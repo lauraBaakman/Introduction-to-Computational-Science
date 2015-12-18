@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>289</width>
-    <height>114</height>
+    <height>178</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -47,15 +47,29 @@
        </spacer>
       </item>
       <item row="0" column="0" colspan="2">
-       <widget class="QComboBox" name="comboBox">
+       <widget class="QComboBox" name="gridType">
         <item>
          <property name="text">
-          <string>Uniform square</string>
+          <string>Square</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>Uniform hexagonal</string>
+          <string>Hexagonal</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item row="1" column="0" colspan="2">
+       <widget class="QComboBox" name="gridTypeDistribution">
+        <item>
+         <property name="text">
+          <string>Uniform</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Variable</string>
          </property>
         </item>
        </widget>

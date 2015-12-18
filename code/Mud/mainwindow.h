@@ -3,6 +3,9 @@
 
 #include <QMainWindow>
 
+#include "grid.h"
+#include "gridcontroller.h"
+
 namespace Ui {
 class MainWindow;
 }
@@ -13,10 +16,14 @@ class MainWindow : public QMainWindow
 
 public:
     explicit MainWindow(QWidget *parent = 0);
+
     ~MainWindow();
 
 private:
     Ui::MainWindow *ui;
+
+    Grid *grid;
+//    GridController gridController;
 };
 
 #endif // MAINWINDOW_H

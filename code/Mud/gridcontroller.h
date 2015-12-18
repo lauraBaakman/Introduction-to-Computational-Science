@@ -3,6 +3,8 @@
 
 #include <QObject>
 
+#include "grid.h"
+
 class GridController : public QObject
 {
     Q_OBJECT

@@ -12,6 +12,7 @@ int main(int argc, char *argv[])
     setOpenGLVersion(majorOpenGLVersion, minorOpenGLVersion);
 
     MainWindow w;
+//    w.init();
     w.show();
 
     return a.exec();

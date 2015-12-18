@@ -12,3 +12,14 @@ Sidebar::~Sidebar()
 {
     delete ui;
 }
+
+Grid::Type Sidebar::getGridType() const
+{
+    return static_cast<Grid::Type>(ui->gridType->currentIndex());
+}
+
+Grid::TypeDistribution Sidebar::getGridTypeDistribution() const
+{
+    return static_cast<Grid::TypeDistribution>(
+                ui->gridTypeDistribution->currentIndex());
+}

@@ -3,6 +3,8 @@
 
 #include <QWidget>
 
+#include "grid.h"
+
 namespace Ui {
 class Sidebar;
 }
@@ -14,6 +16,9 @@ class Sidebar : public QWidget
 public:
     explicit Sidebar(QWidget *parent = 0);
     ~Sidebar();
+
+    Grid::Type getGridType() const;
+    Grid::TypeDistribution getGridTypeDistribution() const;
 
 private:
     Ui::Sidebar *ui;

@@ -7,8 +7,6 @@ class Grid : public QObject
 {
     Q_OBJECT
 public:
-    explicit Grid(QObject *parent = 0);
-
     enum Type {
         SQUARE,
         HEXAGONAL,
@@ -18,6 +16,8 @@ public:
         UNIFORM,
         VARIABLE
     };
+
+    explicit Grid(QObject *parent = 0);
 
     static Grid* gridFactory(Type type, TypeDistribution typeDistribution);
 
