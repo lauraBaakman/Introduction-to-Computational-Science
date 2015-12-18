@@ -17,8 +17,7 @@ public:
     explicit Sidebar(QWidget *parent = 0);
     ~Sidebar();
 
-    Grid::Type getGridType() const;
-    Grid::TypeDistribution getGridTypeDistribution() const;
+    Grid::Settings getGridSettings();
 
 signals:
     void replaceGridSignal(Grid::Settings settings);
@@ -28,6 +27,9 @@ private slots:
 
 private:
     Ui::Sidebar *ui;
+
+    Grid::Type getGridType() const;
+    Grid::TypeDistribution getGridTypeDistribution() const;
 };
 
 #endif // SIDEBAR_H

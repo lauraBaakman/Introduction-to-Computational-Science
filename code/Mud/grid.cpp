@@ -6,22 +6,27 @@ Grid::Grid(QObject *parent) : QObject(parent)
     qDebug() << "Constructor Grid";
 }
 
-Grid* Grid::gridFactory(Type type, TypeDistribution typeDistribution)
+Grid::~Grid()
 {
-    switch(type)
+     qDebug() << "Destructor Grid";
+}
+
+Grid* Grid::gridFactory(Settings settings)
+{
+    switch(settings.type)
     {
     case SQUARE:
-        return selectGridCreator(typeDistribution, &uniformSquareGrid, &variableSquareGrid);
+        return selectGridCreator(settings, &uniformSquareGrid, &variableSquareGrid);
         break;
     case HEXAGONAL:
-        return selectGridCreator(typeDistribution, &uniformHexagonalGrid, &variableHexagonalGrid);
+        return selectGridCreator(settings, &uniformHexagonalGrid, &variableHexagonalGrid);
         break;
     }
 }
 
-Grid* Grid::selectGridCreator(TypeDistribution typeDistribution, gridCreator uniform, gridCreator variable)
+Grid* Grid::selectGridCreator(Settings settings, gridCreator uniform, gridCreator variable)
 {
-    switch(typeDistribution)
+    switch(settings.typeDistribution)
     {
     case UNIFORM:
         return uniform();
