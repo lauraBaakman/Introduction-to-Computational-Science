@@ -1,9 +1,11 @@
 #include <QApplication>
 #include <QSurface>
 #include <QSurfaceFormat>
+#include <QMainWindow>
 
 #include "main.ih"
 #include "mainwindow.h"
+#include "ui_mainwindow.h"
 #include "sidebar.h"
 
 int main(int argc, char *argv[])
@@ -11,14 +13,17 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     setOpenGLVersion(majorOpenGLVersion, minorOpenGLVersion);
 
+    // View (sort of)
+    MainWindow w;
+    Ui::MainWindow *ui = w.getUi();
+
     // Model
-    Grid *grid = new Grid();
+    Grid *grid = Grid::gridFactory(ui->sidebar->getGridType(),
+                                   ui->sidebar->getGridTypeDistribution());
 
     // Controller
     GridController *gridController = new GridController(grid);
 
-    // View (sort of)
-    MainWindow w;
     w.show();
 
     return a.exec();

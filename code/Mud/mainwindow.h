@@ -19,6 +19,8 @@ public:
 
     ~MainWindow();
 
+    Ui::MainWindow *getUi() const;
+
 private:
     Ui::MainWindow *ui;
 };
