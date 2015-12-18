@@ -18,12 +18,16 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     canvas.cpp \
-    sidebar.cpp
+    sidebar.cpp \
+    grid.cpp \
+    gridcontroller.cpp
 
 HEADERS  += mainwindow.h \
     main.ih \
     canvas.h \
-    sidebar.h
+    sidebar.h \
+    grid.h \
+    gridcontroller.h
 
 FORMS  += mainwindow.ui \
         sidebar.ui
