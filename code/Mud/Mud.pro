@@ -17,10 +17,13 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    canvas.cpp
+    canvas.cpp \
+    sidebar.cpp
 
 HEADERS  += mainwindow.h \
     main.ih \
-    canvas.h
+    canvas.h \
+    sidebar.h
 
-FORMS    += mainwindow.ui
+FORMS  += mainwindow.ui \
+        sidebar.ui

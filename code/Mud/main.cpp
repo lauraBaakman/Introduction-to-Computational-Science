@@ -4,6 +4,7 @@
 
 #include "main.ih"
 #include "mainwindow.h"
+#include "sidebar.h"
 
 int main(int argc, char *argv[])
 {

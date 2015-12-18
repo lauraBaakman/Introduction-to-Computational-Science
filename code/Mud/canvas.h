@@ -1,17 +1,18 @@
 #ifndef CANVAS_H
 #define CANVAS_H
 
-#include <QWidget>
+#include <QOpenGLWidget>
+#include <QOpenGLFunctions>
 
-class Canvas : public QWidget
+class Canvas : public QOpenGLWidget, protected QOpenGLFunctions
 {
     Q_OBJECT
+
 public:
-    explicit Canvas(QWidget *parent = 0);
+    Canvas(QWidget *parent = 0);
 
-signals:
-
-public slots:
+//public slots:
+//signals
 };
 
 #endif // CANVAS_H
