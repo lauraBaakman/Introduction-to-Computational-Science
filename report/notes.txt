@@ -1,0 +1,54 @@
+
+General idea
+
+0. MODEL: Particles in 2D space and how they are connected to the outside etc.
+	a. BORDER: fixed border. Absorbing energy or not.
+	b. Is there a connection between the `grid' and the ground?
+	c. ...
+
+
+1. INITIALISATION: Randomized initial state
+	a. Position the `particles' randomly in the 2D space.
+	b. Connect neighboring particles by a spring, within a certain radius.
+	c. How to stabilize this initial state?
+		- Iterate over the distance between all the particles and increase 
+		the distance between neighboring particles along the force vector 
+		between them.
+
+2. UPDATE: Solving the system.
+	Two cases:
+
+	1. All the springs have a max strain after they will break samples from a Gaussian dist. -> increase the strain (in the paper this was indirectly done by decreasing lambda).
+
+	or
+
+	2. All the springs have the same max strain and the update is to `iterate' over all the springs and then sample the `current' strain on that spring from some Gaussian dist.
+
+
+Beste Henk,
+
+We hebben deze middag naar het project gekeken en hebben meerdere vragen.
+
+- Initialisatie: We hebben het na ons gesprek als volgt begrepen:
+	1. Initieel worden de deeltjes random over `de' 2D ruimte verdeeld.
+	2. Verbind de deeltjes waartussen de afstand kleiner is dan een of andere afstand met een veer.
+	
+	Mogelijkheid 1.
+	3. Beweeg deeltjes, waartussen de afstand kleiner is dan een of andere minimum afstand `d', langs de vector tussen die twee deeltjes uit elkaar totdat de afstand tussen deze twee deeltjes de afstand `d' is.
+	4. Herhaal stap 3. totdat het systeem stabiliseerd. (Stabiel systeem: geen enkele afstand tussen twee deeltjes is kleiner dan de afstand `d')
+
+	of 
+
+	Mogelijkheid 2.
+	3. Los het systeem op volgens de krachtvergelijking (vergelijking 2 in de paper, met lambda = 0 en K = 1) zodat de kracht op elk deeltje 0 is.
+
+	Vraag: Welke van de twee mogelijkheden bedoelde u?
+
+
+Voor de onderstaande methoden nemen we aan dat we een geinitialiseerd systeem hebben.
+
+- Methode 1: Elke veer heeft dezelfde maximale `strain' die het aan kan. En de `huidige' strain op elke veer wordt gesampled uits een Gaussian distributie. Als dan blijkt dat er veren breken wordt het systeem gestabiliseerd. (Opgelost zodat de kracht op elk deeltje 0 is).
+
+- Methode 2: Elke veer heeft een gesampelde maximale `strain' die het aan kan. En de `huidige' strain is hetzelfde voor het hele systeem en wordt opgehoogd. Er breken veren en het systeem wordt weer gestabiliseerd. 
+
+Onder beide  methoden is de strain volledig onafhankelijk van de afstand tussen de twee veren waartussen die ligt, aangezien de strain, vergelijking 1 in het paper, geen zinnig resultaat geeft voor een rustlengte van 0. Dit lijkt ons heel gek, was dit wat u bedoelde? 
