@@ -27,17 +27,17 @@ public:
     explicit Grid(QObject *parent = 0);
     ~Grid();
 
-    static Grid* gridFactory(Settings settings);
+    void gridFactory(Settings settings);
 
 private:
-    static Grid* uniformSquareGrid();
-    static Grid* variableSquareGrid();
+    void uniformSquareGrid();
+    void variableSquareGrid();
 
-    static Grid* uniformHexagonalGrid();
-    static Grid* variableHexagonalGrid();
+    void uniformHexagonalGrid();
+    void variableHexagonalGrid();
 
-    typedef Grid* (*gridCreator)();
-    static Grid* selectGridCreator(Settings settings, gridCreator uniform, gridCreator variable);
+    typedef void (Grid::*gridCreator)();
+    void selectGridCreator(Settings settings, gridCreator uniform, gridCreator variable);
 signals:
 
 public slots:

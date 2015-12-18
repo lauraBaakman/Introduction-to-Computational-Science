@@ -20,7 +20,8 @@ int main(int argc, char *argv[])
     Ui::MainWindow *ui = w.getUi();
 
     // Model
-    Grid *grid = Grid::gridFactory(ui->sidebar->getGridSettings());
+    Grid *grid = new Grid();
+    grid->gridFactory(ui->sidebar->getGridSettings());
 
     // Controller
     GridController *gridController = new GridController(grid);

@@ -10,7 +10,5 @@ GridController::GridController(Grid *grid, QObject *parent) :
 void GridController::replaceGridSlot(Grid::Settings settings)
 {
     qDebug() << "Replace grid slot...";
-    delete grid;
-    grid = Grid::gridFactory(settings);
-
+    grid->gridFactory(settings);
 }

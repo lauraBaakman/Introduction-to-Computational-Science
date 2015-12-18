@@ -11,54 +11,50 @@ Grid::~Grid()
      qDebug() << "Destructor Grid";
 }
 
-Grid* Grid::gridFactory(Settings settings)
+void Grid::gridFactory(Settings settings)
 {
     switch(settings.type)
     {
     case SQUARE:
-        return selectGridCreator(settings, &uniformSquareGrid, &variableSquareGrid);
+        selectGridCreator(settings, &Grid::uniformSquareGrid, &Grid::variableSquareGrid);
         break;
     case HEXAGONAL:
-        return selectGridCreator(settings, &uniformHexagonalGrid, &variableHexagonalGrid);
+        selectGridCreator(settings, &Grid::uniformHexagonalGrid, &Grid::variableHexagonalGrid);
         break;
     }
 }
 
-Grid* Grid::selectGridCreator(Settings settings, gridCreator uniform, gridCreator variable)
+void Grid::selectGridCreator(Settings settings, gridCreator uniform, gridCreator variable)
 {
     switch(settings.typeDistribution)
     {
     case UNIFORM:
-        return uniform();
+        (this->*uniform)();
         break;
     case VARIABLE:
-        return variable();
+        (this->*variable)();
         break;
     }
 }
 
-Grid* Grid::uniformSquareGrid()
+void Grid::uniformSquareGrid()
 {
     qDebug() << "uniformSquareGrid! Not implemented yet!";
-    return new Grid();
 }
 
-Grid* Grid::variableSquareGrid()
+void Grid::variableSquareGrid()
 {
     qDebug() << "variableSquareGrid! Not implemented yet!";
-    return new Grid();
 }
 
-Grid* Grid::uniformHexagonalGrid()
+void Grid::uniformHexagonalGrid()
 {
     qDebug() << "uniformHexagonalGrid! Not implemented yet!";
-    return new Grid();
 }
 
-Grid* Grid::variableHexagonalGrid()
+void Grid::variableHexagonalGrid()
 {
     qDebug() << "variableHexagonalGrid! Not implemented yet!";
-    return new Grid();
 }
 
 
