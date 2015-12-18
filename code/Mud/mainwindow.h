@@ -21,9 +21,6 @@ public:
 
 private:
     Ui::MainWindow *ui;
-
-    Grid *grid;
-//    GridController gridController;
 };
 
 #endif // MAINWINDOW_H

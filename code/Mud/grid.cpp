@@ -3,7 +3,7 @@
 
 Grid::Grid(QObject *parent) : QObject(parent)
 {
-
+    qDebug() << "Constructor Grid";
 }
 
 Grid* Grid::gridFactory(Type type, TypeDistribution typeDistribution)
