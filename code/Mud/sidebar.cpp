@@ -26,5 +26,10 @@ Grid::TypeDistribution Sidebar::getGridTypeDistribution() const
 
 void Sidebar::on_initApplyButton_clicked()
 {
-    emit initGrid(42);
+    Grid::Settings settings;
+    settings.type = getGridType();
+    settings.typeDistribution = getGridTypeDistribution();
+//  settings.width = iets;
+//  setting.height = ietsanders;
+    emit replaceGridSignal(settings);
 }

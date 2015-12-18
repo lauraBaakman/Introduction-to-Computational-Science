@@ -18,7 +18,7 @@ private:
 signals:
 
 public slots:
-    void replaceGrid(int value);
+    void replaceGridSlot(Grid::Settings settings);
 };
 
 #endif // GRIDCONTROLLER_H

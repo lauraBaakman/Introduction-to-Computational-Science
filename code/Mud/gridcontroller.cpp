@@ -7,7 +7,8 @@ GridController::GridController(Grid *grid, QObject *parent) :
     qDebug() << "Constructor GridController";
 }
 
-void GridController::replaceGrid(int value)
+void GridController::replaceGridSlot(Grid::Settings settings)
 {
-    qDebug() << "BLEH";
+    qDebug() << (int)settings.type;
+
 }

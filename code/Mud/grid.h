@@ -17,6 +17,13 @@ public:
         VARIABLE
     };
 
+    struct Settings {
+        Type type;
+        TypeDistribution typeDistribution;
+//        int width;
+//        int height;
+    };
+
     explicit Grid(QObject *parent = 0);
 
     static Grid* gridFactory(Type type, TypeDistribution typeDistribution);

@@ -21,7 +21,7 @@ public:
     Grid::TypeDistribution getGridTypeDistribution() const;
 
 signals:
-    void initGrid(int value);
+    void replaceGridSignal(Grid::Settings settings);
 
 private slots:
     void on_initApplyButton_clicked();

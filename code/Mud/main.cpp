@@ -26,7 +26,8 @@ int main(int argc, char *argv[])
     // Controller
     GridController *gridController = new GridController(grid);
 
-    QObject::connect(ui->sidebar, SIGNAL(initGrid(int)), gridController, SLOT(replaceGrid(int)));
+    QObject::connect(ui->sidebar, SIGNAL(replaceGridSignal(Grid::Settings)),
+                     gridController, SLOT(replaceGridSlot(Grid::Settings)));
 
     w.show();
 
