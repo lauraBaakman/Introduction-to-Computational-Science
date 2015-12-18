@@ -6,3 +6,8 @@ GridController::GridController(Grid *grid, QObject *parent) :
 {
     qDebug() << "Constructor GridController";
 }
+
+void GridController::replaceGrid(int value)
+{
+    qDebug() << "BLEH";
+}

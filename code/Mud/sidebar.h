@@ -20,6 +20,12 @@ public:
     Grid::Type getGridType() const;
     Grid::TypeDistribution getGridTypeDistribution() const;
 
+signals:
+    void initGrid(int value);
+
+private slots:
+    void on_initApplyButton_clicked();
+
 private:
     Ui::Sidebar *ui;
 };

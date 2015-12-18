@@ -2,6 +2,7 @@
 #include <QSurface>
 #include <QSurfaceFormat>
 #include <QMainWindow>
+#include <QObject>
 
 #include "main.ih"
 #include "mainwindow.h"
@@ -15,6 +16,7 @@ int main(int argc, char *argv[])
 
     // View (sort of)
     MainWindow w;
+    // TODO: Litte weird?
     Ui::MainWindow *ui = w.getUi();
 
     // Model
@@ -23,6 +25,8 @@ int main(int argc, char *argv[])
 
     // Controller
     GridController *gridController = new GridController(grid);
+
+    QObject::connect(ui->sidebar, SIGNAL(initGrid(int)), gridController, SLOT(replaceGrid(int)));
 
     w.show();
 

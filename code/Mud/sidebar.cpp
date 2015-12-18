@@ -23,3 +23,8 @@ Grid::TypeDistribution Sidebar::getGridTypeDistribution() const
     return static_cast<Grid::TypeDistribution>(
                 ui->gridTypeDistribution->currentIndex());
 }
+
+void Sidebar::on_initApplyButton_clicked()
+{
+    emit initGrid(42);
+}

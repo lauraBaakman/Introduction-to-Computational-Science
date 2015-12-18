@@ -18,6 +18,7 @@ private:
 signals:
 
 public slots:
+    void replaceGrid(int value);
 };
 
 #endif // GRIDCONTROLLER_H

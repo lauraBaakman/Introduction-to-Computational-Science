@@ -27,7 +27,7 @@
      </property>
      <layout class="QGridLayout" name="gridLayout_2">
       <item row="2" column="1">
-       <widget class="QPushButton" name="pushButton">
+       <widget class="QPushButton" name="initApplyButton">
         <property name="text">
          <string>Apply</string>
         </property>
