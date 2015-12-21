@@ -1,3 +1,10 @@
+#include <QApplication>
+#include <QSurface>
+#include <QSurfaceFormat>
+#include <QMainWindow>
+#include <QObject>
+#include <QDebug>
+
 #include "main.ih"
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
@@ -16,6 +23,8 @@ int main(int argc, char *argv[])
     // Model
     Grid *grid = new Grid();
     grid->gridFactory(ui->sidebar->getGridSettings());
+
+    qDebug() << *grid;
 
     // Controller
     GridController *gridController = new GridController(grid);

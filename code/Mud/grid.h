@@ -1,7 +1,11 @@
 #ifndef GRID_H
 #define GRID_H
 
+#include <QVector>
 #include <QObject>
+
+#include "particle.h"
+#include "spring.h"
 
 class Grid : public QObject
 {
@@ -29,8 +33,13 @@ public:
 
     void gridFactory(Settings settings);
 
+    friend QDebug operator<<(QDebug stream, const Grid &grid);
+
 private:
-//    QVector<>
+    QVector<Particle> particles;
+    QVector<QVector3D> particleLocations;
+
+    QVector<Spring> springs;
 
     void uniformSquareGrid();
     void variableSquareGrid();

@@ -1,12 +1,6 @@
 #ifndef MAIN_IH
 #define MAIN_IH
 
-#include <QApplication>
-#include <QSurface>
-#include <QSurfaceFormat>
-#include <QMainWindow>
-#include <QObject>
-
 int const majorOpenGLVersion = 4;
 int const minorOpenGLVersion = 1;
 

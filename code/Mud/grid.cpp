@@ -39,7 +39,58 @@ void Grid::selectGridCreator(Settings settings, gridCreator uniform, gridCreator
 
 void Grid::uniformSquareGrid()
 {
-    qDebug() << "uniformSquareGrid not implemented yet.";
+    qDebug() << "uniformSquareGrid kinda implemented.";
+
+    particles.clear();
+    particleLocations.clear();
+    springs.clear();
+
+    QVector3D *particleLocation = new QVector3D(0.0, 0.0, 0.0);
+    // Function add particle
+    particleLocations.append(*particleLocation);
+    Particle *particleA = new Particle(particleLocation);
+    particles.append(*particleA);
+
+    particleLocation = new QVector3D(1.0, 1.0, 0.0);
+    // Function add particle
+    particleLocations.append(*particleLocation);
+    Particle *particleB = new Particle(particleLocation);
+    particles.append(*particleB);
+
+    particleLocation = new QVector3D(1.0, 0.0, 0.0);
+    // Function add particle
+    particleLocations.append(*particleLocation);
+    Particle *particleC = new Particle(particleLocation);
+    particles.append(*particleC);
+
+    particleLocation = new QVector3D(0.0, 1.0, 0.0);
+    // Function add particle
+    particleLocations.append(*particleLocation);
+    Particle *particleD = new Particle(particleLocation);
+    particles.append(*particleD);
+
+    Spring *springA = new Spring(particleA, particleB);
+    particleA->addSpring(springA);
+    particleB->addSpring(springA);
+    springs.append(*springA);
+
+    Spring *springB = new Spring(particleB, particleC);
+    particleB->addSpring(springB);
+    particleC->addSpring(springB);
+    springs.append(*springB);
+
+    Spring *springC = new Spring(particleC, particleD);
+    particleC->addSpring(springC);
+    particleD->addSpring(springC);
+    springs.append(*springC);
+
+    Spring *springD = new Spring(particleD, particleA);
+    particleD->addSpring(springD);
+    particleA->addSpring(springD);
+    springs.append(*springD);
+
+//    this->addParticle(new Particle())
+
 }
 
 void Grid::variableSquareGrid()
@@ -57,3 +108,12 @@ void Grid::variableHexagonalGrid()
     qDebug() << "variableHexagonalGrid not implemented yet.";
 }
 
+QDebug operator<<(QDebug stream, const Grid &grid)
+{
+    stream << "Grid ["
+           << grid.particles
+           << grid.particleLocations
+           << grid.springs
+           << "]" << &endl;
+    return stream;
+}
