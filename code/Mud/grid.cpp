@@ -111,9 +111,10 @@ void Grid::variableHexagonalGrid()
 QDebug operator<<(QDebug stream, const Grid &grid)
 {
     stream << "Grid ["
-           << grid.particles
-           << grid.particleLocations
-           << grid.springs
+           << "particles: "             << grid.particles           << &endl
+           << "particle locations: "    << &endl
+           << "\t"                      << grid.particleLocations   << &endl
+           << "springs: "               << grid.springs             << &endl
            << "]" << &endl;
     return stream;
 }

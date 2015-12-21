@@ -12,11 +12,12 @@ Spring::Spring(Particle *particleA, Particle *particleB,
 
 QDebug operator<<(QDebug stream, const Spring &spring)
 {
-    stream << "Spring ["
-           << (spring.particleA ? *(spring.particleA->getLocation()) : QVector3D(-1.0, -1.0, -1.0))
-           << (spring.particleB ? *(spring.particleB->getLocation()) : QVector3D(-1.0, -1.0, -1.0))
-           << spring.springConstant
-           << spring.broken
-           << "]" << &endl;
+    stream << &endl
+           << "\tSpring ["
+           << "\tparticle: "        << (spring.particleA ? *(spring.particleA->getLocation()) : QVector3D(-1.0, -1.0, -1.0))
+           << "\tparticle: "        << (spring.particleB ? *(spring.particleB->getLocation()) : QVector3D(-1.0, -1.0, -1.0))
+           << "\tspring constant: " <<  spring.springConstant
+           << "\tbroken: "          <<  spring.broken
+           << "]";
     return stream;
 }

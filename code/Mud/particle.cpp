@@ -19,9 +19,10 @@ QVector3D *Particle::getLocation() const
 
 QDebug operator<<(QDebug stream, const Particle &particle)
 {
-    stream << "Particle ["
-           << (particle.location ? *(particle.location) : QVector3D(-1.0, -1.0, -1.0))
-           << particle.springs
-           << "]" << &endl;
+    stream << &endl
+           << "\tParticle ["
+           << "\tlocation: "   <<  (particle.location ? *(particle.location) : QVector3D(-1.0, -1.0, -1.0))
+           << "\tsprings: "    <<  particle.springs
+           << "]";
     return stream;
 }
