@@ -21,7 +21,8 @@ SOURCES += main.cpp\
     sidebar.cpp \
     grid.cpp \
     gridcontroller.cpp \
-    particle.cpp
+    particle.cpp \
+    spring.cpp
 
 HEADERS  += mainwindow.h \
     main.ih \
@@ -29,7 +30,8 @@ HEADERS  += mainwindow.h \
     sidebar.h \
     grid.h \
     gridcontroller.h \
-    particle.h
+    particle.h \
+    spring.h
 
 FORMS  += mainwindow.ui \
         sidebar.ui
