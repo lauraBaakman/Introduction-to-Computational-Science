@@ -1,0 +1,1 @@
+{"used_options":[],"unused_options":["--with-hdf5","--c++11"],"built_as_bottle":true,"poured_from_bottle":true,"time":1444155420,"HEAD":"d198313ebd2e3f5b1c1985b53cd920bc117d77ec","stdlib":"libcxx","compiler":"clang","source":{"path":"/usr/local/Library/Taps/homebrew/homebrew-science/armadillo.rb","tap":"homebrew/homebrew-science","spec":"stable"}}
