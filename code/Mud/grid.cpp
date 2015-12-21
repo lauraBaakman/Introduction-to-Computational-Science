@@ -39,23 +39,21 @@ void Grid::selectGridCreator(Settings settings, gridCreator uniform, gridCreator
 
 void Grid::uniformSquareGrid()
 {
-    qDebug() << "uniformSquareGrid! Not implemented yet!";
+    qDebug() << "uniformSquareGrid not implemented yet.";
 }
 
 void Grid::variableSquareGrid()
 {
-    qDebug() << "variableSquareGrid! Not implemented yet!";
+    qDebug() << "variableSquareGrid not implemented yet.";
 }
 
 void Grid::uniformHexagonalGrid()
 {
-    qDebug() << "uniformHexagonalGrid! Not implemented yet!";
+    qDebug() << "uniformHexagonalGrid not implemented yet.";
 }
 
 void Grid::variableHexagonalGrid()
 {
-    qDebug() << "variableHexagonalGrid! Not implemented yet!";
+    qDebug() << "variableHexagonalGrid not implemented yet.";
 }
-
-
 

@@ -30,6 +30,8 @@ public:
     void gridFactory(Settings settings);
 
 private:
+//    QVector<>
+
     void uniformSquareGrid();
     void variableSquareGrid();
 

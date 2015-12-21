@@ -10,9 +10,15 @@ class Canvas : public QOpenGLWidget, protected QOpenGLFunctions
 
 public:
     Canvas(QWidget *parent = 0);
+    ~Canvas();
 
-//public slots:
-//signals
+protected:
+    void initializeGL();
+    void paintGL();
+
+private:
+    void initializeShaders();
+    void initializeBuffers();
 };
 
 #endif // CANVAS_H

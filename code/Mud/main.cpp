@@ -1,9 +1,3 @@
-#include <QApplication>
-#include <QSurface>
-#include <QSurfaceFormat>
-#include <QMainWindow>
-#include <QObject>
-
 #include "main.ih"
 #include "mainwindow.h"
 #include "ui_mainwindow.h"

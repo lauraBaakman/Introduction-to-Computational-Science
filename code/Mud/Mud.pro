@@ -20,14 +20,16 @@ SOURCES += main.cpp\
     canvas.cpp \
     sidebar.cpp \
     grid.cpp \
-    gridcontroller.cpp
+    gridcontroller.cpp \
+    particle.cpp
 
 HEADERS  += mainwindow.h \
     main.ih \
     canvas.h \
     sidebar.h \
     grid.h \
-    gridcontroller.h
+    gridcontroller.h \
+    particle.h
 
 FORMS  += mainwindow.ui \
         sidebar.ui
