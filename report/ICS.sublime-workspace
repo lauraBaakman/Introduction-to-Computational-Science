@@ -407,30 +407,6 @@
 	},
 	"buffers":
 	[
-		{
-			"file": "method.tex",
-			"settings":
-			{
-				"buffer_size": 23,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "intro.tex",
-			"settings":
-			{
-				"buffer_size": 23,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "ICS.sublime-project",
-			"settings":
-			{
-				"buffer_size": 1272,
-				"line_ending": "Unix"
-			}
-		}
 	],
 	"build_system": "",
 	"build_system_choices":
@@ -439,7 +415,7 @@
 	"build_varint": "",
 	"command_palette":
 	{
-		"height": 147.0,
+		"height": 392.0,
 		"last_filter": "",
 		"selected_items":
 		[
@@ -619,13 +595,8 @@
 		"side_bar_visible": false,
 		"status_bar_visible": false
 	},
-	"expanded_folders":
-	[
-		"/Users/rickvanveen/OneDrive/Documents/Universiteit/2015-2016/Periode 1b/Introduction to Computational Science/Project/report"
-	],
 	"file_history":
 	[
-		"/Users/rickvanveen/OneDrive/Documents/Universiteit/2015-2016/Periode 1b/Introduction to Computational Science/Project/report/report.tex",
 		"/Users/rickvanveen/OneDrive/Documents/Universiteit/Literature/Papers/BibTex/PN-Triangles.bib",
 		"/Users/rickvanveen/OneDrive/Documents/Universiteit/2015-2016/Periode 1b/Machine Learning/Project/report/method.tex",
 		"/Users/rickvanveen/OneDrive/Documents/Universiteit/2015-2016/Periode 1b/Machine Learning/Project/ML.sublime-project",
@@ -752,7 +723,8 @@
 		"/Users/Rick/Dropbox/Documents/Universiteit/2014-2015/Periode 1b/Image Processing/Practica/practicum1/report/report.pdf",
 		"/Users/Rick/Dropbox/Documents/Universiteit/2012-2013/Periode 2b/Parallel computing/Practicum 3/parcom__mpi_rvveen_bvloon/Code/mandbrot-Master-slave.c",
 		"/Users/Rick/Downloads/Spin/Examples/Exercises/ex_2.pml",
-		"/Users/Rick/Dropbox/Documents/Universiteit/2014-2015/Periode 1b/Automated Reasoning/Practica/Week1/Code/pan.t"
+		"/Users/Rick/Dropbox/Documents/Universiteit/2014-2015/Periode 1b/Automated Reasoning/Practica/Week1/Code/pan.t",
+		"/Users/Rick/Dropbox/Documents/Universiteit/2014-2015/Periode 1b/Automated Reasoning/Practica/Exercises/ex_1a.pml"
 	],
 	"find":
 	{
@@ -938,93 +910,8 @@
 	"groups":
 	[
 		{
-			"selected": 0,
 			"sheets":
 			[
-				{
-					"buffer": 0,
-					"file": "method.tex",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 23,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								23,
-								23
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/LaTeX/LaTeX.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "intro.tex",
-					"semi_transient": true,
-					"settings":
-					{
-						"buffer_size": 23,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								23,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/LaTeX/LaTeX.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "ICS.sublime-project",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1272,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								374,
-								374
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JSON.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				}
 			]
 		}
 	],
