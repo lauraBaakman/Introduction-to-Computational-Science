@@ -9,7 +9,7 @@ Particle::Particle(QVector3D *location) :
 
 void Particle::addSpring(Spring *const spring)
 {
-    this->springs.append(spring);
+    springs.append(spring);
 }
 
 QVector3D *Particle::getLocation() const

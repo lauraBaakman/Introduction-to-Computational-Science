@@ -16,6 +16,9 @@ public:
 
     friend QDebug operator<<(QDebug stream, const Spring &spring);
 
+    Particle *getParticleA() const;
+    Particle *getParticleB() const;
+
 private:
     float springConstant;
     bool broken;

@@ -9,6 +9,10 @@ Grid::Grid(QObject *parent) : QObject(parent)
 Grid::~Grid()
 {
      qDebug() << "Destructor Grid";
+
+//     delete &particleLocations;
+//     delete particles;
+//     delete springs;
 }
 
 void Grid::gridFactory(Settings settings)
@@ -41,57 +45,44 @@ void Grid::uniformSquareGrid()
 {
     qDebug() << "uniformSquareGrid kinda implemented.";
 
-    particles.clear();
-    particleLocations.clear();
-    springs.clear();
+    this->particles.clear();
+    this->particleLocations.clear();
+    this->springs.clear();
 
-    QVector3D *particleLocation = new QVector3D(0.0, 0.0, 0.0);
-    // Function add particle
-    particleLocations.append(*particleLocation);
-    Particle *particleA = new Particle(particleLocation);
-    particles.append(*particleA);
+    this->particles.reserve(4);
+    this->particleLocations.reserve(4);
+    this->springs.reserve(4);
 
-    particleLocation = new QVector3D(1.0, 1.0, 0.0);
-    // Function add particle
-    particleLocations.append(*particleLocation);
-    Particle *particleB = new Particle(particleLocation);
-    particles.append(*particleB);
+    Particle *a = addParticle(QVector3D(0.0, 0.0, 0.0));
+    Particle *b = addParticle(QVector3D(1.0, 0.0, 0.0));
+    Particle *c = addParticle(QVector3D(0.0, 1.0, 0.0));
+    Particle *d = addParticle(QVector3D(1.0, 1.0, 0.0));
 
-    particleLocation = new QVector3D(1.0, 0.0, 0.0);
-    // Function add particle
-    particleLocations.append(*particleLocation);
-    Particle *particleC = new Particle(particleLocation);
-    particles.append(*particleC);
-
-    particleLocation = new QVector3D(0.0, 1.0, 0.0);
-    // Function add particle
-    particleLocations.append(*particleLocation);
-    Particle *particleD = new Particle(particleLocation);
-    particles.append(*particleD);
-
-    Spring *springA = new Spring(particleA, particleB);
-    particleA->addSpring(springA);
-    particleB->addSpring(springA);
-    springs.append(*springA);
-
-    Spring *springB = new Spring(particleB, particleC);
-    particleB->addSpring(springB);
-    particleC->addSpring(springB);
-    springs.append(*springB);
-
-    Spring *springC = new Spring(particleC, particleD);
-    particleC->addSpring(springC);
-    particleD->addSpring(springC);
-    springs.append(*springC);
-
-    Spring *springD = new Spring(particleD, particleA);
-    particleD->addSpring(springD);
-    particleA->addSpring(springD);
-    springs.append(*springD);
-
-//    this->addParticle(new Particle())
-
+    addSpring(Spring(a, b));
+    addSpring(Spring(b, c));
+    addSpring(Spring(c, d));
+    addSpring(Spring(d, a));
 }
+
+Particle* Grid::addParticle(QVector3D location)
+{
+    this->particleLocations.append(location);
+    QVector3D *locationPtr = &(this->particleLocations.last());
+
+    Particle particle = Particle(locationPtr);
+    this->particles.append(particle);
+    return &(this->particles.last());
+}
+
+void Grid::addSpring(Spring spring)
+{
+    this->springs.append(spring);
+    Spring *springPtr = &(this->springs.last());
+
+    spring.getParticleA()->addSpring(springPtr);
+    spring.getParticleB()->addSpring(springPtr);
+}
+
 
 void Grid::variableSquareGrid()
 {

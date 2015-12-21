@@ -10,6 +10,16 @@ Spring::Spring(Particle *particleA, Particle *particleB,
 
 }
 
+Particle *Spring::getParticleA() const
+{
+    return particleA;
+}
+
+Particle *Spring::getParticleB() const
+{
+    return particleB;
+}
+
 QDebug operator<<(QDebug stream, const Spring &spring)
 {
     stream << &endl
