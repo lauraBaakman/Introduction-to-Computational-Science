@@ -38,6 +38,9 @@ public:
 
     friend QDebug operator<<(QDebug stream, const Grid &grid);
 
+    QVector<Spring> getSprings() const;
+    Spring getSpring(int index) const;
+
 private:
     QVector<Particle> particles;
     QVector<QVector3D> particleLocations;

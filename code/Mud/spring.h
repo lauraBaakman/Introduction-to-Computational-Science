@@ -19,6 +19,8 @@ public:
     Particle *getParticleA() const;
     Particle *getParticleB() const;
 
+    float getSpringConstant() const;
+
 private:
     float springConstant;
     bool broken;

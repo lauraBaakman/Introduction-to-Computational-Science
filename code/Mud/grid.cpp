@@ -46,6 +46,16 @@ int Grid::numFreeParticles()
     return count;
 }
 
+QVector<Spring> Grid::getSprings() const
+{
+    return springs;
+}
+
+Spring Grid::getSpring(int index) const
+{
+    return springs.at(index);
+}
+
 void Grid::clear()
 {
     this->particles.clear();

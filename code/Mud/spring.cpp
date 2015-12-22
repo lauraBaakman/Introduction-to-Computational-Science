@@ -20,6 +20,11 @@ Particle *Spring::getParticleB() const
     return particleB;
 }
 
+float Spring::getSpringConstant() const
+{
+    return springConstant;
+}
+
 QDebug operator<<(QDebug stream, const Spring &spring)
 {
     stream << &endl
