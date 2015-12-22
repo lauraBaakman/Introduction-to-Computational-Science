@@ -44,7 +44,12 @@ private:
 
     QVector<Spring> springs;
 
+    void clear();
+    void reserve(int numParticles, int numSprings);
+
     Particle* addParticle(QVector3D location);
+    Particle* addParticle(Particle particle);
+
     void addSpring(Spring spring);
 
     void uniformSquareGrid();
