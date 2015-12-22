@@ -21,9 +21,15 @@ public:
 
     float getSpringConstant() const;
 
+    int getId() const;
+    void clear();
+
 private:
     float springConstant;
     bool broken;
+
+    static int nextId;
+    int id;
 
     Particle *particleA;
     Particle *particleB;
