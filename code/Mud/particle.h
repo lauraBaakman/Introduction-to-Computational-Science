@@ -23,11 +23,14 @@ public:
 
     void setLocation(QVector3D *value);
 
+    int id;
+
 private:
     QVector3D *location;
     // Force?
     QVector<Spring*> springs;
     bool fixed;
-};
 
+    static int nextId;
+};
 #endif // PARTICLE_H
