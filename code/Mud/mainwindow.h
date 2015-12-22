@@ -5,6 +5,7 @@
 
 #include "grid.h"
 #include "gridcontroller.h"
+#include "gridsolver.h"
 
 namespace Ui {
 class MainWindow;
@@ -23,6 +24,11 @@ public:
 
 private:
     Ui::MainWindow *ui;
+
+    Grid *grid;
+    GridController *gridController;
+    GridSolver *gridSolver; // Maybe add this to the gridController..
+    // Canvas/View => ui->canvas
 };
 
 #endif // MAINWINDOW_H

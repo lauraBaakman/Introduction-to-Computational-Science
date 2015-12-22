@@ -10,7 +10,7 @@ class GridController : public QObject
 {
     Q_OBJECT
 public:
-    explicit GridController(Grid *grid, QObject *parent = 0);
+    GridController(Grid *grid, QObject *parent = 0);
 
 private:
     Grid *grid;
