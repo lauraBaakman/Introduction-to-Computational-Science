@@ -1,6 +1,7 @@
 #-------------------------------------------------
 #
 # Project created by QtCreator 2015-12-18T11:09:50
+# HOi!
 #
 #-------------------------------------------------
 
@@ -40,8 +41,7 @@ HEADERS  += mainwindow.h \
 FORMS  += mainwindow.ui \
         sidebar.ui
 
+macx: LIBS += -L/usr/local/lib/ -larmadillo.6.40.3
 
-macx: LIBS += -L$$PWD/../../../../../../../../../../../usr/local/lib/ -larmadillo.6.40.3
-
-INCLUDEPATH += $$PWD/../../../../../../../../../../../usr/local/include
-DEPENDPATH += $$PWD/../../../../../../../../../../../usr/local/include
+INCLUDEPATH += /usr/local/include
+DEPENDPATH += /usr/local/include

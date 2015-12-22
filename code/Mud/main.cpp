@@ -9,6 +9,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "sidebar.h"
+#include "gridsolver.h"
 
 int main(int argc, char *argv[])
 {
@@ -28,6 +29,8 @@ int main(int argc, char *argv[])
 
     // Controller
     GridController *gridController = new GridController(grid);
+
+    GridSolver solver = GridSolver(grid);
 
     QObject::connect(ui->sidebar, SIGNAL(replaceGridSignal(Grid::Settings)),
                      gridController, SLOT(replaceGridSlot(Grid::Settings)));
