@@ -10,14 +10,14 @@ public:
 
     ~FixedParticle();
 
-    friend QDebug operator<<(QDebug stream, const FixedParticle &particle);
+//    friend QDebug operator<<(QDebug stream, const FixedParticle &particle);
 
     static void clear();
 
     bool isFixed() const;
 
 private:
-    static int nextId;
+    static int nextIdF;
 
     QDebug doPrint(QDebug stream) const;
 };
