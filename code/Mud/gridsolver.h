@@ -6,21 +6,19 @@
 
 #include "grid.h"
 
-using aram;
-
 class GridSolver : public QObject
 {
     Q_OBJECT
 public:
-    GridSolver(QObject *parent = 0, Grid *grid);
+    GridSolver(Grid *grid, QObject *parent = 0);
 
     void solve();
 
 private:
     Grid *grid;
 
-    SpMat<float> springConstantsMatrix;
-    SpMat<float> adjacencyMatrix;
+    arma::SpMat<float> springConstantsMatrix;
+    arma::SpMat<float> adjacencyMatrix;
 
     void buildSpringConstantMatrix();
     void buildAdjacencyMatrix();
