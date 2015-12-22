@@ -24,6 +24,11 @@ void Particle::setLocation(QVector3D *value)
     location = value;
 }
 
+void Particle::clear()
+{
+    Particle::nextId = 0;
+}
+
 bool Particle::isFixed() const
 {
     return fixed;

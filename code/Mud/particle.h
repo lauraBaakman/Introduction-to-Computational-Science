@@ -23,6 +23,8 @@ public:
 
     void setLocation(QVector3D *value);
 
+    static void clear();
+
     int id;
 
 private:
