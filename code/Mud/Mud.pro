@@ -40,9 +40,7 @@ HEADERS  += mainwindow.h \
 FORMS  += mainwindow.ui \
         sidebar.ui
 
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/libs/armadillo/lib/release/ -larmadillo.6.10.0
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/libs/armadillo/lib/debug/ -larmadillo.6.10.0
-else:unix: LIBS += -L$$PWD/libs/armadillo/lib/ -larmadillo.6.10.0
+macx: LIBS += -L/usr/local/lib/ -larmadillo.6.40.3
 
-INCLUDEPATH += $$PWD/libs/armadillo/include
-DEPENDPATH += $$PWD/libs/armadillo/include
+INCLUDEPATH += /usr/local/include
+DEPENDPATH += /usr/local/include
