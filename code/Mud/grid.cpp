@@ -53,15 +53,16 @@ void Grid::uniformSquareGrid()
     this->particleLocations.reserve(4);
     this->springs.reserve(4);
 
-    Particle *a = addParticle(QVector3D(0.0, 0.0, 0.0));
-    Particle *b = addParticle(QVector3D(1.0, 0.0, 0.0));
-    Particle *c = addParticle(QVector3D(0.0, 1.0, 0.0));
-    Particle *d = addParticle(QVector3D(1.0, 1.0, 0.0));
+    Particle *a = addParticle(QVector3D(0.0, 1.0, 0.0));
+    Particle *b = addParticle(QVector3D(1.0, 1.0, 0.0));
+    Particle *c = addParticle(QVector3D(0.0, 0.0, 0.0));
+    Particle *d = addParticle(QVector3D(1.0, 0.0, 0.0));
 
     addSpring(Spring(a, b));
     addSpring(Spring(b, c));
     addSpring(Spring(c, d));
     addSpring(Spring(d, a));
+    addSpring(Spring(a, c));
 }
 
 Particle* Grid::addParticle(QVector3D location)

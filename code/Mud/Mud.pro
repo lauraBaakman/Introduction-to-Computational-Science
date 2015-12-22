@@ -7,6 +7,8 @@
 QT       += core gui
 
 QMAKE_CXXFLAGS += -std=c++11 -stdlib=libc++ -mmacosx-version-min=10.10
+QMAKE_CXXFLAGS += -O2
+
 QMAKE_LFLAGS += -std=c++11 -stdlib=libc++ -mmacosx-version-min=10.10
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
@@ -22,7 +24,8 @@ SOURCES += main.cpp\
     grid.cpp \
     gridcontroller.cpp \
     particle.cpp \
-    spring.cpp
+    spring.cpp \
+    gridsolver.cpp
 
 HEADERS  += mainwindow.h \
     main.ih \
@@ -31,7 +34,8 @@ HEADERS  += mainwindow.h \
     grid.h \
     gridcontroller.h \
     particle.h \
-    spring.h
+    spring.h \
+    gridsolver.h
 
 FORMS  += mainwindow.ui \
         sidebar.ui
