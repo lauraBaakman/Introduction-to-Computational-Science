@@ -19,6 +19,8 @@ private:
     GridSolver *gridSolver;
     Canvas *canvas;
 
+    void visualiseGrid();
+
 signals:
 
 public slots:

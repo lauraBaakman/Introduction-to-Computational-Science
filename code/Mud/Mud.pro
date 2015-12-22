@@ -43,7 +43,12 @@ HEADERS  += mainwindow.h \
 FORMS  += mainwindow.ui \
         sidebar.ui
 
+DISTFILES += \
+    shaders/mudfrag.glsl \
+    shaders/mudvert.glsl
+
 macx: LIBS += -L/usr/local/lib/ -larmadillo.6.40.3
 
 INCLUDEPATH += /usr/local/include
 DEPENDPATH += /usr/local/include
+

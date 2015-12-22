@@ -13,4 +13,11 @@ void GridController::replaceGridSlot(Grid::Settings settings)
 {
     qDebug() << "Replace grid slot...";
     grid->gridFactory(settings);
+    visualiseGrid();
+}
+
+void GridController::visualiseGrid()
+{
+    canvas->build(grid);
+    canvas->update();
 }
