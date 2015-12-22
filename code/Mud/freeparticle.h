@@ -15,10 +15,11 @@ public:
 
     bool isFixed() const;
 
+protected:
+    virtual void doPrint(QDebug stream) const;
+
 private:
     static int nextIdP;
-
-    QDebug doPrint(QDebug stream) const;
 };
 
 #endif // FREEPARTICLE_H

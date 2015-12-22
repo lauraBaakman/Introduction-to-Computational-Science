@@ -20,11 +20,10 @@ QVector3D *Particle::getLocation() const
     return location;
 }
 
-QDebug Particle::doPrint(QDebug stream) const {
+void Particle::doPrint(QDebug stream) const {
     stream <<   "  id: "         <<  id
            <<   "\tlocation: "   <<  (location ? *(location) : QVector3D(-1.0, -1.0, -1.0))
            <<   "\tsprings: "    <<  springs;
-    return stream;
 }
 
 void Particle::setLocation(QVector3D *value)
@@ -40,4 +39,9 @@ QVector<Spring *> Particle::getSprings() const
 int Particle::getId() const
 {
     return id;
+}
+
+QDebug operator<<(QDebug stream, const Particle &particle){
+    particle.doPrint(stream);
+    return stream;
 }

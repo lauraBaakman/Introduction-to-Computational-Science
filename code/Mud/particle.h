@@ -25,9 +25,9 @@ public:
     virtual bool isFixed() const = 0;
     virtual ~Particle();
 
-//    friend QDebug operator<<(QDebug stream, const Particle &particle);
+    friend QDebug operator<<(QDebug stream, const Particle &particle);
 
-    virtual QDebug doPrint(QDebug stream) const;
+    virtual void doPrint(QDebug stream) const;
 
 protected:
     QVector3D *location;
