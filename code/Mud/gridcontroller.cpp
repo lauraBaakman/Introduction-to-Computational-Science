@@ -1,8 +1,10 @@
 #include "gridcontroller.h"
 
-GridController::GridController(Grid *grid, QObject *parent) :
+GridController::GridController(Grid *grid, GridSolver *gridSolver, Canvas *canvas, QObject *parent) :
     QObject(parent),
-    grid(grid)
+    grid(grid),
+    gridSolver(gridSolver),
+    canvas(canvas)
 {
     qDebug() << "Constructor GridController";
 }

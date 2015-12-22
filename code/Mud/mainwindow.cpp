@@ -10,9 +10,8 @@ MainWindow::MainWindow(QWidget *parent) :
     this->grid = new Grid();
     this->grid->gridFactory(ui->sidebar->getGridSettings());
 
-
-    this->gridController = new GridController(grid);
-
+    GridSolver *gridSolver = new GridSolver(grid);
+    this->gridController = new GridController(grid, gridSolver, this->ui->canvas);
 }
 
 MainWindow::~MainWindow()

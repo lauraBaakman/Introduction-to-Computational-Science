@@ -5,15 +5,19 @@
 #include <QDebug>
 
 #include "grid.h"
+#include "gridsolver.h"
+#include "canvas.h"
 
 class GridController : public QObject
 {
     Q_OBJECT
 public:
-    GridController(Grid *grid, QObject *parent = 0);
+    GridController(Grid *grid, GridSolver *gridSolver, Canvas *canvas, QObject *parent = 0);
 
 private:
     Grid *grid;
+    GridSolver *gridSolver;
+    Canvas *canvas;
 
 signals:
 
