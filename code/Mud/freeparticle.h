@@ -9,7 +9,7 @@ public:
     FreeParticle(QVector3D* location);
     ~FreeParticle();
 
-//    friend QDebug operator<<(QDebug stream, const FreeParticle &particle);
+    friend QDebug operator<<(QDebug stream, const FreeParticle &particle);
 
     static void clear();
 

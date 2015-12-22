@@ -10,7 +10,7 @@ public:
 
     ~FixedParticle();
 
-//    friend QDebug operator<<(QDebug stream, const FixedParticle &particle);
+    friend QDebug operator<<(QDebug stream, const FixedParticle &particle);
 
     static void clear();
 

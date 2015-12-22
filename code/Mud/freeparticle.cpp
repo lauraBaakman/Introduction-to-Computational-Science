@@ -14,16 +14,16 @@ FreeParticle::~FreeParticle(){
     qDebug() << "FreeParticle destructor";
 }
 
-//QDebug operator<<(QDebug stream, const Particle &particle)
-//{
-//    stream << &endl
-//           << "\tFreeParticle ["
-//           << "  id: "         <<  particle.id
-//           << "\tlocation: "   <<  (particle.location ? *(particle.location) : QVector3D(-1.0, -1.0, -1.0))
-//           << "\tsprings: "    <<  particle.springs
-//           << "]";
-//    return stream;
-//}
+QDebug operator<<(QDebug stream, const FreeParticle &particle)
+{
+    stream << &endl
+           << "\tFreeParticle ["
+           << "  id: "         <<  particle.id
+           << "\tlocation: "   <<  (particle.location ? *(particle.location) : QVector3D(-1.0, -1.0, -1.0))
+           << "\tsprings: "    <<  particle.springs
+           << "]";
+    return stream;
+}
 
 QDebug FreeParticle::doPrint(QDebug stream) const {
     //    return operator<<(stream, this);
