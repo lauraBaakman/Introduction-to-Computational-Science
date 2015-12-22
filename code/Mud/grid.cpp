@@ -67,10 +67,8 @@ void Grid::clear()
     this->particleLocations.clear();
     this->springs.clear();
 
-    //Call the clear function
-    //    FreeParticle::clear();
-    //    FixedParticle::clear();
-
+    FreeParticle::clear();
+    FixedParticle::clear();
     Spring::clear();
 }
 
@@ -153,9 +151,6 @@ void Grid::variableSquareGrid()
     addSpring(Spring(a, c));
     addSpring(Spring(a, b));
     addSpring(Spring(b, c));
-
-    qDebug() << *this;
-    qDebug() << this;
 }
 
 void Grid::uniformHexagonalGrid()

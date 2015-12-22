@@ -8,7 +8,6 @@ FreeParticle::FreeParticle(QVector3D* location):
     id = nextIdP++;
 }
 
-
 FreeParticle::~FreeParticle(){
     //destructor body
     qDebug() << "FreeParticle destructor";
