@@ -8,11 +8,11 @@ Grid::Grid(QObject *parent) : QObject(parent)
 
 Grid::~Grid()
 {
-     qDebug() << "Destructor Grid";
+    qDebug() << "Destructor Grid";
 
-//     delete &particleLocations;
-//     delete particles;
-//     delete springs;
+    //     delete &particleLocations;
+    //     delete particles;
+    //     delete springs;
 }
 
 void Grid::gridFactory(Settings settings)
@@ -68,8 +68,8 @@ void Grid::clear()
     this->springs.clear();
 
     //Call the clear function
-//    FreeParticle::clear();
-//    FixedParticle::clear();
+    //    FreeParticle::clear();
+    //    FixedParticle::clear();
 
     Spring::clear();
 }
@@ -83,18 +83,17 @@ void Grid::reserve(int numParticles, int numSprings)
 
 Particle* Grid::addFreeParticle(QVector3D location)
 {
-    //TODO: Fix
-    qDebug() << "Implement: add a free particle with location" << location;
-//    return addParticle(new FreeParticle(&location));
+    return addParticle(new FreeParticle(&location));
 }
 
-Particle* Grid::addParticle(Particle *particle)
+Particle* Grid::addParticle(Particle* particle)
 {
     this->particleLocations.append(*(particle->getLocation()));
     QVector3D *locationPtr = &(this->particleLocations.last());
+
+    //Swap the old location pointer for the new
     particle->setLocation(locationPtr);
 
-    //TODO: Delete particle to avoid memory leaks?
     this->particles.append(particle);
     return this->particles.last();
 }
@@ -147,15 +146,15 @@ void Grid::variableSquareGrid()
     clear();
     reserve(3, 3);
 
-    // TODO: Fix the new -> possible memory leaks...
-    FixedParticle* a = new FixedParticle(new QVector3D(0.0, 1.0, 0.0));
-//    Particle *a = addParticle(new FixedParticle(new QVector3D(0.0, 1.0, 0.0)));
+    Particle *a = addParticle(new FixedParticle(new QVector3D(0.0, 1.0, 0.0)));
     Particle *b = addFreeParticle(QVector3D(1.0, 0.0, 0.0));
     Particle *c = addFreeParticle(QVector3D(0.0, 0.0, 0.0));
 
-//    addSpring(Spring(a, c));
-//    addSpring(Spring(a, b));
+    addSpring(Spring(a, c));
+    addSpring(Spring(a, b));
     addSpring(Spring(b, c));
+
+    qDebug() << *this;
 }
 
 void Grid::uniformHexagonalGrid()
@@ -171,10 +170,10 @@ void Grid::variableHexagonalGrid()
 QDebug operator<<(QDebug stream, const Grid &grid)
 {
     stream << "Grid ["
-//           << "particles: "             << grid.particles           << &endl
-           << "particle locations: "    << &endl
-           << "\t"                      << grid.particleLocations   << &endl
-           << "springs: "               << grid.springs             << &endl
+           << "particles: "                 << grid.particles           << &endl
+           << "\tparticle locations: "                                  << &endl
+           << "\t"                          << grid.particleLocations   << &endl
+           << "\tsprings: "                 << grid.springs             << &endl
            << "]" << &endl;
     return stream;
 }
