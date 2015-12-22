@@ -49,3 +49,8 @@ QDebug operator<<(QDebug stream, const Spring &spring)
            << "]";
     return stream;
 }
+
+QDebug operator<<(QDebug stream, Spring* spring){
+    stream << *spring;
+    return stream;
+}

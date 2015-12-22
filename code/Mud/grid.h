@@ -39,6 +39,7 @@ public:
     int numFreeParticles();
 
     friend QDebug operator<<(QDebug stream, const Grid &grid);
+    friend QDebug operator<<(QDebug stream, Grid *grid);
 
     QVector<Spring> getSprings() const;
     Spring getSpring(int index) const;

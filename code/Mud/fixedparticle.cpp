@@ -23,10 +23,15 @@ QDebug operator<<(QDebug stream, const FixedParticle &particle)
     return stream;
 }
 
+QDebug operator<<(QDebug stream, FixedParticle *particle){
+    stream << *particle;
+    return stream;
+}
+
 void FixedParticle::doPrint(QDebug stream) const{
     stream  << "\tFixedParticle[";
     Particle::doPrint(stream);
-    stream << "]";
+    stream << "]" << &endl;
 }
 
 

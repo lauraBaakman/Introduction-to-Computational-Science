@@ -155,6 +155,7 @@ void Grid::variableSquareGrid()
     addSpring(Spring(b, c));
 
     qDebug() << *this;
+    qDebug() << this;
 }
 
 void Grid::uniformHexagonalGrid()
@@ -175,5 +176,11 @@ QDebug operator<<(QDebug stream, const Grid &grid)
            << "\t"                          << grid.particleLocations   << &endl
            << "\tsprings: "                 << grid.springs             << &endl
            << "]" << &endl;
+    return stream;
+}
+
+QDebug operator<<(QDebug stream, Grid *grid)
+{
+    stream << *grid;
     return stream;
 }

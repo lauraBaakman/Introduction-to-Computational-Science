@@ -10,6 +10,7 @@ public:
     ~FreeParticle();
 
     friend QDebug operator<<(QDebug stream, const FreeParticle &particle);
+    friend QDebug operator<<(QDebug stream, FreeParticle *particle);
 
     static void clear();
 

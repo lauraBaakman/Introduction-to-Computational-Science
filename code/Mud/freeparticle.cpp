@@ -25,6 +25,11 @@ QDebug operator<<(QDebug stream, const FreeParticle &particle)
     return stream;
 }
 
+QDebug operator <<(QDebug stream, FreeParticle* particle){
+    stream << *particle;
+    return stream;
+}
+
 void FreeParticle::doPrint(QDebug stream) const {
     stream  << "\tFreeParticle[";
     Particle::doPrint(stream);
