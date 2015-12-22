@@ -67,8 +67,9 @@ void Grid::clear()
     this->particleLocations.clear();
     this->springs.clear();
 
-    FreeParticle::clear();
-    FixedParticle::clear();
+    //Call the clear function
+//    FreeParticle::clear();
+//    FixedParticle::clear();
 
     Spring::clear();
 }
@@ -82,7 +83,9 @@ void Grid::reserve(int numParticles, int numSprings)
 
 Particle* Grid::addFreeParticle(QVector3D location)
 {
-    return addParticle(new FreeParticle(&location));
+    //TODO: Fix
+    qDebug() << "Implement: add a free particle with location" << location;
+//    return addParticle(new FreeParticle(&location));
 }
 
 Particle* Grid::addParticle(Particle *particle)
@@ -91,7 +94,7 @@ Particle* Grid::addParticle(Particle *particle)
     QVector3D *locationPtr = &(this->particleLocations.last());
     particle->setLocation(locationPtr);
 
-    //TODO: Delete particle?
+    //TODO: Delete particle to avoid memory leaks?
     this->particles.append(particle);
     return this->particles.last();
 }
@@ -145,12 +148,15 @@ void Grid::variableSquareGrid()
     reserve(3, 3);
 
     // TODO: Fix the new -> possible memory leaks...
-    Particle *a = addParticle(new FixedParticle(new QVector3D(0.0, 1.0, 0.0)));
+    FixedParticle* a = new FixedParticle(new QVector3D(0.0, 1.0, 0.0));
+    qDebug() << *a;
+    exit(-1);
+//    Particle *a = addParticle(new FixedParticle(new QVector3D(0.0, 1.0, 0.0)));
     Particle *b = addFreeParticle(QVector3D(1.0, 0.0, 0.0));
     Particle *c = addFreeParticle(QVector3D(0.0, 0.0, 0.0));
 
-    addSpring(Spring(a, c));
-    addSpring(Spring(a, b));
+//    addSpring(Spring(a, c));
+//    addSpring(Spring(a, b));
     addSpring(Spring(b, c));
 }
 

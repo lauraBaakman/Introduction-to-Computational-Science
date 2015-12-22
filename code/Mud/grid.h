@@ -6,6 +6,8 @@
 
 #include "freeparticle.h"
 #include "fixedparticle.h"
+#include "particle.h"
+
 #include "spring.h"
 
 class Grid : public QObject

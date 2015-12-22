@@ -26,9 +26,9 @@ QDebug operator<<(QDebug stream, const Particle &particle)
 }
 
 QDebug FreeParticle::doPrint(QDebug stream) const {
-//    return operator<<(stream, this);
+    //    return operator<<(stream, this);
     //TODO: actually print the particle
-   return stream << "freeParticle";
+    return stream << "freeParticle";
 }
 
 
