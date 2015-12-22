@@ -29,6 +29,11 @@ void Particle::clear()
     Particle::nextId = 0;
 }
 
+int Particle::getId() const
+{
+    return id;
+}
+
 bool Particle::isFixed() const
 {
     return fixed;
@@ -39,9 +44,9 @@ QDebug operator<<(QDebug stream, const Particle &particle)
     stream << &endl
            << "\tParticle ["
            << "  id: "         <<  particle.id
+           << "\tfixed: "      <<  particle.isFixed()
            << "\tlocation: "   <<  (particle.location ? *(particle.location) : QVector3D(-1.0, -1.0, -1.0))
            << "\tsprings: "    <<  particle.springs
-           << "\tfixed: "      <<  particle.isFixed()
            << "]";
     return stream;
 }

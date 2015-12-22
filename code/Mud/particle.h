@@ -14,24 +14,25 @@ class Particle
 public:
     Particle(QVector3D *location = nullptr, bool fixed = false);
 
-    void addSpring(Spring *const spring);
+    int getId() const;
+
+    QVector3D *getLocation() const;
+    void setLocation(QVector3D *value);
+
     bool isFixed() const;
+
+    void addSpring(Spring *const spring);
 
     friend QDebug operator<<(QDebug stream, const Particle &particle);
 
-    QVector3D *getLocation() const;
-
-    void setLocation(QVector3D *value);
-
     static void clear();
-
-    int id;
 
 private:
     QVector3D *location;
     // Force?
     QVector<Spring*> springs;
     bool fixed;
+    int id;
 
     static int nextId;
 };
