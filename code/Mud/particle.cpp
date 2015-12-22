@@ -45,3 +45,8 @@ QDebug operator<<(QDebug stream, const Particle &particle){
     particle.doPrint(stream);
     return stream;
 }
+
+QDebug operator<<(QDebug stream, Particle *particle){
+    particle->doPrint(stream);
+    return stream;
+}

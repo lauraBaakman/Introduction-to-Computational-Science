@@ -26,6 +26,7 @@ public:
     virtual ~Particle();
 
     friend QDebug operator<<(QDebug stream, const Particle &particle);
+    friend QDebug operator<<(QDebug stream, Particle* particle);
 
     virtual void doPrint(QDebug stream) const;
 
