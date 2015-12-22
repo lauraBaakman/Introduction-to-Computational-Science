@@ -22,7 +22,7 @@ public:
     float getSpringConstant() const;
 
     int getId() const;
-    void clear();
+    static void clear();
 
 private:
     float springConstant;
