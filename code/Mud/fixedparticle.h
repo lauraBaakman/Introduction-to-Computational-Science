@@ -6,7 +6,14 @@
 class FixedParticle : public Particle
 {
 public:
-    FixedParticle();
+    FixedParticle(QVector3D* location);
+
+    friend QDebug operator<<(QDebug stream, const FixedParticle &particle);
+
+    static void clear();
+
+private:
+    static int nextId;
 };
 
 #endif // FIXEDPARTICLE_H

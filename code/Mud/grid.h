@@ -4,7 +4,8 @@
 #include <QVector>
 #include <QObject>
 
-#include "particle.h"
+#include "freeparticle.h"
+#include "fixedparticle.h"
 #include "spring.h"
 
 class Grid : public QObject
@@ -52,7 +53,7 @@ private:
     void clear();
     void reserve(int numParticles, int numSprings);
 
-    Particle* addParticle(QVector3D location);
+    Particle* addFreeParticle(QVector3D location);
     Particle* addParticle(Particle particle);
 
     void addSpring(Spring spring);

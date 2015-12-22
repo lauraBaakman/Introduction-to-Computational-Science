@@ -13,6 +13,8 @@ QMAKE_CXXFLAGS += -Wunused-parameter
 QMAKE_CXXFLAGS += -Wunused-variable
 
 QMAKE_LFLAGS += -std=c++11 -stdlib=libc++ -mmacosx-version-min=10.10
+QMAKE_LFLAGS += -Wunused-variable
+QMAKE_LFLAGS += -Wunused-parameter
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -28,7 +30,9 @@ SOURCES += main.cpp\
     gridcontroller.cpp \
     particle.cpp \
     spring.cpp \
-    gridsolver.cpp
+    gridsolver.cpp \
+    fixedparticle.cpp \
+    freeparticle.cpp
 
 HEADERS  += mainwindow.h \
     main.ih \
@@ -38,7 +42,9 @@ HEADERS  += mainwindow.h \
     gridcontroller.h \
     particle.h \
     spring.h \
-    gridsolver.h
+    gridsolver.h \
+    fixedparticle.h \
+    freeparticle.h
 
 FORMS  += mainwindow.ui \
         sidebar.ui
