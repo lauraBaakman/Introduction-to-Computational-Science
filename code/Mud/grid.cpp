@@ -61,6 +61,7 @@ void Grid::clear()
     this->particles.clear();
     this->particleLocations.clear();
     this->springs.clear();
+    Particle::clear();
 }
 
 void Grid::reserve(int numParticles, int numSprings)
