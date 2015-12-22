@@ -27,12 +27,14 @@ public:
 
 //    friend QDebug operator<<(QDebug stream, const Particle &particle);
 
+    virtual QDebug doPrint(QDebug stream) const;
+
 protected:
     QVector3D *location;
     QVector<Spring*> springs;
     int id;
 
 private:
-    virtual QDebug doPrint(QDebug stream) const = 0;
+
 };
 #endif // PARTICLE_H
