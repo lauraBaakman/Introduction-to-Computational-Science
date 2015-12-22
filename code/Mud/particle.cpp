@@ -29,6 +29,11 @@ void Particle::clear()
     Particle::nextId = 0;
 }
 
+QVector<Spring *> Particle::getSprings() const
+{
+    return springs;
+}
+
 int Particle::getId() const
 {
     return id;

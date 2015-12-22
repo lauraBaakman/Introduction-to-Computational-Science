@@ -56,6 +56,11 @@ Spring Grid::getSpring(int index) const
     return springs.at(index);
 }
 
+QVector<Particle> Grid::getParticles() const
+{
+    return particles;
+}
+
 void Grid::clear()
 {
     this->particles.clear();

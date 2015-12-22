@@ -27,6 +27,8 @@ public:
 
     static void clear();
 
+    QVector<Spring *> getSprings() const;
+
 private:
     QVector3D *location;
     // Force?

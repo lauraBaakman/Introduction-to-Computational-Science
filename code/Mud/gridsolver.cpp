@@ -7,7 +7,12 @@ GridSolver::GridSolver(Grid *grid, QObject *parent) :
     adjacencyMatrix(grid->numSprings(), grid->numFreeParticles())
 {
     qDebug() << "GridSolver constructor";
+
+    qDebug() << grid->numSprings();
+    qDebug() << grid->numFreeParticles();
+
     buildSpringConstantMatrix();
+    buildAdjacencyMatrix();
 }
 
 
@@ -24,13 +29,17 @@ void GridSolver::buildSpringConstantMatrix()
 
 void GridSolver::buildAdjacencyMatrix()
 {
-    for(const Particle &particle : grid->getParticles())
-    {
-        for(const Spring &spring : particle->getFreeSprings())
-        {
-
-        }
-    }
+//    for(const Particle &particle : grid->getParticles())
+//    {
+//        if(!particle.isFixed()) {
+//            for(const Spring *spring : particle.getSprings())
+//            {
+//                qDebug() << spring->getId() << " " << particle.getId();
+//                adjacencyMatrix(spring->getId(), particle.getId()) = 1.0;
+//            }
+//        }
+//    }
+//    std::cout << adjacencyMatrix;
 }
 
 

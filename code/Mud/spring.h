@@ -21,6 +21,7 @@ public:
 
     float getSpringConstant() const;
 
+
     int getId() const;
     static void clear();
 
