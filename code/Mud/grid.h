@@ -42,10 +42,10 @@ public:
     QVector<Spring> getSprings() const;
     Spring getSpring(int index) const;
 
-    QVector<Particle> getParticles() const;
+    QVector<Particle *> getParticles() const;
 
 private:
-    QVector<Particle> particles;
+    QVector<Particle *> particles;
     QVector<QVector3D> particleLocations;
 
     QVector<Spring> springs;
@@ -54,7 +54,7 @@ private:
     void reserve(int numParticles, int numSprings);
 
     Particle* addFreeParticle(QVector3D location);
-    Particle* addParticle(Particle particle);
+    Particle* addParticle(Particle *particle);
 
     void addSpring(Spring spring);
 

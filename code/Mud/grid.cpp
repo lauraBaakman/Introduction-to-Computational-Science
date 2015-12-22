@@ -36,9 +36,9 @@ int Grid::numSprings()
 int Grid::numFreeParticles()
 { // TODO: Make it a property and build it on initialisation.
     int count = 0;
-    for(const Particle &particle : this->particles)
+    for(const Particle *particle : this->particles)
     {
-        if(!particle.isFixed())
+        if(!particle->isFixed())
         {
             count++;
         }
@@ -56,7 +56,7 @@ Spring Grid::getSpring(int index) const
     return springs.at(index);
 }
 
-QVector<Particle> Grid::getParticles() const
+QVector<Particle *> Grid::getParticles() const
 {
     return particles;
 }
@@ -82,17 +82,19 @@ void Grid::reserve(int numParticles, int numSprings)
 
 Particle* Grid::addFreeParticle(QVector3D location)
 {
-    return addParticle(FreeParticle(&location));
+    return addParticle(new FreeParticle(&location));
 }
 
-Particle* Grid::addParticle(Particle particle)
+Particle* Grid::addParticle(Particle *particle)
 {
-    this->particleLocations.append(*(particle.getLocation()));
+    this->particleLocations.append(*(particle->getLocation()));
     QVector3D *locationPtr = &(this->particleLocations.last());
-    particle.setLocation(locationPtr);
+    particle->setLocation(locationPtr);
 
+
+    //TODO: Delete particle?
     this->particles.append(particle);
-    return &(this->particles.last());
+    return this->particles.last();
 }
 
 void Grid::addSpring(Spring spring)
@@ -144,7 +146,7 @@ void Grid::variableSquareGrid()
     reserve(3, 3);
 
     // TODO: Fix the new -> possible memory leaks...
-    Particle *a = addParticle(FixedParticle(new QVector3D(0.0, 1.0, 0.0)));
+    Particle *a = addParticle(new FixedParticle(new QVector3D(0.0, 1.0, 0.0)));
     Particle *b = addFreeParticle(QVector3D(1.0, 0.0, 0.0));
     Particle *c = addFreeParticle(QVector3D(0.0, 0.0, 0.0));
 

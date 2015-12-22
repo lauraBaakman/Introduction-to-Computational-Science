@@ -6,6 +6,10 @@ Particle::Particle(QVector3D *location) :
     //constructor body
 }
 
+Particle::~Particle(){
+    qDebug() << "Particle deconstructor";
+}
+
 void Particle::addSpring(Spring *const spring)
 {
     springs.append(spring);
