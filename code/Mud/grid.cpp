@@ -28,6 +28,16 @@ void Grid::gridFactory(Settings settings)
     }
 }
 
+int Grid::numSprings()
+{
+    return 4;
+}
+
+int Grid::numFreeParticles()
+{
+    return 3;
+}
+
 void Grid::selectGridCreator(Settings settings, gridCreator uniform, gridCreator variable)
 {
     switch(settings.typeDistribution)

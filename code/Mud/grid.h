@@ -33,6 +33,9 @@ public:
 
     void gridFactory(Settings settings);
 
+    int numSprings();
+    int numFreeParticles();
+
     friend QDebug operator<<(QDebug stream, const Grid &grid);
 
 private:
