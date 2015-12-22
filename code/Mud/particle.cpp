@@ -1,9 +1,7 @@
 #include "particle.h"
 
-int Particle::nextId = 0;
-
 Particle::Particle(QVector3D *location) :
-    location(location),
+    location(location)
 {
     //constructor body
 }
@@ -16,6 +14,10 @@ void Particle::addSpring(Spring *const spring)
 QVector3D *Particle::getLocation() const
 {
     return location;
+}
+
+QDebug operator<<(QDebug stream, const Particle &particle){
+    return particle.doPrint(stream);
 }
 
 void Particle::setLocation(QVector3D *value)

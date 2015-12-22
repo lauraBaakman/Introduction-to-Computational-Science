@@ -8,6 +8,12 @@ FreeParticle::FreeParticle(QVector3D* location):
     id = nextId++;
 }
 
+
+FreeParticle::~FreeParticle(){
+    //destructor body
+    qDebug() << "FreeParticle destructor";
+}
+
 QDebug operator<<(QDebug stream, const Particle &particle)
 {
     stream << &endl
@@ -19,7 +25,14 @@ QDebug operator<<(QDebug stream, const Particle &particle)
     return stream;
 }
 
-bool FreeParticle::isFixed(){
+QDebug FreeParticle::doPrint(QDebug stream) const {
+//    return operator<<(stream, this);
+    //TODO: actually print the particle
+   return stream << "freeParticle";
+}
+
+
+bool FreeParticle::isFixed() const{
     return false;
 }
 

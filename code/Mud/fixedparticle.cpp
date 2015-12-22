@@ -8,6 +8,10 @@ FixedParticle::FixedParticle(QVector3D* location):
     id = nextId++;
 }
 
+FixedParticle::~FixedParticle(){
+    qDebug() << "FixedParticle destructor";
+}
+
 QDebug operator<<(QDebug stream, const FixedParticle &particle)
 {
     stream << &endl
@@ -19,7 +23,13 @@ QDebug operator<<(QDebug stream, const FixedParticle &particle)
     return stream;
 }
 
-bool FixedParticle::isFixed(){
+QDebug FixedParticle::doPrint(QDebug stream) const {
+    //    return operator<<(stream, this);
+        //TODO: actually print the particle
+    return stream << "fixedParticle";
+}
+
+bool FixedParticle::isFixed() const{
     return true;
 }
 

@@ -12,22 +12,26 @@ class Spring;
 class Particle
 {
 public:
-    Particle(QVector3D *location = nullptr, bool fixed = false);
+    Particle(QVector3D *location = nullptr);
 
     int getId() const;
 
     QVector3D *getLocation() const;
     void setLocation(QVector3D *value);
 
-    virtual bool isFixed() const;
-
     void addSpring(Spring *const spring);
-
     QVector<Spring *> getSprings() const;
+
+    virtual bool isFixed() const = 0;
+
+    friend QDebug operator<<(QDebug stream, const Particle &particle);
 
 protected:
     QVector3D *location;
     QVector<Spring*> springs;
     int id;
+
+private:
+    virtual QDebug doPrint(QDebug stream) const;
 };
 #endif // PARTICLE_H
