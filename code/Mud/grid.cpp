@@ -91,7 +91,6 @@ Particle* Grid::addParticle(Particle *particle)
     QVector3D *locationPtr = &(this->particleLocations.last());
     particle->setLocation(locationPtr);
 
-
     //TODO: Delete particle?
     this->particles.append(particle);
     return this->particles.last();

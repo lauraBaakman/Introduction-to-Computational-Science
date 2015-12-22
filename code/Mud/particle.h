@@ -33,6 +33,6 @@ protected:
     int id;
 
 private:
-    virtual QDebug doPrint(QDebug stream) const;
+    virtual QDebug doPrint(QDebug stream) const = 0;
 };
 #endif // PARTICLE_H
