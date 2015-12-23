@@ -46,8 +46,11 @@ public:
 
     QVector<Particle *> getParticles() const;
 
+    QVector<FreeParticle *> getFreeParticles() const;
+
 private:
     QVector<Particle *> particles;
+    QVector<FreeParticle *> freeParticles;
     QVector<QVector3D> particleLocations;
 
     QVector<Spring> springs;

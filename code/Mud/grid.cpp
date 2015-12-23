@@ -33,16 +33,8 @@ int Grid::numSprings()
 }
 
 int Grid::numFreeParticles()
-{ // TODO: Make it a property and build it on initialisation.
-    int count = 0;
-    for(const Particle *particle : this->particles)
-    {
-        if(!particle->isFixed())
-        {
-            count++;
-        }
-    }
-    return count;
+{
+    return freeParticles.size();
 }
 
 QVector<Spring> Grid::getSprings() const
@@ -65,6 +57,7 @@ void Grid::clear()
     this->particles.clear();
     this->particleLocations.clear();
     this->springs.clear();
+    this->freeParticles.clear();
 
     FreeParticle::clear();
     FixedParticle::clear();
@@ -76,6 +69,7 @@ void Grid::reserve(int numParticles, int numSprings)
     this->particles.reserve(numParticles);
     this->particleLocations.reserve(numParticles);
     this->springs.reserve(numSprings);
+    this->freeParticles.reserve(numParticles);
 }
 
 Particle* Grid::addParticle(QVector3D location, Particle* particle)
@@ -83,14 +77,18 @@ Particle* Grid::addParticle(QVector3D location, Particle* particle)
     QVector3D* locationPtr = this->addParticleLocation(location);
     particle->setLocation(locationPtr);
 
-    this->particles.append(particle);
-    return particle;
+    return addParticle(particle);
 }
 
 //Assumes that the particle location is already in the list of particle locations!
+
+//TODO use overloaded method!
 Particle *Grid::addParticle(Particle *particle)
 {
     this->particles.append(particle);
+    if(!particle->isFixed()){
+        freeParticles.append(dynamic_cast<FreeParticle*>(particle));
+    }
     return particle;
 }
 
