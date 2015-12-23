@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>shaders/mudfrag.glsl</file>
+        <file>shaders/mudvert.glsl</file>
+    </qresource>
+</RCC>

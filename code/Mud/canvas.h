@@ -32,6 +32,9 @@ private:
     QOpenGLVertexArrayObject gridArrayObject;
     void initializeBuffers();
     void updateBuffers(QVector<QVector3D> locations);
+
+    void drawParticles();
+    bool isAllocated(QOpenGLBuffer *buffer);
 };
 
 #endif // CANVAS_H

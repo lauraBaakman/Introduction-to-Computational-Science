@@ -5,11 +5,17 @@ Canvas::Canvas(QWidget *parent) :
     QOpenGLWidget(parent)
 {
     qDebug() << "Constructor Canvas";
+
 }
 
 Canvas::~Canvas()
 {
     qDebug() << "Destructor Canvas";
+
+    delete this->shaderProgram;
+    delete this->particlesBufferObject;
+
+    this->gridArrayObject.destroy();
 }
 
 void Canvas::initializeGL()
@@ -26,8 +32,8 @@ void Canvas::initializeGL()
 void Canvas::initializeShaders()
 {
     this->shaderProgram = new QOpenGLShaderProgram();
-    this->shaderProgram->addShaderFromSourceFile(QOpenGLShader::Vertex, "shaders/mudvert.glsl");
-    this->shaderProgram->addShaderFromSourceFile(QOpenGLShader::Fragment, "shaders/mudfrag.glsl");
+    this->shaderProgram->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/shaders/mudvert.glsl");
+    this->shaderProgram->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/shaders/mudfrag.glsl");
     this->shaderProgram->link();
 }
 
@@ -39,6 +45,11 @@ void Canvas::initializeBuffers()
     this->particlesBufferObject = new QOpenGLBuffer(QOpenGLBuffer::VertexBuffer);
     this->particlesBufferObject->create();
     this->particlesBufferObject->bind();
+
+//    QVector<QVector3D> temp;
+//    temp.append(QVector3D(0.0, 0.0, 0.0));
+
+//    this->particlesBufferObject->allocate(temp.data(), temp.size() * sizeof(temp[0]));
 
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
@@ -57,14 +68,26 @@ void Canvas::paintGL()
 {
     glClear(GL_COLOR_BUFFER_BIT);
 
-    this->shaderProgram->bind();
+    if (isAllocated(this->particlesBufferObject)) {
+        this->shaderProgram->bind();
+        drawParticles();
+        this->shaderProgram->release();
+    }
+}
+
+bool Canvas::isAllocated(QOpenGLBuffer *buffer)
+{
+    return buffer->size() != 0;
+}
+
+void Canvas::drawParticles()
+{
     this->gridArrayObject.bind();
 
-    glPointSize(3.0f);
+    glPointSize(10.0f);
     glDrawArrays(GL_POINTS, 0, 3);
 
     this->gridArrayObject.release();
-    this->shaderProgram->release();
 }
 
 void Canvas::build(Grid *grid)

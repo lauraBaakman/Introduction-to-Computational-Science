@@ -1,7 +1,8 @@
-varying vec3 position;
+#version 410
+in vec3 position;
 
-void main(void)
+void main()
 {
-    gl_Position = position;
+    gl_Position = vec4(position, 1.0);
 }
 
