@@ -27,7 +27,7 @@ float Spring::getSpringConstant() const
     return springConstant;
 }
 
-Particle *Spring::getOtherParticle(Particle *particle) const
+const Particle *Spring::getOtherParticle(const Particle *particle) const
 {
     if(particleA == particle) return particleB;
     if(particleB == particle) return particleA;
