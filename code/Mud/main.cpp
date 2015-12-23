@@ -39,11 +39,7 @@ int main(int argc, char *argv[])
 
     w.show();
 
-    int quitValue = a.exec();
-
-    delete grid;
-
-    return quitValue;
+    return a.exec()
 }
 
 void setOpenGLVersion(int const majorVersion, int const minorVersion)
