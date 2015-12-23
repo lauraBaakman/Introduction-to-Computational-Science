@@ -22,6 +22,7 @@ public:
 
     float getSpringConstant() const;
 
+    Particle *getOtherParticle(Particle* particle) const;
 
     int getId() const;
     static void clear();

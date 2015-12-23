@@ -27,6 +27,13 @@ float Spring::getSpringConstant() const
     return springConstant;
 }
 
+Particle *Spring::getOtherParticle(Particle *particle) const
+{
+    if(particleA == particle) return particleB;
+    if(particleB == particle) return particleA;
+    return particle;
+}
+
 void Spring::clear()
 {
     Spring::nextId = 0;
