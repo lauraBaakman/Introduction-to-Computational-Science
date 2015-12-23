@@ -9,10 +9,7 @@ Grid::Grid(QObject *parent) : QObject(parent)
 Grid::~Grid()
 {
     qDebug() << "Destructor Grid";
-
-    //     delete &particleLocations;
-    //     delete particles;
-    //     delete springs;
+    clear();
 }
 
 void Grid::gridFactory(Settings settings)
