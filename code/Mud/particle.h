@@ -13,7 +13,7 @@ class Particle
 {
 public:
     Particle(QVector3D *location = nullptr);
-    ~Particle();
+    virtual ~Particle();
 
     int getId() const;
 
