@@ -9,10 +9,12 @@ QT       += core gui
 
 QMAKE_CXXFLAGS += -std=c++11 -stdlib=libc++ -mmacosx-version-min=10.10
 QMAKE_CXXFLAGS += -O2
+QMAKE_CXXFLAGS += -Wno-unused-parameter
+QMAKE_CXXFLAGS += -Wno-unused-variable
+QMAKE_CXXFLAGS += -isystem /usr/local/include
+
 
 QMAKE_LFLAGS += -std=c++11 -stdlib=libc++ -mmacosx-version-min=10.10
-QMAKE_LFLAGS += -Wno-unused-parameter
-QMAKE_LFLAGS += -Wno-unused-parameter
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -49,5 +51,5 @@ FORMS  += mainwindow.ui \
 
 macx: LIBS += -L/usr/local/lib/ -larmadillo.6.40.3
 
-INCLUDEPATH += /usr/local/include
+#INCLUDEPATH += /usr/local/include
 DEPENDPATH += /usr/local/include
