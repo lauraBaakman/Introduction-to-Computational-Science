@@ -9,6 +9,7 @@ Canvas::Canvas(QWidget *parent) :
     qDebug() << "Constructor Canvas";
 
     this->zoomFactor = 1.0;
+    this->rotateFactor = 1.0;
     this->mvpMatrix.setToIdentity();
 
     grabGesture(Qt::PinchGesture);
@@ -88,6 +89,7 @@ void Canvas::setUniformValues()
 //    mvpMatrix.scale(1.0);
 //    mvpMatrix.translate(0.0, 0.0, 0.0);
     mvpMatrix.scale(this->zoomFactor);
+    mvpMatrix.rotate(0.0,this->rotateFactor, 0.0);
 
     this->shaderProgram->setUniformValue("mvpMatrix", mvpMatrix);
 }
@@ -105,12 +107,6 @@ void Canvas::drawParticles()
     glDrawArrays(GL_POINTS, 0, 3);
 
     this->gridArrayObject.release();
-}
-
-void Canvas::zoom(float factor)
-{
-    this->zoomFactor = this->zoomFactor * factor;
-    update();
 }
 
 void Canvas::build(Grid *grid)
@@ -146,20 +142,15 @@ void Canvas::pinchTriggered(QPinchGesture *gesture)
     QPinchGesture::ChangeFlags changeFlags = gesture->changeFlags();
     if(changeFlags & QPinchGesture::RotationAngleChanged) {
         qDebug() << "Rotate!";
+        qDebug() << gesture->lastRotationAngle();
+        qDebug() << gesture->rotationAngle();
+        qDebug() << gesture->rotationAngle() - gesture->lastRotationAngle();
     }
     if(changeFlags * QPinchGesture::ScaleFactorChanged) {
-        qDebug() << "Scale!";
+        this->zoomFactor = gesture->scaleFactor();
     }
-
-}
-
-void Canvas::wheelEvent(QWheelEvent *event)
-{
-    float delta = event->pixelDelta().y();
-
-    if(delta > 0) {
-        zoom(1.1);
-    } else if(delta != 0) {
-        zoom(0.9);
-    }
+    if (gesture->state() == Qt::GestureFinished) {
+        qDebug() << "Never happens...";
+   }
+    update();
 }

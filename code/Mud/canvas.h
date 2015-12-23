@@ -26,7 +26,6 @@ protected:
     void paintGL() Q_DECL_OVERRIDE;
 
     bool event(QEvent *event) Q_DECL_OVERRIDE;
-    void wheelEvent(QWheelEvent *event)  Q_DECL_OVERRIDE;
 
 private:
     QOpenGLShaderProgram *shaderProgram;
@@ -39,8 +38,8 @@ private:
 
     QMatrix4x4 mvpMatrix;
     float zoomFactor;
+    float rotateFactor;
 
-    void zoom(float factor);
     void setUniformValues();
     void drawParticles();
     bool isAllocated(QOpenGLBuffer *buffer);
