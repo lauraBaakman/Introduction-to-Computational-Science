@@ -24,8 +24,8 @@ private:
     void buildAdjacencyMatrix();
 
     arma::SpMat<float> computeLHS();
-    arma::SpMat<float> computeRHSx();
-    arma::SpMat<float> computeRHSy();
+    arma::Col<float> computeRHSx();
+    arma::Col<float> computeRHSy();
 
 signals:
 
