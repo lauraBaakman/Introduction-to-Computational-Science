@@ -26,6 +26,10 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
+
+    delete grid;
+    delete gridSolver;
+    delete gridController;
 }
 
 Ui::MainWindow *MainWindow::getUi() const
