@@ -8,6 +8,15 @@ FreeParticle::FreeParticle(QVector3D* location):
     id = nextIdP++;
 }
 
+//Copy constructor
+FreeParticle::FreeParticle(QVector3D *location, FreeParticle inputParticle):
+    Particle(location)
+{
+    //Constructor body
+    id = inputParticle.id;
+    springs = inputParticle.springs;
+}
+
 FreeParticle::~FreeParticle(){
     //destructor body
     qDebug() << "FreeParticle destructor";
@@ -30,7 +39,7 @@ QDebug operator <<(QDebug stream, FreeParticle* particle){
 }
 
 void FreeParticle::doPrint(QDebug stream) const {
-    stream  << "\tFreeParticle[";
+    stream  << &endl << "\tFreeParticle [";
     Particle::doPrint(stream);
     stream << "]";
 }

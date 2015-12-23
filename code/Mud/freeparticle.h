@@ -6,7 +6,8 @@
 class FreeParticle : public Particle
 {
 public:
-    FreeParticle(QVector3D* location);
+    FreeParticle(QVector3D* location = nullptr);
+    FreeParticle(QVector3D *location, FreeParticle particle);
     ~FreeParticle();
 
     friend QDebug operator<<(QDebug stream, const FreeParticle &particle);

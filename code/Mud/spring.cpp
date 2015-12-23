@@ -51,6 +51,6 @@ QDebug operator<<(QDebug stream, const Spring &spring)
 }
 
 QDebug operator<<(QDebug stream, Spring* spring){
-    stream << *spring;
+    stream << spring->id;
     return stream;
 }
