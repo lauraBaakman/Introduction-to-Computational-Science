@@ -116,6 +116,10 @@ void Canvas::build(Grid *grid)
     {
         locations.append(*(particle.getLocation()));
     }
+    // Todo: remove magic.
+    this->zoomingFactor = 1.0;
+    this->rotationAngle = 1.0;
+    this->mvpMatrix.setToIdentity();
     updateBuffers(locations);
 }
 
@@ -141,7 +145,7 @@ void Canvas::pinchTriggered(QPinchGesture *gesture)
     if(changeFlags & QPinchGesture::RotationAngleChanged) {
         this->rotationAngle = -1.0 * gesture->rotationAngle();
     }
-    if(changeFlags * QPinchGesture::ScaleFactorChanged) {
+    if(changeFlags & QPinchGesture::ScaleFactorChanged) {
         this->zoomingFactor = gesture->scaleFactor();
     }
     if (gesture->state() == Qt::GestureFinished) {
