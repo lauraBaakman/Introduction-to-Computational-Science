@@ -43,10 +43,8 @@ void GridSolver::buildAdjacencyMatrix()
 arma::SpMat<float> GridSolver::computeLHS()
 {
     arma::SpMat<float> lhs = arma::SpMat<float>(grid->numSprings(), grid->numFreeParticles());
-    std::cout << lhs;
-
-//    lhs = adjacencyMatrix.t() * springConstantsMatrix * adjacencyMatrix;
-//    diagVec(lhs) * -1;
+    lhs = adjacencyMatrix.t() * springConstantsMatrix * adjacencyMatrix;
+    lhs.diag() *= -1;
     return lhs;
 }
 
