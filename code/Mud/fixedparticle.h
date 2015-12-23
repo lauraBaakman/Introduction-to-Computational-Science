@@ -6,7 +6,7 @@
 class FixedParticle : public Particle
 {
 public:
-    FixedParticle(QVector3D* location);
+    FixedParticle(QVector3D* location = nullptr);
 
     ~FixedParticle();
 

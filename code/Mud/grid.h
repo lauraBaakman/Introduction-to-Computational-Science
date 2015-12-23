@@ -55,9 +55,10 @@ private:
     void clear();
     void reserve(int numParticles, int numSprings);
 
-    Particle* addFreeParticle(QVector3D location);
-    Particle* addParticle(Particle *particle);
-    Particle* addParticle(QVector3D location, FreeParticle particle);
+    Particle* addParticle(QVector3D location, Particle* particle);
+    Particle* addParticle(Particle* particle);
+
+    QVector3D* addParticleLocation(QVector3D location);
 
     void addSpring(Spring spring);
 
