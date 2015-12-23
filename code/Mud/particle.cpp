@@ -1,12 +1,13 @@
 #include "particle.h"
 
-int Particle::nextId = 0;
-
-Particle::Particle(QVector3D *location, bool fixed) :
-    location(location),
-    fixed(fixed)
+Particle::Particle(QVector3D *location) :
+    location(location)
 {
-    id = nextId++;
+    //constructor body
+}
+
+Particle::~Particle(){
+    //destructor body
 }
 
 void Particle::addSpring(Spring *const spring)
@@ -19,14 +20,15 @@ QVector3D *Particle::getLocation() const
     return location;
 }
 
+void Particle::doPrint(QDebug stream) const {
+    stream <<   "  id: "         <<  id
+           <<   "\tlocation: "   <<  (location ? *(location) : QVector3D(-1.0, -1.0, -1.0))
+           <<   "\tsprings: "    <<  springs;
+}
+
 void Particle::setLocation(QVector3D *value)
 {
     location = value;
-}
-
-void Particle::clear()
-{
-    Particle::nextId = 0;
 }
 
 QVector<Spring *> Particle::getSprings() const
@@ -39,19 +41,12 @@ int Particle::getId() const
     return id;
 }
 
-bool Particle::isFixed() const
-{
-    return fixed;
+QDebug operator<<(QDebug stream, const Particle &particle){
+    particle.doPrint(stream);
+    return stream;
 }
 
-QDebug operator<<(QDebug stream, const Particle &particle)
-{
-    stream << &endl
-           << "\tParticle ["
-           << "  id: "         <<  particle.id
-           << "\tfixed: "      <<  particle.isFixed()
-           << "\tlocation: "   <<  (particle.location ? *(particle.location) : QVector3D(-1.0, -1.0, -1.0))
-           << "\tsprings: "    <<  particle.springs
-           << "]";
+QDebug operator<<(QDebug stream, Particle *particle){
+    particle->doPrint(stream);
     return stream;
 }

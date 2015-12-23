@@ -27,6 +27,13 @@ float Spring::getSpringConstant() const
     return springConstant;
 }
 
+const Particle *Spring::getOtherParticle(const Particle *particle) const
+{
+    if(particleA == particle) return particleB;
+    if(particleB == particle) return particleA;
+    return particle;
+}
+
 void Spring::clear()
 {
     Spring::nextId = 0;
@@ -47,5 +54,10 @@ QDebug operator<<(QDebug stream, const Spring &spring)
            << "\tbroken: "          << spring.broken
            << "\tid: "              << spring.getId()
            << "]";
+    return stream;
+}
+
+QDebug operator<<(QDebug stream, Spring* spring){
+    stream << spring->id;
     return stream;
 }

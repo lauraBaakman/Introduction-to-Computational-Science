@@ -111,16 +111,11 @@ void Canvas::drawParticles()
 
 void Canvas::build(Grid *grid)
 {
-    QVector<QVector3D> locations;
-    for(const Particle &particle : grid->getParticles())
-    {
-        locations.append(*(particle.getLocation()));
-    }
     // Todo: remove magic.
     this->zoomingFactor = 1.0;
     this->rotationAngle = 1.0;
     this->mvpMatrix.setToIdentity();
-    updateBuffers(locations);
+    updateBuffers(grid->getParticleLocations());
 }
 
 bool Canvas::event(QEvent *event)

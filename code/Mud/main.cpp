@@ -16,27 +16,7 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     setOpenGLVersion(majorOpenGLVersion, minorOpenGLVersion);
 
-    // View (sort of)
     MainWindow w;
-    // TODO: Litte weird?
-//    Ui::MainWindow *ui = w.getUi();
-
-    // Model
-//    Grid *grid = new Grid();
-//    grid->gridFactory(ui->sidebar->getGridSettings());
-
-//    qDebug() << *grid;
-
-//    // Controller
-//    GridController *gridController = new GridController(grid);
-
-//    GridSolver *solver = new GridSolver(grid);
-
-////    qDebug() << *grid;
-
-//    QObject::connect(ui->sidebar, SIGNAL(replaceGridSignal(Grid::Settings)),
-//                     gridController, SLOT(replaceGridSlot(Grid::Settings)));
-
     w.show();
 
     return a.exec();

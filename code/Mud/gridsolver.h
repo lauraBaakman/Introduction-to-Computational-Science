@@ -23,6 +23,10 @@ private:
     void buildSpringConstantMatrix();
     void buildAdjacencyMatrix();
 
+    arma::SpMat<float> computeLHS();
+    arma::Col<float> computeRHSx();
+    arma::Col<float> computeRHSy();
+
 signals:
 
 public slots:

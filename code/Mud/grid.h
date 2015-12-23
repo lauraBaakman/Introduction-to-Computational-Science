@@ -4,7 +4,9 @@
 #include <QVector>
 #include <QObject>
 
-#include "particle.h"
+#include "freeparticle.h"
+#include "fixedparticle.h"
+
 #include "spring.h"
 
 class Grid : public QObject
@@ -37,14 +39,20 @@ public:
     int numFreeParticles();
 
     friend QDebug operator<<(QDebug stream, const Grid &grid);
+    friend QDebug operator<<(QDebug stream, Grid *grid);
 
     QVector<Spring> getSprings() const;
     Spring getSpring(int index) const;
 
-    QVector<Particle> getParticles() const;
+    QVector<Particle *> getParticles() const;
+
+    QVector<FreeParticle *> getFreeParticles() const;
+
+    QVector<QVector3D> getParticleLocations() const;
 
 private:
-    QVector<Particle> particles;
+    QVector<Particle *> particles;
+    QVector<FreeParticle *> freeParticles;
     QVector<QVector3D> particleLocations;
 
     QVector<Spring> springs;
@@ -52,8 +60,10 @@ private:
     void clear();
     void reserve(int numParticles, int numSprings);
 
-    Particle* addParticle(QVector3D location);
-    Particle* addParticle(Particle particle);
+    Particle* addParticle(QVector3D location, Particle* particle);
+    Particle* addParticle(Particle* particle);
+
+    QVector3D* addParticleLocation(QVector3D location);
 
     void addSpring(Spring spring);
 
