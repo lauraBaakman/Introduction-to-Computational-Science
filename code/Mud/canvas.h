@@ -24,6 +24,8 @@ protected:
     void initializeGL();
     void paintGL();
 
+    void wheelEvent(QWheelEvent *event);
+
 private:
     QOpenGLShaderProgram *shaderProgram;
     void initializeShaders();
@@ -33,6 +35,11 @@ private:
     void initializeBuffers();
     void updateBuffers(QVector<QVector3D> locations);
 
+    QMatrix4x4 mvpMatrix;
+    float zoomFactor;
+
+    void zoom(float factor);
+    void setUniformValues();
     void drawParticles();
     bool isAllocated(QOpenGLBuffer *buffer);
 };

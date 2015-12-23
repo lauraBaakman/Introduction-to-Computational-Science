@@ -141,8 +141,8 @@ void Grid::variableSquareGrid()
     reserve(3, 3);
 
     // TODO: Fix the new -> possible memory leaks...
-    Particle *a = addParticle(Particle(new QVector3D(0.0, 1.0, 0.0), true));
-    Particle *b = addParticle(QVector3D(1.0, 0.0, 0.0));
+    Particle *a = addParticle(Particle(new QVector3D(0.0, 0.5, 0.0), true));
+    Particle *b = addParticle(QVector3D(0.5, 0.0, 0.0));
     Particle *c = addParticle(QVector3D(0.0, 0.0, 0.0));
 
     addSpring(Spring(a, c));

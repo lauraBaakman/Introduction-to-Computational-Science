@@ -1,11 +1,15 @@
 #include "canvas.h"
 #include <QDebug>
 
+#include <QWheelEvent>
+
 Canvas::Canvas(QWidget *parent) :
     QOpenGLWidget(parent)
 {
     qDebug() << "Constructor Canvas";
 
+    this->zoomFactor = 1.0;
+    this->mvpMatrix.setToIdentity();
 }
 
 Canvas::~Canvas()
@@ -23,7 +27,10 @@ void Canvas::initializeGL()
     qDebug() << "InitializeGL not implemented yet.";
     initializeOpenGLFunctions();
 
-    glClearColor(0.9f, 0.9f, 0.9f, 1.0f);
+    glEnable(GL_DEPTH_TEST);
+    // glEnable(GL_CULL_FACE);
+
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
     initializeShaders();
     initializeBuffers();
@@ -46,11 +53,6 @@ void Canvas::initializeBuffers()
     this->particlesBufferObject->create();
     this->particlesBufferObject->bind();
 
-//    QVector<QVector3D> temp;
-//    temp.append(QVector3D(0.0, 0.0, 0.0));
-
-//    this->particlesBufferObject->allocate(temp.data(), temp.size() * sizeof(temp[0]));
-
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
 
@@ -70,9 +72,22 @@ void Canvas::paintGL()
 
     if (isAllocated(this->particlesBufferObject)) {
         this->shaderProgram->bind();
+        setUniformValues();
         drawParticles();
         this->shaderProgram->release();
     }
+}
+
+void Canvas::setUniformValues()
+{
+    // Todo: Move
+    mvpMatrix.setToIdentity();
+//    mvpMatrix.rotate(0.0, 0.0, 0.0);
+//    mvpMatrix.scale(1.0);
+//    mvpMatrix.translate(0.0, 0.0, 0.0);
+    mvpMatrix.scale(this->zoomFactor);
+
+    this->shaderProgram->setUniformValue("mvpMatrix", mvpMatrix);
 }
 
 bool Canvas::isAllocated(QOpenGLBuffer *buffer)
@@ -90,6 +105,12 @@ void Canvas::drawParticles()
     this->gridArrayObject.release();
 }
 
+void Canvas::zoom(float factor)
+{
+    this->zoomFactor = this->zoomFactor * factor;
+    update();
+}
+
 void Canvas::build(Grid *grid)
 {
     qDebug() << "Building buffers from grid...";
@@ -100,4 +121,17 @@ void Canvas::build(Grid *grid)
     }
     updateBuffers(locations);
     qDebug() << "Building buffers complete....";
+}
+
+void Canvas::wheelEvent(QWheelEvent *event)
+{
+    QPoint delta = event->pixelDelta();
+
+    if(delta.y() > 0) {
+        zoom(1.1);
+    } else {
+        zoom(0.9);
+    }
+
+    qDebug() << "Wheee ....";
 }
