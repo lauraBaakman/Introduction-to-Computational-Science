@@ -37,8 +37,8 @@ private:
     void updateBuffers(QVector<QVector3D> locations);
 
     QMatrix4x4 mvpMatrix;
-    float zoomFactor;
-    float rotateFactor;
+    float zoomingFactor;
+    float rotationAngle;
 
     void setUniformValues();
     void drawParticles();

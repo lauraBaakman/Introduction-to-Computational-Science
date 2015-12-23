@@ -8,8 +8,8 @@ Canvas::Canvas(QWidget *parent) :
 {
     qDebug() << "Constructor Canvas";
 
-    this->zoomFactor = 1.0;
-    this->rotateFactor = 1.0;
+    this->zoomingFactor = 1.0;
+    this->rotationAngle = 1.0;
     this->mvpMatrix.setToIdentity();
 
     grabGesture(Qt::PinchGesture);
@@ -85,11 +85,8 @@ void Canvas::setUniformValues()
 {
     // Todo: Move
     mvpMatrix.setToIdentity();
-//    mvpMatrix.rotate(0.0, 0.0, 0.0);
-//    mvpMatrix.scale(1.0);
-//    mvpMatrix.translate(0.0, 0.0, 0.0);
-    mvpMatrix.scale(this->zoomFactor);
-    mvpMatrix.rotate(0.0,this->rotateFactor, 0.0);
+    mvpMatrix.scale(this->zoomingFactor);
+    mvpMatrix.rotate(this->rotationAngle, 0.0, 0.0, 1.0);
 
     this->shaderProgram->setUniformValue("mvpMatrix", mvpMatrix);
 }
@@ -142,12 +139,10 @@ void Canvas::pinchTriggered(QPinchGesture *gesture)
     QPinchGesture::ChangeFlags changeFlags = gesture->changeFlags();
     if(changeFlags & QPinchGesture::RotationAngleChanged) {
         qDebug() << "Rotate!";
-        qDebug() << gesture->lastRotationAngle();
-        qDebug() << gesture->rotationAngle();
-        qDebug() << gesture->rotationAngle() - gesture->lastRotationAngle();
+        this->rotationAngle = -1.0 * gesture->rotationAngle();
     }
     if(changeFlags * QPinchGesture::ScaleFactorChanged) {
-        this->zoomFactor = gesture->scaleFactor();
+        this->zoomingFactor = gesture->scaleFactor();
     }
     if (gesture->state() == Qt::GestureFinished) {
         qDebug() << "Never happens...";
