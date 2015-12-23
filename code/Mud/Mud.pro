@@ -9,8 +9,6 @@ QT       += core gui
 
 QMAKE_CXXFLAGS += -std=c++11 -stdlib=libc++ -mmacosx-version-min=10.10
 QMAKE_CXXFLAGS += -O2
-QMAKE_CXXFLAGS += -Wno-unused-parameter
-QMAKE_CXXFLAGS += -Wno-unused-variable
 QMAKE_CXXFLAGS += -isystem /usr/local/include
 
 
@@ -20,7 +18,6 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = Mud
 TEMPLATE = app
-
 
 SOURCES += main.cpp\
         mainwindow.cpp \
