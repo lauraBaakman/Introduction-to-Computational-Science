@@ -93,16 +93,6 @@ Particle* Grid::addParticle(Particle* particle)
     return this->particles.last();
 }
 
-Particle *Grid::addParticle(QVector3D location, FreeParticle particle)
-{
-    this->particleLocations.append(location);
-    QVector3D* locationPtr = &(this->particleLocations.last());
-
-    FreeParticle particleWithLocation = FreeParticle(locationPtr, particle);
-    this->particles.append(&particleWithLocation);
-    return this->particles.last();
-}
-
 void Grid::addSpring(Spring spring)
 {
     this->springs.append(spring);
@@ -132,12 +122,10 @@ void Grid::uniformSquareGrid()
     clear();
     reserve(4, 5);
 
-    Particle *a = addParticle(QVector3D(0.0, 1.0, 0.0), FreeParticle());
-    Particle *b = addParticle(QVector3D(1.0, 1.0, 0.0), FreeParticle());
-    Particle *c = addParticle(QVector3D(0.0, 0.0, 0.0), FreeParticle());
-    Particle *d = addParticle(QVector3D(1.0, 0.0, 0.0), FreeParticle());
-
-    exit(-1);
+    Particle *a = addFreeParticle(QVector3D(0.0, 1.0, 0.0));
+    Particle *b = addFreeParticle(QVector3D(1.0, 1.0, 0.0));
+    Particle *c = addFreeParticle(QVector3D(0.0, 0.0, 0.0));
+    Particle *d = addFreeParticle(QVector3D(1.0, 0.0, 0.0));
 
     addSpring(Spring(a, b));
     addSpring(Spring(b, c));
