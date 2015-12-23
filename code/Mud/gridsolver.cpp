@@ -12,9 +12,10 @@ GridSolver::GridSolver(Grid *grid, QObject *parent) :
 
 void GridSolver::solve()
 {
-    qDebug() << "solve";
     arma::SpMat<float> lhs = computeLHS();
-    arma::Col<float> rhsX = computeRHSx();
+    arma::Col<float> rhsX = computeRHS(&QVector3D::x);
+    arma::Col<float> rhsY = computeRHS(&QVector3D::y);
+    qDebug() << "Continue implementing solve";
 }
 
 void GridSolver::buildSpringConstantMatrix()
@@ -49,24 +50,26 @@ arma::SpMat<float> GridSolver::computeLHS()
     return lhs;
 }
 
-float computeRHSxElement(const Particle* particle){
+float GridSolver::computeRHSelement(const Particle* particle, GridSolver::elementGetter getter){
     float element = 0;
     const Particle* otherParticle;
+
     for (const Spring *spring : particle->getSprings()){
         otherParticle = spring->getOtherParticle(particle);
         if(otherParticle->isFixed()){
-            element += (spring->getSpringConstant() * otherParticle->getLocation()->x());
+            element += (spring->getSpringConstant() * (otherParticle->getLocation()->*getter)());
         }
     }
     return element;
 }
 
-arma::Col<float> GridSolver::computeRHSx()
+
+arma::Col<float> GridSolver::computeRHS(GridSolver::elementGetter getter)
 {
     arma::Col<float> rhs = arma::Col<float>(grid->numFreeParticles());
     QVector<FreeParticle*> freeParticles = grid->getFreeParticles();
     for(const FreeParticle *particle : freeParticles){
-        rhs(particle->getId()) = computeRHSxElement(particle);
+        rhs(particle->getId()) = computeRHSelement(particle, getter);
     }
     std::cout << rhs;
     return rhs;

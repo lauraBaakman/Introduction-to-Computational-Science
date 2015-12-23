@@ -17,6 +17,8 @@ public:
 private:
     Grid *grid;
 
+    typedef float (QVector3D::*elementGetter)() const;
+
     arma::SpMat<float> springConstantsMatrix;
     arma::SpMat<float> adjacencyMatrix;
 
@@ -24,8 +26,8 @@ private:
     void buildAdjacencyMatrix();
 
     arma::SpMat<float> computeLHS();
-    arma::Col<float> computeRHSx();
-    arma::Col<float> computeRHSy();
+    float computeRHSelement(const Particle* particle, elementGetter getter);
+    arma::Col<float> computeRHS(elementGetter getter);
 
 signals:
 
