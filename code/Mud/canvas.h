@@ -41,6 +41,7 @@ private:
     float rotationAngle;
 
     void setUniformValues();
+    void constructModelViewProjectionMatrix();
     void drawParticles();
     bool isAllocated(QOpenGLBuffer *buffer);
 

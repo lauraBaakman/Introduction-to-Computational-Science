@@ -12,6 +12,7 @@ Canvas::Canvas(QWidget *parent) :
     this->rotationAngle = 1.0;
     this->mvpMatrix.setToIdentity();
 
+    // Register all gesture event, because this is not the default.
     grabGesture(Qt::PinchGesture);
 }
 
@@ -27,7 +28,6 @@ Canvas::~Canvas()
 
 void Canvas::initializeGL()
 {
-    qDebug() << "InitializeGL not implemented yet.";
     initializeOpenGLFunctions();
 
     glEnable(GL_DEPTH_TEST);
@@ -83,12 +83,15 @@ void Canvas::paintGL()
 
 void Canvas::setUniformValues()
 {
-    // Todo: Move
+    constructModelViewProjectionMatrix();
+    this->shaderProgram->setUniformValue("mvpMatrix", mvpMatrix);
+}
+
+void Canvas::constructModelViewProjectionMatrix()
+{
     mvpMatrix.setToIdentity();
     mvpMatrix.scale(this->zoomingFactor);
     mvpMatrix.rotate(this->rotationAngle, 0.0, 0.0, 1.0);
-
-    this->shaderProgram->setUniformValue("mvpMatrix", mvpMatrix);
 }
 
 bool Canvas::isAllocated(QOpenGLBuffer *buffer)
@@ -108,14 +111,12 @@ void Canvas::drawParticles()
 
 void Canvas::build(Grid *grid)
 {
-    qDebug() << "Building buffers from grid...";
     QVector<QVector3D> locations;
     for(const Particle &particle : grid->getParticles())
     {
         locations.append(*(particle.getLocation()));
     }
     updateBuffers(locations);
-    qDebug() << "Building buffers complete....";
 }
 
 bool Canvas::event(QEvent *event)
@@ -138,7 +139,6 @@ void Canvas::pinchTriggered(QPinchGesture *gesture)
 {
     QPinchGesture::ChangeFlags changeFlags = gesture->changeFlags();
     if(changeFlags & QPinchGesture::RotationAngleChanged) {
-        qDebug() << "Rotate!";
         this->rotationAngle = -1.0 * gesture->rotationAngle();
     }
     if(changeFlags * QPinchGesture::ScaleFactorChanged) {
