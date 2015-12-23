@@ -52,6 +52,11 @@ QVector<Particle *> Grid::getParticles() const
     return particles;
 }
 
+QVector<FreeParticle *> Grid::getFreeParticles() const
+{
+    return freeParticles;
+}
+
 void Grid::clear()
 {
     this->particles.clear();
