@@ -10,6 +10,8 @@ Canvas::Canvas(QWidget *parent) :
 
     this->zoomFactor = 1.0;
     this->mvpMatrix.setToIdentity();
+
+    grabGesture(Qt::PinchGesture);
 }
 
 Canvas::~Canvas()
@@ -123,15 +125,41 @@ void Canvas::build(Grid *grid)
     qDebug() << "Building buffers complete....";
 }
 
-void Canvas::wheelEvent(QWheelEvent *event)
+bool Canvas::event(QEvent *event)
 {
-    QPoint delta = event->pixelDelta();
+    if (event->type() == QEvent::Gesture) {
+          return gestureEvent(static_cast<QGestureEvent*>(event));
+    }
+    return QWidget::event(event);
+}
 
-    if(delta.y() > 0) {
-        zoom(1.1);
-    } else {
-        zoom(0.9);
+bool Canvas::gestureEvent(QGestureEvent *event)
+{
+    if (QGesture *swipe = event->gesture(Qt::PinchGesture)) {
+        pinchTriggered(static_cast<QPinchGesture *>(swipe));
+    }
+    return true;
+}
+
+void Canvas::pinchTriggered(QPinchGesture *gesture)
+{
+    QPinchGesture::ChangeFlags changeFlags = gesture->changeFlags();
+    if(changeFlags & QPinchGesture::RotationAngleChanged) {
+        qDebug() << "Rotate!";
+    }
+    if(changeFlags * QPinchGesture::ScaleFactorChanged) {
+        qDebug() << "Scale!";
     }
 
-    qDebug() << "Wheee ....";
+}
+
+void Canvas::wheelEvent(QWheelEvent *event)
+{
+    float delta = event->pixelDelta().y();
+
+    if(delta > 0) {
+        zoom(1.1);
+    } else if(delta != 0) {
+        zoom(0.9);
+    }
 }

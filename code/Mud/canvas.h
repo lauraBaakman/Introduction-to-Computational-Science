@@ -6,6 +6,7 @@
 #include <QOpenGLBuffer>
 #include <QOpenGLVertexArrayObject>
 #include <QOpenGLShaderProgram>
+#include <QGestureEvent>
 
 #include "grid.h"
 
@@ -21,10 +22,11 @@ public:
     void build(Grid *grid);
 
 protected:
-    void initializeGL();
-    void paintGL();
+    void initializeGL() Q_DECL_OVERRIDE;
+    void paintGL() Q_DECL_OVERRIDE;
 
-    void wheelEvent(QWheelEvent *event);
+    bool event(QEvent *event) Q_DECL_OVERRIDE;
+    void wheelEvent(QWheelEvent *event)  Q_DECL_OVERRIDE;
 
 private:
     QOpenGLShaderProgram *shaderProgram;
@@ -42,6 +44,9 @@ private:
     void setUniformValues();
     void drawParticles();
     bool isAllocated(QOpenGLBuffer *buffer);
+
+    bool gestureEvent(QGestureEvent *event);
+    void pinchTriggered(QPinchGesture *gesture);
 };
 
 #endif // CANVAS_H
