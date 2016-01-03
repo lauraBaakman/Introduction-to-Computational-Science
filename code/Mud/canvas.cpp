@@ -8,11 +8,9 @@ Canvas::Canvas(QWidget *parent) :
 {
     qDebug() << "Constructor Canvas";
 
-    this->zoomingFactor = 1.0;
-    this->rotationAngle = 1.0;
-    this->mvpMatrix.setToIdentity();
+    reset();
 
-    // Register all gesture event, because this is not the default.
+    // Register all gesture events.
     grabGesture(Qt::PinchGesture);
 }
 
@@ -103,18 +101,32 @@ void Canvas::drawParticles()
 {
     this->gridArrayObject.bind();
 
+    // Todo: remove magic.
     glPointSize(10.0f);
     glDrawArrays(GL_POINTS, 0, 3);
 
     this->gridArrayObject.release();
 }
 
-void Canvas::build(Grid *grid)
+void Canvas::drawSprings()
 {
-    // Todo: remove magic.
+    qDebug() << "drawSprings() Not implemented yet.";
+}
+
+void Canvas::reset()
+{
     this->zoomingFactor = 1.0;
     this->rotationAngle = 1.0;
     this->mvpMatrix.setToIdentity();
+}
+
+
+void Canvas::build(Grid *grid)
+{
+    // Todo: remove magic.
+    reset();
+
+    // Buffer for fixed and non fixed.
     updateBuffers(grid->getParticleLocations());
 }
 

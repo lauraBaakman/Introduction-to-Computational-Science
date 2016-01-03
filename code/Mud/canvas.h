@@ -28,23 +28,32 @@ protected:
     bool event(QEvent *event) Q_DECL_OVERRIDE;
 
 private:
+    // Shaders
     QOpenGLShaderProgram *shaderProgram;
     void initializeShaders();
 
+    // Buffers
     QOpenGLBuffer *particlesBufferObject;
     QOpenGLVertexArrayObject gridArrayObject;
     void initializeBuffers();
     void updateBuffers(QVector<QVector3D> locations);
 
+    // Transformations
     QMatrix4x4 mvpMatrix;
     float zoomingFactor;
     float rotationAngle;
 
+    // Helpers
     void setUniformValues();
     void constructModelViewProjectionMatrix();
-    void drawParticles();
     bool isAllocated(QOpenGLBuffer *buffer);
+    void reset();
 
+    // Draw
+    void drawParticles();
+    void drawSprings();
+
+    // Events
     bool gestureEvent(QGestureEvent *event);
     void pinchTriggered(QPinchGesture *gesture);
 };
