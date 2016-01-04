@@ -12,14 +12,36 @@ GridSolver::GridSolver(Grid *grid, QObject *parent) :
 
 void GridSolver::solve()
 {
-    arma::SpMat<float> lhs = computeLHS();
-    arma::Col<float> rhsX = computeRHS(&QVector3D::x);
-    arma::Col<float> rhsY = computeRHS(&QVector3D::y);
+    arma::Mat<float> lhs = computeLHS();
 
+    arma::Mat<float> solution = arma::Mat<float>(lhs.n_rows, 3);
 
     //Solve the system
+    solution.col(0) = solveForAxis(lhs, &QVector3D::x);
+    solution.col(1) = solveForAxis(lhs, &QVector3D::y);
+    solution.col(2) = solveForAxis(lhs, &QVector3D::z);
 
-    //Update the locations of vertices
+    updateLocations(solution);
+}
+
+arma::Col<float> GridSolver::solveForAxis(
+        arma::Mat<float> lhs,
+        GridSolver::elementGetter getter)
+{
+    arma::Col<float> rhs = computeRHS(getter);
+    arma::Col<float> solution = arma::Col<float>(lhs.n_rows);
+
+    arma::solve(solution, lhs, rhs);
+    return solution;
+}
+
+void GridSolver::updateLocations(arma::Mat<float> newLocations)
+{
+    qDebug() << grid->getParticleLocations();
+    for (unsigned long long i = 0; i < newLocations.n_rows; i++){
+        grid->getParticleLocations()[i].setX(newLocations(i, 1));
+    }
+    qDebug() << grid->getParticleLocations();
 }
 
 void GridSolver::buildSpringConstantMatrix()
@@ -46,9 +68,9 @@ void GridSolver::buildAdjacencyMatrix()
     }
 }
 
-arma::SpMat<float> GridSolver::computeLHS()
+arma::Mat<float> GridSolver::computeLHS()
 {
-    arma::SpMat<float> lhs = arma::SpMat<float>(grid->numSprings(), grid->numFreeParticles());
+    arma::Mat<float> lhs = arma::Mat<float>(grid->numSprings(), grid->numFreeParticles());
     lhs = adjacencyMatrix.t() * springConstantsMatrix * adjacencyMatrix;
     lhs.diag() *= -1;
     return lhs;
@@ -67,7 +89,6 @@ float GridSolver::computeVectorElement(const Particle* particle, GridSolver::ele
     return element;
 }
 
-
 arma::Col<float> GridSolver::computeRHS(GridSolver::elementGetter getter)
 {
     arma::Col<float> rhs = arma::Col<float>(grid->numFreeParticles());
@@ -75,6 +96,5 @@ arma::Col<float> GridSolver::computeRHS(GridSolver::elementGetter getter)
     for(const FreeParticle *particle : freeParticles){
         rhs(particle->getId()) = computeVectorElement(particle, getter);
     }
-    std::cout << rhs;
     return rhs;
 }

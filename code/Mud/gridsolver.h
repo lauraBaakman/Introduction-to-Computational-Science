@@ -18,14 +18,19 @@ private:
     Grid *grid;
 
     typedef float (QVector3D::*elementGetter)() const;
+    typedef void (QVector3D::*elementSetter)(float);
 
-    arma::SpMat<float> springConstantsMatrix;
-    arma::SpMat<float> adjacencyMatrix;
+    arma::Col<float> solveForAxis(arma::Mat<float> lhs, elementGetter getter);
+
+    void updateLocations(arma::Mat<float> newLocations);
+
+    arma::Mat<float> springConstantsMatrix;
+    arma::Mat<float> adjacencyMatrix;
 
     void buildSpringConstantMatrix();
     void buildAdjacencyMatrix();
 
-    arma::SpMat<float> computeLHS();
+    arma::Mat<float> computeLHS();
     float computeVectorElement(const Particle* particle, elementGetter getter);
     arma::Col<float> computeRHS(elementGetter getter);
 
