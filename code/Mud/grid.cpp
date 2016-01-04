@@ -62,15 +62,22 @@ QVector<QVector3D> Grid::getParticleLocations() const
     return particleLocations;
 }
 
+QVector<FixedParticle *> Grid::getFixedParticles() const
+{
+    return fixedParticles;
+}
+
 void Grid::clear()
 {
     this->particles.clear();
     this->particleLocations.clear();
     this->springs.clear();
     this->freeParticles.clear();
+    this->fixedParticles.clear();
 
     FreeParticle::clear();
     FixedParticle::clear();
+    Particle::clear();
     Spring::clear();
 }
 
@@ -84,34 +91,37 @@ void Grid::reserve(int numParticles, int numSprings)
 
 Particle* Grid::addParticle(QVector3D location, Particle* particle)
 {
-    QVector3D* locationPtr = this->addParticleLocation(location);
+    QVector3D* locationPtr = this->addParticleLocation(location, particle->getGlobalID());
     particle->setLocation(locationPtr);
-
     return addParticle(particle);
 }
 
 //Assumes that the particle location is already in the list of particle locations!
-
-//TODO use overloaded method!
 Particle *Grid::addParticle(Particle *particle)
 {
-    this->particles.append(particle);
-    if(!particle->isFixed()){
-        freeParticles.append(dynamic_cast<FreeParticle*>(particle));
+    this->particles.insert(particle->getGlobalID(), particle);
+    if(particle->isFixed()) {
+        fixedParticles.insert(
+                    particle->getId(),
+                    dynamic_cast<FixedParticle*>(particle));
+    } else {
+        freeParticles.insert(
+                    particle->getId(),
+                    dynamic_cast<FreeParticle*>(particle));
     }
     return particle;
 }
 
-QVector3D *Grid::addParticleLocation(QVector3D location)
+QVector3D *Grid::addParticleLocation(QVector3D location, int globalParticleId)
 {
-    this->particleLocations.append(location);
+    particleLocations.insert(globalParticleId, location);
     QVector3D *locationPtr = &(this->particleLocations.last());
     return locationPtr;
 }
 
 void Grid::addSpring(Spring spring)
 {
-    this->springs.append(spring);
+    springs.append(spring);
     Spring *springPtr = &(this->springs.last());
 
     spring.getParticleA()->addSpring(springPtr);
@@ -182,6 +192,10 @@ QDebug operator<<(QDebug stream, const Grid &grid)
            << "\tparticles: "               << grid.particles           << &endl
            << "\tparticle locations: "                                  << &endl
            << "\t"                          << grid.particleLocations   << &endl
+           << "\tfree particles: "                                      << &endl
+           << "\t"                          << grid.freeParticles       << &endl
+           << "\tfixed particles: "                                     << &endl
+           << "\t"                          << grid.fixedParticles      << &endl
            << "\tsprings: "                 << grid.springs             << &endl
            << "]" << &endl;
     return stream;

@@ -30,12 +30,18 @@ public:
 
     virtual void doPrint(QDebug stream) const;
 
+    int getGlobalID() const;
+
+    static void clear();
+
 protected:
     QVector3D *location;
     QVector<Spring*> springs;
     int id;
+    int globalID;
 
 private:
+    static int nextGlobalID;
 
 };
 #endif // PARTICLE_H
