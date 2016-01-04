@@ -18,7 +18,6 @@ private:
     Grid *grid;
 
     typedef float (QVector3D::*elementGetter)() const;
-    typedef void (QVector3D::*elementSetter)(float);
 
     arma::Col<float> solveForAxis(arma::Mat<float> lhs, elementGetter getter);
 

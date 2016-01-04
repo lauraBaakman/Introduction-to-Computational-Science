@@ -44,6 +44,13 @@ void Particle::setLocation(QVector3D *value)
     location = value;
 }
 
+void Particle::setLocation(float x, float y, float z)
+{
+    location->setX(x);
+    location->setY(y);
+    location->setZ(z);
+}
+
 QVector<Spring *> Particle::getSprings() const
 {
     return springs;

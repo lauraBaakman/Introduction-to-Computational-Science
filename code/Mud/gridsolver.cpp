@@ -39,7 +39,8 @@ void GridSolver::updateLocations(arma::Mat<float> newLocations)
 {
     qDebug() << grid->getParticleLocations();
     for (unsigned long long i = 0; i < newLocations.n_rows; i++){
-        grid->getParticleLocations()[i].setX(newLocations(i, 1));
+        grid->getFreeParticles()[i]->setLocation(
+                    newLocations(i, 0), newLocations(i, 1), newLocations(i, 2));
     }
     qDebug() << grid->getParticleLocations();
 }

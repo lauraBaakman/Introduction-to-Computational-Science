@@ -19,6 +19,7 @@ public:
 
     QVector3D *getLocation() const;
     void setLocation(QVector3D *value);
+    void setLocation(float x, float y, float z);
 
     void addSpring(Spring *const spring);
     QVector<Spring *> getSprings() const;
