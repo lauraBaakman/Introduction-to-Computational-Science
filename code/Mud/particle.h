@@ -32,6 +32,8 @@ public:
 
     int getGlobalID() const;
 
+    void clear();
+
 protected:
     QVector3D *location;
     QVector<Spring*> springs;

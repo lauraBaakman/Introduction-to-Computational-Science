@@ -71,6 +71,7 @@ void Grid::clear()
 
     FreeParticle::clear();
     FixedParticle::clear();
+    Particle::clear();
     Spring::clear();
 }
 

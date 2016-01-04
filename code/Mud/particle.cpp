@@ -34,6 +34,11 @@ int Particle::getGlobalID() const
     return globalID;
 }
 
+void Particle::clear()
+{
+    Particle::nextGlobalID = 0;
+}
+
 void Particle::setLocation(QVector3D *value)
 {
     location = value;
