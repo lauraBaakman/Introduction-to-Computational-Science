@@ -50,10 +50,14 @@ public:
 
     QVector<QVector3D> getParticleLocations() const;
 
+    QVector<FixedParticle *> getFixedParticles() const;
+
 private:
     QVector<Particle *> particles;
     QVector<FreeParticle *> freeParticles;
+    QVector<FixedParticle *>  fixedParticles;
     QVector<QVector3D> particleLocations;
+
 
     QVector<Spring> springs;
 

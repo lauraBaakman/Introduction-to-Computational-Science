@@ -62,12 +62,18 @@ QVector<QVector3D> Grid::getParticleLocations() const
     return particleLocations;
 }
 
+QVector<FixedParticle *> Grid::getFixedParticles() const
+{
+    return fixedParticles;
+}
+
 void Grid::clear()
 {
     this->particles.clear();
     this->particleLocations.clear();
     this->springs.clear();
     this->freeParticles.clear();
+    this->fixedParticles.clear();
 
     FreeParticle::clear();
     FixedParticle::clear();
@@ -92,12 +98,12 @@ Particle* Grid::addParticle(QVector3D location, Particle* particle)
 }
 
 //Assumes that the particle location is already in the list of particle locations!
-
-//TODO use overloaded method!
 Particle *Grid::addParticle(Particle *particle)
 {
     this->particles.append(particle);
-    if(!particle->isFixed()){
+    if(particle->isFixed()) {
+        fixedParticles.append(dynamic_cast<FixedParticle*>(particle));
+    } else {
         freeParticles.append(dynamic_cast<FreeParticle*>(particle));
     }
     return particle;
@@ -183,6 +189,10 @@ QDebug operator<<(QDebug stream, const Grid &grid)
            << "\tparticles: "               << grid.particles           << &endl
            << "\tparticle locations: "                                  << &endl
            << "\t"                          << grid.particleLocations   << &endl
+           << "\tfree particles: "                                      << &endl
+           << "\t"                          << grid.freeParticles       << &endl
+           << "\tfixed particles: "                                     << &endl
+           << "\t"                          << grid.fixedParticles      << &endl
            << "\tsprings: "                 << grid.springs             << &endl
            << "]" << &endl;
     return stream;
