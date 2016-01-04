@@ -33,11 +33,21 @@ private:
     void initializeShaders();
 
     // Buffers
-    QOpenGLBuffer *particlesBufferObject;
+    QOpenGLBuffer *locationBufferObject;
     QOpenGLBuffer *springIndicesBufferObject;
+    QOpenGLBuffer *freeParticleIndicesBufferObject;
+    QOpenGLBuffer *fixedParticleIndicesBufferObject;
+
+    //?
     QOpenGLVertexArrayObject gridArrayObject;
     void initializeBuffers();
-    void updateBuffers(QVector<QVector3D> locations);
+//    void updateBuffers(QVector<QVector3D> locations);
+
+
+    void updateLocationBuffer(QVector<QVector3D> locations);
+    void updateFreeParticleBuffer(QVector<int> indices);
+    void updateFixedParticleBuffer(QVector<int> indices);
+    void updateSpringBuffer(QVector<int> indices);
 
     // Transformations
     QMatrix4x4 mvpMatrix;
@@ -51,12 +61,15 @@ private:
     void reset();
 
     // Helpers for build
-    QVector<int> buildFreeParticleIndices(QVector<Particle*> freeParticles);
-    QVector<int> buildFixedParticleIndices(QVector<Particle*> fixedParticles);
+    QVector<int> buildFreeParticleIndices(QVector<FreeParticle*> freeParticles);
+    QVector<int> buildFixedParticleIndices(QVector<FixedParticle*> fixedParticles);
     QVector<int> buildSpringIndices(QVector<Spring> springs);
 
     // Draw
-    void drawParticles();
+    int numFreeParticles;
+    int numFixedParticles;
+    void drawFreeParticles();
+    void drawFixedParticles();
     void drawSprings();
 
     // Events
