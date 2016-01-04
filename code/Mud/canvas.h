@@ -41,9 +41,6 @@ private:
     //?
     QOpenGLVertexArrayObject gridArrayObject;
     void initializeBuffers();
-//    void updateBuffers(QVector<QVector3D> locations);
-
-
     void updateLocationBuffer(QVector<QVector3D> locations);
     void updateFreeParticleBuffer(QVector<int> indices);
     void updateFixedParticleBuffer(QVector<int> indices);
@@ -55,7 +52,8 @@ private:
     float rotationAngle;
 
     // Helpers
-    void setUniformValues();
+    void setMvpValue();
+    void setColorValue(QColor color);
     void constructModelViewProjectionMatrix();
     bool isAllocated(QOpenGLBuffer *buffer);
     void reset();
@@ -68,6 +66,7 @@ private:
     // Draw
     int numFreeParticles;
     int numFixedParticles;
+    int numSprings;
     void drawFreeParticles();
     void drawFixedParticles();
     void drawSprings();

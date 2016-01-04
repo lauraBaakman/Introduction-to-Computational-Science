@@ -22,6 +22,7 @@ Canvas::~Canvas()
     delete this->locationBufferObject;
     delete this->freeParticleIndicesBufferObject;
     delete this->fixedParticleIndicesBufferObject;
+    delete this->springIndicesBufferObject;
 
     this->gridArrayObject.destroy();
 }
@@ -31,8 +32,6 @@ void Canvas::initializeGL()
     initializeOpenGLFunctions();
 
     glEnable(GL_DEPTH_TEST);
-    // glEnable(GL_CULL_FACE);
-
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
     initializeShaders();
@@ -59,15 +58,17 @@ void Canvas::initializeBuffers()
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
 
+    this->gridArrayObject.release();
+
+    // Not bound to the VAO...
     this->freeParticleIndicesBufferObject = new QOpenGLBuffer(QOpenGLBuffer::IndexBuffer);
     this->freeParticleIndicesBufferObject->create();
-    this->freeParticleIndicesBufferObject->bind();
 
     this->fixedParticleIndicesBufferObject = new QOpenGLBuffer(QOpenGLBuffer::IndexBuffer);
     this->fixedParticleIndicesBufferObject->create();
-    this->fixedParticleIndicesBufferObject->bind();
 
-    this->gridArrayObject.release();
+    this->springIndicesBufferObject = new QOpenGLBuffer(QOpenGLBuffer::IndexBuffer);
+    this->springIndicesBufferObject->create();
 }
 
 void Canvas::updateLocationBuffer(QVector<QVector3D> locations)
@@ -91,6 +92,13 @@ void Canvas::updateFixedParticleBuffer(QVector<int> indices)
     this->fixedParticleIndicesBufferObject->release();
 }
 
+void Canvas::updateSpringBuffer(QVector<int> indices)
+{
+    this->springIndicesBufferObject->bind();
+    this->springIndicesBufferObject->allocate(indices.data(), indices.size() * sizeof(indices[0]));
+    this->springIndicesBufferObject->release();
+}
+
 void Canvas::paintGL()
 {
     glClear(GL_COLOR_BUFFER_BIT);
@@ -98,18 +106,24 @@ void Canvas::paintGL()
     if (isAllocated(this->locationBufferObject)) {
         this->shaderProgram->bind();
         this->gridArrayObject.bind();
-        setUniformValues();
+        setMvpValue();
         drawFreeParticles();
         drawFixedParticles();
+        drawSprings();
         this->gridArrayObject.release();
         this->shaderProgram->release();
     }
 }
 
-void Canvas::setUniformValues()
+void Canvas::setMvpValue()
 {
     constructModelViewProjectionMatrix();
     this->shaderProgram->setUniformValue("mvpMatrix", mvpMatrix);
+}
+
+void Canvas::setColorValue(QColor color)
+{
+    this->shaderProgram->setUniformValue("color", color);
 }
 
 void Canvas::constructModelViewProjectionMatrix()
@@ -126,6 +140,7 @@ bool Canvas::isAllocated(QOpenGLBuffer *buffer)
 
 void Canvas::drawFreeParticles()
 { // Todo: remove magic.
+    setColorValue(QColor(Qt::red));
     this->freeParticleIndicesBufferObject->bind();
     glPointSize(10.0f);
     glDrawElements(GL_POINTS, this->numFreeParticles, GL_UNSIGNED_INT, (void*)(0));
@@ -134,6 +149,7 @@ void Canvas::drawFreeParticles()
 
 void Canvas::drawFixedParticles()
 { // Todo: remove magic.
+    setColorValue(QColor(Qt::blue));
     this->fixedParticleIndicesBufferObject->bind();
     glPointSize(20.0f);
     glDrawElements(GL_POINTS, this->numFixedParticles, GL_UNSIGNED_INT, (void*)(0));
@@ -142,7 +158,10 @@ void Canvas::drawFixedParticles()
 
 void Canvas::drawSprings()
 {
-    qDebug() << "drawSprings() Not implemented yet.";
+    setColorValue(QColor(Qt::green));
+    this->springIndicesBufferObject->bind();
+    glDrawElements(GL_LINES, this->numSprings * 2, GL_UNSIGNED_INT, (void*)(0));
+    this->springIndicesBufferObject->release();
 }
 
 void Canvas::reset()
@@ -166,9 +185,9 @@ void Canvas::build(Grid *grid)
     QVector<int> fixedParticleIndices = buildFixedParticleIndices(fixedParticles);
     updateFixedParticleBuffer(fixedParticleIndices);
 
-//    QVector<Spring> springs = grid->getSprings();
-//    QVector<int> springIndices = buildSpringIndices(springs);
-//    updateSpringBuffer(springIndices);
+    QVector<Spring> springs = grid->getSprings();
+    QVector<int> springIndices = buildSpringIndices(springs);
+    updateSpringBuffer(springIndices);
 }
 
 QVector<int> Canvas::buildFreeParticleIndices(QVector<FreeParticle*> freeParticles)
@@ -195,11 +214,12 @@ QVector<int> Canvas::buildFixedParticleIndices(QVector<FixedParticle*> fixedPart
 
 QVector<int> Canvas::buildSpringIndices(QVector<Spring> springs)
 {
+    this->numSprings = springs.size();
     QVector<int> springLocationIndices;
     Particle *a, *b;
     Spring spring;
 
-    for (int i = 0; i < springs.size(); i++)
+    for (int i = 0; i < this->numSprings; i++)
     {
         spring = springs.at(i);
 
@@ -209,7 +229,6 @@ QVector<int> Canvas::buildSpringIndices(QVector<Spring> springs)
         springLocationIndices.append(a->getGlobalID());
         springLocationIndices.append(b->getGlobalID());
     }
-
     return springLocationIndices;
 }
 
