@@ -67,7 +67,7 @@ private:
     Particle* addParticle(QVector3D location, Particle* particle);
     Particle* addParticle(Particle* particle);
 
-    QVector3D* addParticleLocation(QVector3D location);
+    QVector3D* addParticleLocation(QVector3D location, int globalParticleId);
 
     void addSpring(Spring spring);
 

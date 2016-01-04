@@ -91,34 +91,37 @@ void Grid::reserve(int numParticles, int numSprings)
 
 Particle* Grid::addParticle(QVector3D location, Particle* particle)
 {
-    QVector3D* locationPtr = this->addParticleLocation(location);
+    QVector3D* locationPtr = this->addParticleLocation(location, particle->getGlobalID());
     particle->setLocation(locationPtr);
-
     return addParticle(particle);
 }
 
 //Assumes that the particle location is already in the list of particle locations!
 Particle *Grid::addParticle(Particle *particle)
 {
-    this->particles.append(particle);
+    this->particles.insert(particle->getGlobalID(), particle);
     if(particle->isFixed()) {
-        fixedParticles.append(dynamic_cast<FixedParticle*>(particle));
+        fixedParticles.insert(
+                    particle->getId(),
+                    dynamic_cast<FixedParticle*>(particle));
     } else {
-        freeParticles.append(dynamic_cast<FreeParticle*>(particle));
+        freeParticles.insert(
+                    particle->getId(),
+                    dynamic_cast<FreeParticle*>(particle));
     }
     return particle;
 }
 
-QVector3D *Grid::addParticleLocation(QVector3D location)
+QVector3D *Grid::addParticleLocation(QVector3D location, int globalParticleId)
 {
-    this->particleLocations.append(location);
+    particleLocations.insert(globalParticleId, location);
     QVector3D *locationPtr = &(this->particleLocations.last());
     return locationPtr;
 }
 
 void Grid::addSpring(Spring spring)
 {
-    this->springs.append(spring);
+    springs.append(spring);
     Spring *springPtr = &(this->springs.last());
 
     spring.getParticleA()->addSpring(springPtr);
