@@ -1,9 +1,11 @@
 #include "particle.h"
 
+int Particle::nextGlobalID = 0;
+
 Particle::Particle(QVector3D *location) :
     location(location)
 {
-    //constructor body
+    globalID = nextGlobalID++;
 }
 
 Particle::~Particle(){
@@ -21,9 +23,15 @@ QVector3D *Particle::getLocation() const
 }
 
 void Particle::doPrint(QDebug stream) const {
-    stream <<   "  id: "         <<  id
+    stream <<   "  global ID: "  <<     globalID
+           <<   "  id: "         <<  id
            <<   "\tlocation: "   <<  (location ? *(location) : QVector3D(-1.0, -1.0, -1.0))
            <<   "\tsprings: "    <<  springs;
+}
+
+int Particle::getGlobalID() const
+{
+    return globalID;
 }
 
 void Particle::setLocation(QVector3D *value)
