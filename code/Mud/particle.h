@@ -32,7 +32,7 @@ public:
 
     int getGlobalID() const;
 
-    void clear();
+    static void clear();
 
 protected:
     QVector3D *location;

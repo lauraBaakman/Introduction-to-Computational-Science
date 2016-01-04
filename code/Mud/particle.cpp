@@ -23,7 +23,7 @@ QVector3D *Particle::getLocation() const
 }
 
 void Particle::doPrint(QDebug stream) const {
-    stream <<   "  global ID: "  <<     globalID
+    stream <<   "  global ID: "  <<  globalID
            <<   "  id: "         <<  id
            <<   "\tlocation: "   <<  (location ? *(location) : QVector3D(-1.0, -1.0, -1.0))
            <<   "\tsprings: "    <<  springs;
