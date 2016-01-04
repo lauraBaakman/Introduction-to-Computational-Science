@@ -26,8 +26,7 @@ public:
     struct Settings {
         Type type;
         TypeDistribution typeDistribution;
-//        int width;
-//        int height;
+        int numParticles;
     };
 
     explicit Grid(QObject *parent = 0);

@@ -24,6 +24,11 @@ Grid::TypeDistribution Sidebar::getGridTypeDistribution() const
                 ui->gridTypeDistribution->currentIndex());
 }
 
+int Sidebar::getNumParticles()
+{
+    return ui->horizontalSlider->value();
+}
+
 void Sidebar::on_initApplyButton_clicked()
 {
     emit replaceGridSignal(getGridSettings());
@@ -34,7 +39,6 @@ Grid::Settings Sidebar::getGridSettings()
     Grid::Settings settings;
     settings.type = getGridType();
     settings.typeDistribution = getGridTypeDistribution();
-    //  settings.width = iets;
-    //  setting.height = ietsanders;
+    settings.numParticles = getNumParticles();
     return settings;
 }
