@@ -34,6 +34,7 @@ private:
 
     // Buffers
     QOpenGLBuffer *particlesBufferObject;
+    QOpenGLBuffer *springIndicesBufferObject;
     QOpenGLVertexArrayObject gridArrayObject;
     void initializeBuffers();
     void updateBuffers(QVector<QVector3D> locations);
@@ -48,6 +49,11 @@ private:
     void constructModelViewProjectionMatrix();
     bool isAllocated(QOpenGLBuffer *buffer);
     void reset();
+
+    // Helpers for build
+    QVector<int> buildFreeParticleIndices(QVector<Particle*> freeParticles);
+    QVector<int> buildFixedParticleIndices(QVector<Particle*> fixedParticles);
+    QVector<int> buildSpringIndices(QVector<Spring> springs);
 
     // Draw
     void drawParticles();

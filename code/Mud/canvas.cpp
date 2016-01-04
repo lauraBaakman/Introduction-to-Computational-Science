@@ -60,11 +60,13 @@ void Canvas::initializeBuffers()
     this->gridArrayObject.release();
 }
 
-void Canvas::updateBuffers(QVector<QVector3D> locations)
+void Canvas::updateBuffers(QVector<QVector3D> locations, QVector<int> indices)
 {
     this->particlesBufferObject->bind();
     this->particlesBufferObject->allocate(locations.data(), locations.size() * sizeof(locations[0]));
     this->particlesBufferObject->release();
+
+
 }
 
 void Canvas::paintGL()
@@ -121,13 +123,65 @@ void Canvas::reset()
 }
 
 
+
 void Canvas::build(Grid *grid)
 {
-    // Todo: remove magic.
     reset();
+    updateLocationBuffer(grid->getParticleLocations());
 
-    // Buffer for fixed and non fixed.
-    updateBuffers(grid->getParticleLocations());
+    QVector<Particle*> freeParticles = grid->getFreeParticles();
+    QVector<int> freeParticleIndices = buildFreeParticleIndices(freeParticles);
+    updateFreeParticleBuffer(freeParticleIndices);
+
+    // Check if this is needed.
+    QVector<Particle*> fixedParticles = grid->getFixedParticles();
+    QVector<int> fixedParticleIndices = buildFixedParticleIndices(fixedParticles);
+    updateFixedParticleBuffer(fixedParticleIndices);
+
+    QVector<Spring> springs = grid->getSprings();
+    QVector<int> springIndices = buildSpringIndices(springs);
+    updateSpringBuffer(springIndices);
+}
+
+QVector<int> Canvas::buildFreeParticleIndices(QVector<Particle*> freeParticles)
+{
+    QVector<int> freeParticleIndices;
+    for (int i = 0; i < freeParticles.size(); i++)
+    {
+        freeParticleIndices.append(freeParticles.at(i)->getId());
+    }
+    return freeParticleIndices;
+}
+
+QVector<int> Canvas::buildFixedParticleIndices(QVector<Particle*> fixedParticles)
+{
+    QVector<int> fixedParticleIndices;
+    for (int i = 0; i < fixedParticles.size(); i++)
+    {
+        fixedParticleIndices.append(fixedParticles.at(i)->getId());
+    }
+    return fixedParticleIndices;
+}
+
+QVector<int> Canvas::buildSpringIndices(QVector<Spring> springs)
+{
+    QVector<Spring> springs = grid->getSprings();
+    QVector<int> springLocationIndices;
+    Particle *a, *b;
+    Spring spring;
+
+    for (int i = 0; i < springs.size(); i++)
+    {
+        spring = springs.at(i);
+
+        *a = spring.getParticleA();
+        *b = spring.getParticleB();
+
+        springLocationIndices.append(a->getId());
+        springLocationIndices.append(b->getId());
+    }
+
+    return springLocationIndices;
 }
 
 bool Canvas::event(QEvent *event)

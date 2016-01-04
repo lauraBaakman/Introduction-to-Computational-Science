@@ -36,7 +36,6 @@ private:
 
     Particle *particleA;
     Particle *particleB;
-
 };
 
 #endif // SPRING_H
