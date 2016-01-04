@@ -10,8 +10,10 @@ QT       += core gui
 QMAKE_CXXFLAGS += -std=c++11 -stdlib=libc++ -mmacosx-version-min=10.10
 QMAKE_CXXFLAGS += -O2
 QMAKE_CXXFLAGS += -isystem /usr/local/include
+QMAKE_CXXFLAGS += -I/usr/local/opt/superlu43/include
 
 QMAKE_LFLAGS += -std=c++11 -stdlib=libc++ -mmacosx-version-min=10.10
+QMAKE_LFLAGS += -L/usr/local/opt/superlu43/lib
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
