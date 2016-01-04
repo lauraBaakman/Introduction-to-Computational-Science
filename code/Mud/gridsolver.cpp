@@ -15,7 +15,11 @@ void GridSolver::solve()
     arma::SpMat<float> lhs = computeLHS();
     arma::Col<float> rhsX = computeRHS(&QVector3D::x);
     arma::Col<float> rhsY = computeRHS(&QVector3D::y);
-    qDebug() << "Continue implementing solve";
+
+
+    //Solve the system
+
+    //Update the locations of vertices
 }
 
 void GridSolver::buildSpringConstantMatrix()
@@ -50,7 +54,7 @@ arma::SpMat<float> GridSolver::computeLHS()
     return lhs;
 }
 
-float GridSolver::computeRHSelement(const Particle* particle, GridSolver::elementGetter getter){
+float GridSolver::computeVectorElement(const Particle* particle, GridSolver::elementGetter getter){
     float element = 0;
     const Particle* otherParticle;
 
@@ -69,7 +73,7 @@ arma::Col<float> GridSolver::computeRHS(GridSolver::elementGetter getter)
     arma::Col<float> rhs = arma::Col<float>(grid->numFreeParticles());
     QVector<FreeParticle*> freeParticles = grid->getFreeParticles();
     for(const FreeParticle *particle : freeParticles){
-        rhs(particle->getId()) = computeRHSelement(particle, getter);
+        rhs(particle->getId()) = computeVectorElement(particle, getter);
     }
     std::cout << rhs;
     return rhs;

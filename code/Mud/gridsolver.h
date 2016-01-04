@@ -26,7 +26,7 @@ private:
     void buildAdjacencyMatrix();
 
     arma::SpMat<float> computeLHS();
-    float computeRHSelement(const Particle* particle, elementGetter getter);
+    float computeVectorElement(const Particle* particle, elementGetter getter);
     arma::Col<float> computeRHS(elementGetter getter);
 
 signals:
