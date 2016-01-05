@@ -185,13 +185,11 @@ void Canvas::build(Grid *grid)
 
     QVector<FreeParticle*> freeParticles = grid->getFreeParticles();
     QVector<int> freeParticleIndices = buildFreeParticleIndices(freeParticles);
-    qDebug() << freeParticleIndices << "Free";
     updateFreeParticleBuffer(freeParticleIndices);
 
     // Check if this is needed.
     QVector<FixedParticle*> fixedParticles = grid->getFixedParticles();
     QVector<int> fixedParticleIndices = buildFixedParticleIndices(fixedParticles);
-    qDebug() << fixedParticleIndices << "Fixed";
     updateFixedParticleBuffer(fixedParticleIndices);
 
     QVector<Spring> springs = grid->getSprings();

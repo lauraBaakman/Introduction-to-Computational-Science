@@ -9,7 +9,7 @@ FixedParticle::FixedParticle(QVector3D* location):
 }
 
 FixedParticle::~FixedParticle(){
-    qDebug() << "FixedParticle destructor";
+    //qDebug() << "FixedParticle destructor";
 }
 
 QDebug operator<<(QDebug stream, const FixedParticle &particle)

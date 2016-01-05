@@ -46,21 +46,23 @@ public:
     Spring getSpring(int index) const;
 
     QVector<Particle *> getParticles() const;
-
     QVector<FreeParticle *> getFreeParticles() const;
-
     QVector<QVector3D> getParticleLocations() const;
-
     QVector<FixedParticle *> getFixedParticles() const;
+
+    void breakSprings();
 
 private:
     QVector<Particle *> particles;
     QVector<FreeParticle *> freeParticles;
     QVector<FixedParticle *>  fixedParticles;
     QVector<QVector3D> particleLocations;
-    QVector<Spring> springs;
 
+    QVector<Spring> springs;
     Settings settings;
+
+    void breakSpringsWithHighestStrain(int numSpringsToBreak);
+    void breakSpringsWithStrainGreaterThan(float breakingStrain);
 
     void clear();
     void reserve(int numParticles, int numSprings);

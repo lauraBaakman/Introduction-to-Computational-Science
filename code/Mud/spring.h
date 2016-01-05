@@ -26,9 +26,13 @@ public:
 
     float getSpringConstant() const;
 
+    bool isBroken() const;
+
     const Particle *getOtherParticle(const Particle* particle) const;
 
     float strain() const;
+
+    void breakIt();
 
     int getId() const;
     static void clear();

@@ -47,6 +47,11 @@ float Spring::strain() const
     return (springConstant * (distanceBetweenParticles - naturalLength));
 }
 
+void Spring::breakIt()
+{
+    broken = true;
+}
+
 void Spring::clear()
 {
     Spring::nextId = 0;
@@ -59,6 +64,11 @@ void Spring::clear()
 void Spring::setSpringConstantDistributionParameters(float mean, float standardDeviation)
 {
     Spring::normalDistribution = std::normal_distribution<float> (mean, standardDeviation);
+}
+
+bool Spring::isBroken() const
+{
+    return broken;
 }
 
 float Spring::sampleSpringConstant()

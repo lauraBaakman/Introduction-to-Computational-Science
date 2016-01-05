@@ -4,12 +4,12 @@
 
 Grid::Grid(QObject *parent) : QObject(parent)
 {
-    qDebug() << "Constructor Grid";
+    //qDebug() << "Constructor Grid";
 }
 
 Grid::~Grid()
 {
-    qDebug() << "Destructor Grid";
+    //qDebug() << "Destructor Grid";
     for(const Particle* particle : particles){
         delete particle;
     }
@@ -68,6 +68,36 @@ QVector<QVector3D> Grid::getParticleLocations() const
 QVector<FixedParticle *> Grid::getFixedParticles() const
 {
     return fixedParticles;
+}
+
+void Grid::breakSprings()
+{
+    qDebug() << "Grid::breakSprings() needs a decent implementation!";
+    breakSpringsWithHighestStrain(2);
+}
+
+void Grid::breakSpringsWithHighestStrain(int springsToBreak)
+{
+    std::map<float, Spring*> map;
+
+    for (QVector<Spring>::iterator spring = springs.begin(); spring != springs.end(); spring++) {
+        if(!spring->isBroken()) map[spring->strain()] = spring;
+    }
+
+    for(auto item = map.begin();
+        (springsToBreak != 0) && (item != map.end());
+        item++)
+    {
+        item->second->breakIt();
+        springsToBreak--;
+    }
+}
+
+void Grid::breakSpringsWithStrainGreaterThan(float breakingStrain)
+{
+    for (QVector<Spring>::iterator spring = springs.begin(); spring != springs.end(); spring++) {
+        if(spring->strain() > breakingStrain) spring->breakIt();
+    }
 }
 
 void Grid::clear()
@@ -151,8 +181,6 @@ void Grid::selectGridCreator(gridCreator uniform, gridCreator variable)
 
 void Grid::uniformSquareGrid()
 {
-    qDebug() << "uniformSquareGrid kinda implemented.";
-
     clear();
 
     // Get a bunch of numbers.
@@ -188,7 +216,6 @@ void Grid::uniformSquareGrid()
                      top = getParticleById(fromCoordinateToId(row - 1, column, rows, columns));
                      addSpring(Spring(center, top));
                  }
-
             } else if (!onBorder(row, column, rows, columns)) { // Free particles
                 center = addParticle(QVector3D((float)column, (float)row, 0.0), new FreeParticle());
                 // Add springs...
