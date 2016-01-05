@@ -56,8 +56,8 @@ void Spring::setSpringConstantDistributionParameters(float mean, float standardD
 float Spring::sampleSpringConstant()
 {
     float number = Spring::normalDistribution(Spring::randomNumberGenerator);
-    qDebug() << "Generating a random number: " << number << &endl;
-    return number;
+    //Ensure that the spring constant is always positive
+    return std::abs(number);
 }
 
 int Spring::getId() const
