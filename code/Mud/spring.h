@@ -39,12 +39,14 @@ private:
     Particle *particleA;
     Particle *particleB;
 
+    float sampleSpringConstant();
+
     static int nextId;
 
     static std::normal_distribution<float> normalDistribution;
-    static std::default_random_engine random_number_generator;
+    static std::default_random_engine randomNumberGenerator;
 
-    float sampleSpringConstant();
+
 };
 
 #endif // SPRING_H
