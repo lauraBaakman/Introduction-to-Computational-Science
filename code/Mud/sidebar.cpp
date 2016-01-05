@@ -40,5 +40,8 @@ Grid::Settings Sidebar::getGridSettings()
     settings.type = getGridType();
     settings.typeDistribution = getGridTypeDistribution();
     settings.numParticles = getNumParticles();
+    //TEMPORARY, until it is fixed in the UI
+    settings.springBreakMethod = Grid::SpringBreakMethod::X_SPRINGS_WITH_HIGHEST_STRAIN;
+    settings.springBreakParameter = 2;
     return settings;
 }
