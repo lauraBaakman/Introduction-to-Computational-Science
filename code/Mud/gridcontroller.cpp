@@ -16,6 +16,11 @@ void GridController::replaceGridSlot(Grid::Settings settings)
     visualiseGrid();
 }
 
+void GridController::doStep()
+{
+      qDebug() << "Do a step";
+}
+
 void GridController::visualiseGrid()
 {
     canvas->build(grid);

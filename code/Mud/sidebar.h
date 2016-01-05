@@ -23,6 +23,7 @@ public:
 
 signals:
     void replaceGridSignal(Grid::Settings settings);
+    void doStep();
 
 private slots:
     void on_initApplyButton_clicked();
@@ -36,6 +37,8 @@ private slots:
     void on_horizontalSlider_sliderPressed();
 
     void on_breakingSpringsParameterSlider_valueChanged(int value);
+
+    void on_simulateStepButton_clicked();
 
 private:
     Ui::Sidebar *ui;

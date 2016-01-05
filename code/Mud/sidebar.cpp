@@ -170,6 +170,7 @@ void Sidebar::on_initApplyButton_clicked()
     emit replaceGridSignal(getGridSettings());
 }
 
+
 Grid::Settings Sidebar::getGridSettings()
 {
     Grid::Settings settings;
@@ -204,4 +205,9 @@ void Sidebar::on_horizontalSlider_sliderPressed()
 void Sidebar::on_breakingSpringsParameterSlider_valueChanged(int value)
 {
     updateSpringBreakingMethodSliderValueLabel(value);
+}
+
+void Sidebar::on_simulateStepButton_clicked()
+{
+    emit doStep();
 }

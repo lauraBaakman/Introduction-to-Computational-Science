@@ -21,6 +21,10 @@ MainWindow::MainWindow(QWidget *parent) :
     // Setup connections between sidebar and the grid controller
     QObject::connect(ui->sidebar, SIGNAL(replaceGridSignal(Grid::Settings)),
                      this->gridController, SLOT(replaceGridSlot(Grid::Settings)));
+
+    QObject::connect(ui->sidebar, SIGNAL(doStep()),
+                     this->gridController, SLOT(doStep()));
+
 }
 
 MainWindow::~MainWindow()
