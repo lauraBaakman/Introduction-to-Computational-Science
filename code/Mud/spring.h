@@ -30,6 +30,8 @@ public:
 
     float strain() const;
 
+    void breakIt();
+
     int getId() const;
     static void clear();
 

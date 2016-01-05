@@ -47,6 +47,11 @@ float Spring::strain() const
     return (springConstant * (distanceBetweenParticles - naturalLength));
 }
 
+void Spring::breakIt()
+{
+    broken = true;
+}
+
 void Spring::clear()
 {
     Spring::nextId = 0;
