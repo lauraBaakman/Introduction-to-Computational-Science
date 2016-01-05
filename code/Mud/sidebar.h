@@ -42,6 +42,8 @@ private:
     int map(int value, int newMin, int newMax, int oldMin, int oldMax);
 
     void updateSpringBreakingMethodSlider(Grid::SpringBreakMethod method);
+    void updateSpringBreakingMethodSliderValueLabel(Grid::SpringBreakMethod method, int value);
+    void updateSpringBreakingMethodSliderValueLabel(Grid::SpringBreakMethod method);
 
     static float breakingSpringsMinMaxStrain;
     static float breakingSpringsMaxMaxStrain;

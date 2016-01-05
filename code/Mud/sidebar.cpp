@@ -70,22 +70,51 @@ int Sidebar::map(int value, int newMin, int newMax, int oldMin, int oldMax)
 
 void Sidebar::updateSpringBreakingMethodSlider(Grid::SpringBreakMethod method)
 {
+    QString minLabel;
+    QString maxLabel;
+
     switch(method){
     case Grid::X_SPRINGS_WITH_HIGHEST_STRAIN:
         qDebug() << "Update slider: X_SPRINGS_WITH_HIGHEST_STRAIN";
-        ui->breakingSpringsMin->setText(
-                    QString().setNum(breakingSpringsMinNumberOfSpringsToBreak));
-        ui->breakingSpringsMax->setText(
-                    QString().setNum(breakingSpringsMaxNumberOfSpringsToBreak));
+        minLabel.setNum(breakingSpringsMinNumberOfSpringsToBreak);
+        maxLabel.setNum(breakingSpringsMaxNumberOfSpringsToBreak);
         break;
     case Grid::SPRINGS_WITH_STRAIN_GREATER_THAN:
         qDebug() << "Update slider: SPRINGS_WITH_STRAIN_GREATER_THAN";
-        ui->breakingSpringsMin->setText(
-                    QString().setNum(breakingSpringsMinMaxStrain));
-        ui->breakingSpringsMax->setText(
-                    QString().setNum(breakingSpringsMaxMaxStrain));
+        minLabel.setNum(breakingSpringsMinMaxStrain);
+        maxLabel.setNum(breakingSpringsMaxMaxStrain);
         break;
     }
+    ui->breakingSpringsMin->setText(minLabel);
+    ui->breakingSpringsMax->setText(maxLabel);
+    updateSpringBreakingMethodSliderValueLabel(method);
+}
+
+void Sidebar::updateSpringBreakingMethodSliderValueLabel(Grid::SpringBreakMethod method, int value)
+{
+    int sliderMin = ui->breakingSpringsParameterSlider->minimum();
+    int sliderMax = ui->breakingSpringsParameterSlider->maximum();
+    QString label;
+
+    switch(method){
+    case Grid::X_SPRINGS_WITH_HIGHEST_STRAIN:
+        label.setNum(map(value,
+                         breakingSpringsMinNumberOfSpringsToBreak, breakingSpringsMaxNumberOfSpringsToBreak,
+                         sliderMin, sliderMax));
+        break;
+    case Grid::SPRINGS_WITH_STRAIN_GREATER_THAN:
+        label.setNum(map(value,
+                         breakingSpringsMinMaxStrain, breakingSpringsMaxMaxStrain,
+                         sliderMin, sliderMax));
+        break;
+    }
+    ui->breakingSpringsValue->setText(label);
+}
+
+void Sidebar::updateSpringBreakingMethodSliderValueLabel(Grid::SpringBreakMethod method)
+{
+    int value = ui->breakingSpringsParameterSlider->value();
+    updateSpringBreakingMethodSliderValueLabel(method, value);
 }
 
 void Sidebar::on_initApplyButton_clicked()
