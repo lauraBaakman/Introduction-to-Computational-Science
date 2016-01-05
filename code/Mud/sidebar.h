@@ -49,6 +49,7 @@ private:
     int map(int value, int newMin, int newMax, int oldMin, int oldMax) const;
 
     void updateSpringBreakingMethodSlider(Grid::SpringBreakMethod method);
+    void updateSpringBreakingMethodSlider();
 
     void updateSpringBreakingMethodSliderValueLabel(Grid::SpringBreakMethod method, int value);
     void updateSpringBreakingMethodSliderValueLabel(Grid::SpringBreakMethod method);

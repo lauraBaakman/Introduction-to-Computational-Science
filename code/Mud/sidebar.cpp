@@ -17,6 +17,7 @@ Sidebar::Sidebar(QWidget *parent) :
     ui->setupUi(this);
     //Set the max value of the slider if we are setting number of springs to break to the total number of particles.
     Sidebar::breakingSpringsMaxNumberOfSpringsToBreak = ui->horizontalSlider->value() * 4;
+    updateSpringBreakingMethodSlider();
 }
 
 Sidebar::~Sidebar()
@@ -126,6 +127,11 @@ void Sidebar::updateSpringBreakingMethodSlider(Grid::SpringBreakMethod method)
     ui->breakingSpringsMin->setText(minLabel);
     ui->breakingSpringsMax->setText(maxLabel);
     updateSpringBreakingMethodSliderValueLabel(method);
+}
+
+void Sidebar::updateSpringBreakingMethodSlider()
+{
+    updateSpringBreakingMethodSlider(getSpringBreakMethod());
 }
 
 void Sidebar::updateSpringBreakingMethodSliderValueLabel(Grid::SpringBreakMethod method, int value)
