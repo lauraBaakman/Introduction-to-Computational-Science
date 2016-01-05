@@ -3,8 +3,12 @@
 
 float Sidebar::breakingSpringsMinMaxStrain = 0.1;
 float Sidebar::breakingSpringsMaxMaxStrain = 5.0;
+
 int Sidebar::breakingSpringsMinNumberOfSpringsToBreak = 1;
 int Sidebar::breakingSpringsMaxNumberOfSpringsToBreak;
+
+char Sidebar::numberFormat = 'f';
+int Sidebar::numberPrecision = 2;
 
 Sidebar::Sidebar(QWidget *parent) :
     QWidget(parent),
@@ -81,8 +85,8 @@ void Sidebar::updateSpringBreakingMethodSlider(Grid::SpringBreakMethod method)
         break;
     case Grid::SPRINGS_WITH_STRAIN_GREATER_THAN:
         qDebug() << "Update slider: SPRINGS_WITH_STRAIN_GREATER_THAN";
-        minLabel.setNum(breakingSpringsMinMaxStrain);
-        maxLabel.setNum(breakingSpringsMaxMaxStrain);
+        minLabel.setNum(breakingSpringsMinMaxStrain, numberFormat, numberPrecision);
+        maxLabel.setNum(breakingSpringsMaxMaxStrain, numberFormat, numberPrecision);
         break;
     }
     ui->breakingSpringsMin->setText(minLabel);
@@ -105,7 +109,7 @@ void Sidebar::updateSpringBreakingMethodSliderValueLabel(Grid::SpringBreakMethod
     case Grid::SPRINGS_WITH_STRAIN_GREATER_THAN:
         label.setNum(map(value,
                          breakingSpringsMinMaxStrain, breakingSpringsMaxMaxStrain,
-                         sliderMin, sliderMax));
+                         sliderMin, sliderMax), numberFormat, numberPrecision);
         break;
     }
     ui->breakingSpringsValue->setText(label);

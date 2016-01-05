@@ -49,6 +49,9 @@ private:
     static float breakingSpringsMaxMaxStrain;
     static int breakingSpringsMinNumberOfSpringsToBreak;
     static int breakingSpringsMaxNumberOfSpringsToBreak;
+
+    static char numberFormat;
+    static int numberPrecision;
 };
 
 #endif // SIDEBAR_H
