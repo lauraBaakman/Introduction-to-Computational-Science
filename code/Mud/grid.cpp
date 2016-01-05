@@ -70,15 +70,11 @@ QVector<FixedParticle *> Grid::getFixedParticles() const
     return fixedParticles;
 }
 
-void Grid::breakSprings()
-{
-    qDebug() << "Grid::breakSprings() needs a decent implementation!";
-    breakSpringsWithHighestStrain(2);
-}
-
-void Grid::breakSpringsWithHighestStrain(int springsToBreak)
+void Grid::breakSpringsWithHighestStrain()
 {
     std::map<float, Spring*> map;
+
+    int springsToBreak = settings.springBreakParameter;
 
     for (QVector<Spring>::iterator spring = springs.begin(); spring != springs.end(); spring++) {
         if(!spring->isBroken()) map[spring->strain()] = spring;
@@ -93,8 +89,9 @@ void Grid::breakSpringsWithHighestStrain(int springsToBreak)
     }
 }
 
-void Grid::breakSpringsWithStrainGreaterThan(float breakingStrain)
+void Grid::breakSpringsWithStrainGreaterThan()
 {
+    float breakingStrain = settings.springBreakParameter;
     for (QVector<Spring>::iterator spring = springs.begin(); spring != springs.end(); spring++) {
         if(spring->strain() > breakingStrain) spring->breakIt();
     }
