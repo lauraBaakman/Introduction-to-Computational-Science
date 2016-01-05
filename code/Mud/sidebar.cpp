@@ -58,7 +58,6 @@ float Sidebar::map(int value, float newMin, float newMax, int oldMin, int oldMax
     return newMin + (scaledValue * newRange);
 }
 
-
 int Sidebar::map(int value, int newMin, int newMax, int oldMin, int oldMax)
 {
     int newRange = newMax - newMin;
@@ -67,6 +66,18 @@ int Sidebar::map(int value, int newMin, int newMax, int oldMin, int oldMax)
     float scaledValue = (static_cast<float>(value - oldMin)) / oldRange;
 
     return newMin + (scaledValue * newRange);
+}
+
+void Sidebar::updateSpringBreakingMethodSlider(Grid::SpringBreakMethod method)
+{
+    switch(method){
+    case Grid::X_SPRINGS_WITH_HIGHEST_STRAIN:
+        qDebug() << "Update slider: X_SPRINGS_WITH_HIGHEST_STRAIN";
+        break;
+    case Grid::SPRINGS_WITH_STRAIN_GREATER_THAN:
+        qDebug() << "Update slider: SPRINGS_WITH_STRAIN_GREATER_THAN";
+        break;
+    }
 }
 
 void Sidebar::on_initApplyButton_clicked()
@@ -83,4 +94,9 @@ Grid::Settings Sidebar::getGridSettings()
     settings.springBreakMethod = getSpringBreakMethod();
     settings.springBreakParameter = getSpringBreakingParameter();
     return settings;
+}
+
+void Sidebar::on_springBreakingMethod_currentIndexChanged(int index)
+{
+    updateSpringBreakingMethodSlider(static_cast<Grid::SpringBreakMethod>(index));
 }

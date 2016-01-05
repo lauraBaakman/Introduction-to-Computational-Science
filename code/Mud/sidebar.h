@@ -27,6 +27,8 @@ signals:
 private slots:
     void on_initApplyButton_clicked();
 
+    void on_springBreakingMethod_currentIndexChanged(int index);
+
 private:
     Ui::Sidebar *ui;
 
@@ -38,6 +40,8 @@ private:
 
     float map(int value, float newMin, float newMax, int oldMin, int oldMax);
     int map(int value, int newMin, int newMax, int oldMin, int oldMax);
+
+    void updateSpringBreakingMethodSlider(Grid::SpringBreakMethod method);
 
     static float breakingSpringsMinMaxStrain;
     static float breakingSpringsMaxMaxStrain;
