@@ -69,19 +69,30 @@ QVector<FixedParticle *> Grid::getFixedParticles() const
 
 void Grid::breakSprings()
 {
-    qDebug() << "Methods needs a decent implementation!";
-    breakSpringsWithStrainGreaterThan(0.5);
+    qDebug() << "Grid::breakSprings() needs a decent implementation!";
+    breakSpringsWithHighestStrain(2);
 }
 
-void Grid::breakSpringsWithHighestStrain(int numSpringsToBreak)
+void Grid::breakSpringsWithHighestStrain(int springsToBreak)
 {
-    qDebug() << "Grid::breakSpringsWithHighestStrain is not yet implemented.\n";
-    exit(-1);
+    std::map<float, Spring*> map;
+
+    for (QVector<Spring>::iterator spring = springs.begin(); spring != springs.end(); spring++) {
+        if(!spring->isBroken()) map[spring->strain()] = spring;
+    }
+
+    for(auto item = map.begin();
+        (springsToBreak != 0) && (item != map.end());
+        item++)
+    {
+        item->second->breakIt();
+        springsToBreak--;
+    }
 }
 
 void Grid::breakSpringsWithStrainGreaterThan(float breakingStrain)
 {
-    for (QVector<Spring>::iterator spring = springs.begin(); spring != springs.end(); spring++){
+    for (QVector<Spring>::iterator spring = springs.begin(); spring != springs.end(); spring++) {
         if(spring->strain() > breakingStrain) spring->breakIt();
     }
 }
@@ -165,18 +176,18 @@ void Grid::uniformSquareGrid()
     qDebug() << "uniformSquareGrid kinda implemented.";
 
     clear();
-//    reserve(4, 5);
+    //    reserve(4, 5);
 
-//    Particle *a = addParticle(QVector3D(0.0, 1.0, 0.0));
-//    Particle *b = addParticle(QVector3D(1.0, 1.0, 0.0));
-//    Particle *c = addParticle(QVector3D(0.0, 0.0, 0.0));
-//    Particle *d = addParticle(QVector3D(1.0, 0.0, 0.0));
+    //    Particle *a = addParticle(QVector3D(0.0, 1.0, 0.0));
+    //    Particle *b = addParticle(QVector3D(1.0, 1.0, 0.0));
+    //    Particle *c = addParticle(QVector3D(0.0, 0.0, 0.0));
+    //    Particle *d = addParticle(QVector3D(1.0, 0.0, 0.0));
 
-//    addSpring(Spring(a, b));
-//    addSpring(Spring(b, c));
-//    addSpring(Spring(c, d));
-//    addSpring(Spring(d, a));
-//    addSpring(Spring(a, c));
+    //    addSpring(Spring(a, b));
+    //    addSpring(Spring(b, c));
+    //    addSpring(Spring(c, d));
+    //    addSpring(Spring(d, a));
+    //    addSpring(Spring(a, c));
 }
 
 void Grid::variableSquareGrid()
