@@ -52,7 +52,37 @@ float Sidebar::getSpringBreakingParameter() const
     return static_cast<float>(value);
 }
 
-float Sidebar::map(int value, float newMin, float newMax, int oldMin, int oldMax)
+float Sidebar::mapSpringBreakingParameterToCorrectRange(Grid::SpringBreakMethod method) const
+{
+    return mapSpringBreakingParameterToCorrectRange(method, ui->breakingSpringsParameterSlider->value());
+}
+
+float Sidebar::mapSpringBreakingParameterToCorrectRange(int value) const
+{
+    return mapSpringBreakingParameterToCorrectRange(getSpringBreakMethod(), value);
+}
+
+float Sidebar::mapSpringBreakingParameterToCorrectRange(Grid::SpringBreakMethod method, int value) const
+{
+    int sliderMin = ui->breakingSpringsParameterSlider->minimum();
+    int sliderMax = ui->breakingSpringsParameterSlider->maximum();
+    float mappedValue;
+    switch(method){
+    case Grid::X_SPRINGS_WITH_HIGHEST_STRAIN:
+        mappedValue = map(value,
+                         breakingSpringsMinNumberOfSpringsToBreak, breakingSpringsMaxNumberOfSpringsToBreak,
+                         sliderMin, sliderMax);
+        break;
+    case Grid::SPRINGS_WITH_STRAIN_GREATER_THAN:
+        mappedValue = map(value,
+                         breakingSpringsMinMaxStrain, breakingSpringsMaxMaxStrain,
+                         sliderMin, sliderMax);
+        break;
+    }
+    return mappedValue;
+}
+
+float Sidebar::map(int value, float newMin, float newMax, int oldMin, int oldMax) const
 {
     float newRange = newMax - newMin;
     float oldRange = static_cast<float>(oldMax - oldMin);
@@ -62,7 +92,7 @@ float Sidebar::map(int value, float newMin, float newMax, int oldMin, int oldMax
     return newMin + (scaledValue * newRange);
 }
 
-int Sidebar::map(int value, int newMin, int newMax, int oldMin, int oldMax)
+int Sidebar::map(int value, int newMin, int newMax, int oldMin, int oldMax) const
 {
     int newRange = newMax - newMin;
     float oldRange = static_cast<float>(oldMax - oldMin);
@@ -96,20 +126,15 @@ void Sidebar::updateSpringBreakingMethodSlider(Grid::SpringBreakMethod method)
 
 void Sidebar::updateSpringBreakingMethodSliderValueLabel(Grid::SpringBreakMethod method, int value)
 {
-    int sliderMin = ui->breakingSpringsParameterSlider->minimum();
-    int sliderMax = ui->breakingSpringsParameterSlider->maximum();
+    float mappedValue = mapSpringBreakingParameterToCorrectRange(method, static_cast<float>(value));
     QString label;
 
     switch(method){
     case Grid::X_SPRINGS_WITH_HIGHEST_STRAIN:
-        label.setNum(map(value,
-                         breakingSpringsMinNumberOfSpringsToBreak, breakingSpringsMaxNumberOfSpringsToBreak,
-                         sliderMin, sliderMax));
+        label.setNum(static_cast<int>(mappedValue));
         break;
     case Grid::SPRINGS_WITH_STRAIN_GREATER_THAN:
-        label.setNum(map(value,
-                         breakingSpringsMinMaxStrain, breakingSpringsMaxMaxStrain,
-                         sliderMin, sliderMax), numberFormat, numberPrecision);
+        label.setNum(mappedValue, numberFormat, numberPrecision);
         break;
     }
     ui->breakingSpringsValue->setText(label);

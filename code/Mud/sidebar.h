@@ -38,8 +38,12 @@ private:
     int getNumParticles() const;
     float getSpringBreakingParameter() const;
 
-    float map(int value, float newMin, float newMax, int oldMin, int oldMax);
-    int map(int value, int newMin, int newMax, int oldMin, int oldMax);
+    float mapSpringBreakingParameterToCorrectRange(Grid::SpringBreakMethod method) const;
+    float mapSpringBreakingParameterToCorrectRange(int value) const;
+    float mapSpringBreakingParameterToCorrectRange(Grid::SpringBreakMethod method, int value) const;
+
+    float map(int value, float newMin, float newMax, int oldMin, int oldMax) const;
+    int map(int value, int newMin, int newMax, int oldMin, int oldMax) const;
 
     void updateSpringBreakingMethodSlider(Grid::SpringBreakMethod method);
     void updateSpringBreakingMethodSliderValueLabel(Grid::SpringBreakMethod method, int value);
