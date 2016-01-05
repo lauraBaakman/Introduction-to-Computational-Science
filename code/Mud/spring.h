@@ -14,7 +14,9 @@ class Particle;
 class Spring
 {
 public:
-    Spring(Particle *particleA = nullptr, Particle *particleB = nullptr, bool broken = false);
+    Spring(
+            Particle *particleA = nullptr, Particle *particleB = nullptr,
+            bool broken = false, float naturalLength = 0);
 
     friend QDebug operator<<(QDebug stream, const Spring &spring);
     friend QDebug operator<<(QDebug stream, Spring *spring);
@@ -26,6 +28,8 @@ public:
 
     const Particle *getOtherParticle(const Particle* particle) const;
 
+    float strain() const;
+
     int getId() const;
     static void clear();
 
@@ -33,6 +37,7 @@ public:
 
 private:
     float springConstant;
+    float naturalLength;
     bool broken;
     int id;
 

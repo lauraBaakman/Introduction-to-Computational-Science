@@ -8,7 +8,9 @@ std::default_random_engine Spring::randomNumberGenerator;
 //Create the normal distribution with the default argumetns: mean = 0, std = 1
 std::normal_distribution<float> Spring::normalDistribution;
 
-Spring::Spring(Particle *particleA, Particle *particleB, bool broken) :
+
+Spring::Spring(Particle *particleA, Particle *particleB, bool broken, float naturalLength) :
+    naturalLength(naturalLength),
     broken(broken),
     particleA(particleA),
     particleB(particleB)
@@ -37,6 +39,12 @@ const Particle *Spring::getOtherParticle(const Particle *particle) const
     if(particleA == particle) return particleB;
     if(particleB == particle) return particleA;
     return particle;
+}
+
+float Spring::strain() const
+{
+    float distanceBetweenParticles = particleA->getLocation()->distanceToPoint(*(particleB->getLocation()));
+    return (springConstant * (distanceBetweenParticles - naturalLength));
 }
 
 void Spring::clear()
