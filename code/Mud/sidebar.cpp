@@ -11,7 +11,8 @@ Sidebar::Sidebar(QWidget *parent) :
     ui(new Ui::Sidebar)
 {
     ui->setupUi(this);
-    Sidebar::breakingSpringsMaxNumberOfSpringsToBreak = ui->horizontalSlider->value();
+    //Set the max value of the slider if we are setting number of springs to break to the total number of particles.
+    Sidebar::breakingSpringsMaxNumberOfSpringsToBreak = ui->horizontalSlider->value() * 4;
 }
 
 Sidebar::~Sidebar()
@@ -45,6 +46,27 @@ float Sidebar::getSpringBreakingParameter() const
 {
     int value = ui->breakingSpringsParameterSlider->value();
     return static_cast<float>(value);
+}
+
+float Sidebar::map(int value, float newMin, float newMax, int oldMin, int oldMax)
+{
+    float newRange = newMax - newMin;
+    float oldRange = static_cast<float>(oldMax - oldMin);
+
+    float scaledValue = (static_cast<float>(value) - oldMin) / oldRange;
+
+    return newMin + (scaledValue * newRange);
+}
+
+
+int Sidebar::map(int value, int newMin, int newMax, int oldMin, int oldMax)
+{
+    int newRange = newMax - newMin;
+    float oldRange = static_cast<float>(oldMax - oldMin);
+
+    float scaledValue = (static_cast<float>(value - oldMin)) / oldRange;
+
+    return newMin + (scaledValue * newRange);
 }
 
 void Sidebar::on_initApplyButton_clicked()

@@ -3,6 +3,8 @@
 
 #include <QWidget>
 
+#include <c++/v1/map>
+
 #include "grid.h"
 
 namespace Ui {
@@ -33,6 +35,9 @@ private:
     Grid::SpringBreakMethod getSpringBreakMethod() const;
     int getNumParticles() const;
     float getSpringBreakingParameter() const;
+
+    float map(int value, float newMin, float newMax, int oldMin, int oldMax);
+    int map(int value, int newMin, int newMax, int oldMin, int oldMax);
 
     static float breakingSpringsMinMaxStrain;
     static float breakingSpringsMaxMaxStrain;
