@@ -49,17 +49,18 @@ public:
     QVector<QVector3D> getParticleLocations() const;
     QVector<FixedParticle *> getFixedParticles() const;
 
+    void breakSprings();
+
 private:
     QVector<Particle *> particles;
     QVector<FreeParticle *> freeParticles;
     QVector<FixedParticle *>  fixedParticles;
     QVector<QVector3D> particleLocations;
 
+    QVector<Spring> springs;
+
     void breakSpringsWithHighestStrain(int numSpringsToBreak);
     void breakSpringsWithStrainGreaterThan(float breakingStrain);
-
-
-    QVector<Spring> springs;
 
     void clear();
     void reserve(int numParticles, int numSprings);
