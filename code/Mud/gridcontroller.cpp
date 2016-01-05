@@ -19,10 +19,13 @@ void GridController::replaceGridSlot(Grid::Settings settings)
 void GridController::doStep()
 {
     // Break springs?
+    (grid->*grid->breakSprings)();
 
     // solver solve grid
+    gridSolver->solve();
 
     // this->visualiseGrid();
+    this->visualiseGrid();
 }
 
 void GridController::visualiseGrid()
