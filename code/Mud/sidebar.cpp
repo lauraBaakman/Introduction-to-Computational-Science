@@ -73,9 +73,17 @@ void Sidebar::updateSpringBreakingMethodSlider(Grid::SpringBreakMethod method)
     switch(method){
     case Grid::X_SPRINGS_WITH_HIGHEST_STRAIN:
         qDebug() << "Update slider: X_SPRINGS_WITH_HIGHEST_STRAIN";
+        ui->breakingSpringsMin->setText(
+                    QString().setNum(breakingSpringsMinNumberOfSpringsToBreak));
+        ui->breakingSpringsMax->setText(
+                    QString().setNum(breakingSpringsMaxNumberOfSpringsToBreak));
         break;
     case Grid::SPRINGS_WITH_STRAIN_GREATER_THAN:
         qDebug() << "Update slider: SPRINGS_WITH_STRAIN_GREATER_THAN";
+        ui->breakingSpringsMin->setText(
+                    QString().setNum(breakingSpringsMinMaxStrain));
+        ui->breakingSpringsMax->setText(
+                    QString().setNum(breakingSpringsMaxMaxStrain));
         break;
     }
 }
