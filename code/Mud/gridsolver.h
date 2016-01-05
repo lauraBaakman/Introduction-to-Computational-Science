@@ -19,14 +19,18 @@ private:
 
     typedef float (QVector3D::*elementGetter)() const;
 
-    arma::SpMat<float> springConstantsMatrix;
-    arma::SpMat<float> adjacencyMatrix;
+    arma::Col<float> solveForAxis(arma::Mat<float> lhs, elementGetter getter);
+
+    void updateLocations(arma::Mat<float> newLocations);
+
+    arma::Mat<float> springConstantsMatrix;
+    arma::Mat<float> adjacencyMatrix;
 
     void buildSpringConstantMatrix();
     void buildAdjacencyMatrix();
 
-    arma::SpMat<float> computeLHS();
-    float computeRHSelement(const Particle* particle, elementGetter getter);
+    arma::Mat<float> computeLHS();
+    float computeVectorElement(const Particle* particle, elementGetter getter);
     arma::Col<float> computeRHS(elementGetter getter);
 
 signals:
