@@ -175,12 +175,15 @@ void Grid::uniformSquareGrid()
                     !onCorner(row, column, rows, columns))
             { // Fixed border particles
                 addParticle(QVector3D((float)row, (float)column, 0.0), new FixedParticle());
+                qDebug() << row << column << "Fixed";
             } else if (!onBorder(row, column, rows, columns))
             { // Free particles
+                qDebug() << row << column << "Free";
                 addParticle(QVector3D((float)row, (float)column, 0.0), new FreeParticle());
             }
         }
     }
+
 
 
 //    Particle *a = addParticle(QVector3D(0.0, 1.0, 0.0));

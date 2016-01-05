@@ -181,16 +181,17 @@ void Canvas::build(Grid *grid)
     reset();
     QVector<QVector3D> locations = grid->getParticleLocations();
     locations = mapLocationsToRange(locations, grid->getSettings());
-    qDebug() << locations;
     updateLocationBuffer(locations);
 
     QVector<FreeParticle*> freeParticles = grid->getFreeParticles();
     QVector<int> freeParticleIndices = buildFreeParticleIndices(freeParticles);
+    qDebug() << freeParticleIndices << "Free";
     updateFreeParticleBuffer(freeParticleIndices);
 
     // Check if this is needed.
     QVector<FixedParticle*> fixedParticles = grid->getFixedParticles();
     QVector<int> fixedParticleIndices = buildFixedParticleIndices(fixedParticles);
+    qDebug() << fixedParticleIndices << "Fixed";
     updateFixedParticleBuffer(fixedParticleIndices);
 
     QVector<Spring> springs = grid->getSprings();
@@ -215,7 +216,7 @@ QVector<int> Canvas::buildFixedParticleIndices(QVector<FixedParticle*> fixedPart
     QVector<int> fixedParticleIndices;
     for (int i = 0; i < this->numFixedParticles; i++)
     {
-        fixedParticleIndices.append(fixedParticles.at(i)->getId());
+        fixedParticleIndices.append(fixedParticles.at(i)->getGlobalID());
     }
     return fixedParticleIndices;
 }
@@ -248,8 +249,8 @@ QVector<QVector3D> Canvas::mapLocationsToRange(QVector<QVector3D> locations, Gri
     for (int i = 0; i < locations.size(); i++)
     {
         QVector3D mappedLocation =locations.at(i);
-        mappedLocation.setX((mappedLocation.x() * columnSlope) - 1.0);
-        mappedLocation.setY((mappedLocation.y() * rowSlope) - 1.0);
+        mappedLocation.setX((mappedLocation.x() * rowSlope) - 1.0);
+        mappedLocation.setY((mappedLocation.y() * columnSlope) - 1.0);
         locations.replace(i, mappedLocation);
     }
     return locations;
