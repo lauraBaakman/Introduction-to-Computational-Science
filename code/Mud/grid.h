@@ -45,11 +45,8 @@ public:
     Spring getSpring(int index) const;
 
     QVector<Particle *> getParticles() const;
-
     QVector<FreeParticle *> getFreeParticles() const;
-
     QVector<QVector3D> getParticleLocations() const;
-
     QVector<FixedParticle *> getFixedParticles() const;
 
 private:
