@@ -67,6 +67,18 @@ QVector<FixedParticle *> Grid::getFixedParticles() const
     return fixedParticles;
 }
 
+void Grid::breakSpringsWithHighestStrain(int numSpringsToBreak)
+{
+    qDebug() << "Grid::breakSpringsWithHighestStrain is not yet implemented.\n";
+    exit(-1);
+}
+
+void Grid::breakSpringsWithStrainGreaterThan(float breakingStrain)
+{
+    qDebug() << "Grid::breakSpringsWithStrainGreaterThan is not yet implemented.\n";
+    exit(-1);
+}
+
 void Grid::clear()
 {
     this->particles.clear();

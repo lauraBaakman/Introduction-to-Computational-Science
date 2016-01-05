@@ -55,6 +55,9 @@ private:
     QVector<FixedParticle *>  fixedParticles;
     QVector<QVector3D> particleLocations;
 
+    void breakSpringsWithHighestStrain(int numSpringsToBreak);
+    void breakSpringsWithStrainGreaterThan(float breakingStrain);
+
 
     QVector<Spring> springs;
 
