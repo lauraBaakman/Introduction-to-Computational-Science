@@ -189,6 +189,7 @@ void Grid::uniformSquareGrid()
     this->settings.columns = columns;
 
     int numParticles = rows * columns;
+    settings.numParticles = numParticles;
     int numSprings = (2 *(columns * rows + 2)) - (3 * (rows + columns));
 
     reserve(numParticles, numSprings);
