@@ -2,6 +2,7 @@
 #define SPRING_H
 
 #include <random>
+#include <iostream>
 
 #include <QDebug>
 #include <QVector3D>
@@ -40,7 +41,7 @@ private:
 
     static int nextId;
 
-    static std::normal_distribution<float> normal_distribution;
+    static std::normal_distribution<float> normalDistribution;
     static std::default_random_engine random_number_generator;
 
     float sampleSpringConstant();
