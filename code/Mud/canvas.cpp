@@ -267,7 +267,6 @@ bool Canvas::gestureEvent(QGestureEvent *event)
     if (QGesture *pinch = event->gesture(Qt::PinchGesture)) {
         pinchTriggered(static_cast<QPinchGesture *>(pinch));
     }
-    qDebug() << event;
     return true;
 }
 
@@ -285,4 +284,3 @@ void Canvas::pinchTriggered(QPinchGesture *gesture)
    }
     update();
 }
-
