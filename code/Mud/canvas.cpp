@@ -180,7 +180,7 @@ void Canvas::build(Grid *grid)
 {
     reset();
     QVector<QVector3D> locations = grid->getParticleLocations();
-    locations = mapLocationsToRange(locations, grid->getSettings(), -10.0, 10.0);
+    locations = mapLocationsToRange(locations, grid->getSettings(), -1.0, 1.0);
     updateLocationBuffer(locations);
 
     QVector<FreeParticle*> freeParticles = grid->getFreeParticles();
@@ -240,15 +240,15 @@ QVector<int> Canvas::buildSpringIndices(QVector<Spring> springs)
 }
 
 QVector<QVector3D> Canvas::mapLocationsToRange(QVector<QVector3D> locations, Grid::Settings* settings, float start, float end)
-{ // Assuming the -1 to 1 range for now... and ever (probably)
-    float rowSlope = ((end - start) / ((float)settings->rows - 1.0));
-    float columnSlope = ((end - start) / ((float)settings->columns - 1.0));
+{
+    float slope = (end - start) / (static_cast<float>(settings->rows) - 1.0);
 
+    QVector3D mappedLocation;
     for (int i = 0; i < locations.size(); i++)
     {
-        QVector3D mappedLocation =locations.at(i);
-        mappedLocation.setX((mappedLocation.x() * rowSlope) + start);
-        mappedLocation.setY((mappedLocation.y() * columnSlope) + start);
+        mappedLocation = locations.at(i);
+        mappedLocation.setX((mappedLocation.x() * slope) + start);
+        mappedLocation.setY((mappedLocation.y() * slope) + start);
         locations.replace(i, mappedLocation);
     }
     return locations;
