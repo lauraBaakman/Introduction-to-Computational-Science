@@ -40,8 +40,8 @@ private:
 
     static int nextId;
 
-//    static std::normal_distribution<float> distribution;
-    static std::default_random_engine generator;
+    static std::normal_distribution<float> normal_distribution;
+    static std::default_random_engine random_number_generator;
 
     float sampleSpringConstant();
 };

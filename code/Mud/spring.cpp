@@ -1,7 +1,10 @@
 #include "spring.h"
 
 int Spring::nextId = 0;
-std::default_random_engine Spring::generator;
+std::default_random_engine Spring::random_number_generator;
+
+//Create the normal distribution with the default argumetns: mean = 0, std = 1
+std::normal_distribution<float> Spring::normal_distribution;
 
 Spring::Spring(Particle *particleA, Particle *particleB, bool broken) :
     broken(broken),
@@ -48,9 +51,9 @@ void Spring::setSpringConstantDistributionParameters(float mean, float standardD
 
 float Spring::sampleSpringConstant()
 {
-    std::normal_distribution<double> distribution(5.0,2.0);
+//    std::normal_distribution<double> distribution(5.0,2.0);
 
-    float number = distribution(Spring::generator);
+    float number = Spring::normal_distribution(Spring::random_number_generator);
     qDebug() << "Generating a random number: " << number << &endl;
     return number;
 }
