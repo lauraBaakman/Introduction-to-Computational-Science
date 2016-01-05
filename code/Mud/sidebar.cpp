@@ -16,8 +16,7 @@ Sidebar::Sidebar(QWidget *parent) :
 {
     ui->setupUi(this);
     //Set the max value of the slider if we are setting number of springs to break to the total number of particles.
-    Sidebar::breakingSpringsMaxNumberOfSpringsToBreak = ui->horizontalSlider->value() * 4;
-    updateSpringBreakingMethodSlider();
+    updateMaxNumSpringsToBreak(ui->horizontalSlider->value());
 }
 
 Sidebar::~Sidebar()
@@ -114,12 +113,10 @@ void Sidebar::updateSpringBreakingMethodSlider(Grid::SpringBreakMethod method)
 
     switch(method){
     case Grid::X_SPRINGS_WITH_HIGHEST_STRAIN:
-        qDebug() << "Update slider: X_SPRINGS_WITH_HIGHEST_STRAIN";
         minLabel.setNum(breakingSpringsMinNumberOfSpringsToBreak);
         maxLabel.setNum(breakingSpringsMaxNumberOfSpringsToBreak);
         break;
     case Grid::SPRINGS_WITH_STRAIN_GREATER_THAN:
-        qDebug() << "Update slider: SPRINGS_WITH_STRAIN_GREATER_THAN";
         minLabel.setNum(breakingSpringsMinMaxStrain, numberFormat, numberPrecision);
         maxLabel.setNum(breakingSpringsMaxMaxStrain, numberFormat, numberPrecision);
         break;
@@ -162,6 +159,12 @@ void Sidebar::updateSpringBreakingMethodSliderValueLabel(int value)
     updateSpringBreakingMethodSliderValueLabel(method, value);
 }
 
+void Sidebar::updateMaxNumSpringsToBreak(int numberOfParticles)
+{
+    Sidebar::breakingSpringsMaxNumberOfSpringsToBreak = numberOfParticles * 4;
+    updateSpringBreakingMethodSlider();
+}
+
 void Sidebar::on_initApplyButton_clicked()
 {
     emit replaceGridSignal(getGridSettings());
@@ -186,4 +189,19 @@ void Sidebar::on_springBreakingMethod_currentIndexChanged(int index)
 void Sidebar::on_breakingSpringsParameterSlider_sliderMoved(int position)
 {
     updateSpringBreakingMethodSliderValueLabel(position);
+}
+
+void Sidebar::on_horizontalSlider_sliderMoved(int position)
+{
+    updateMaxNumSpringsToBreak(position);
+}
+
+void Sidebar::on_horizontalSlider_sliderPressed()
+{
+    updateMaxNumSpringsToBreak(ui->horizontalSlider->value());
+}
+
+void Sidebar::on_breakingSpringsParameterSlider_valueChanged(int value)
+{
+    updateSpringBreakingMethodSliderValueLabel(value);
 }

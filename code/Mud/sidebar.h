@@ -31,6 +31,12 @@ private slots:
 
     void on_breakingSpringsParameterSlider_sliderMoved(int position);
 
+    void on_horizontalSlider_sliderMoved(int position);
+
+    void on_horizontalSlider_sliderPressed();
+
+    void on_breakingSpringsParameterSlider_valueChanged(int value);
+
 private:
     Ui::Sidebar *ui;
 
@@ -54,6 +60,8 @@ private:
     void updateSpringBreakingMethodSliderValueLabel(Grid::SpringBreakMethod method, int value);
     void updateSpringBreakingMethodSliderValueLabel(Grid::SpringBreakMethod method);
     void updateSpringBreakingMethodSliderValueLabel(int value);
+
+    void updateMaxNumSpringsToBreak(int numberOfParticles);
 
     static float breakingSpringsMinMaxStrain;
     static float breakingSpringsMaxMaxStrain;
