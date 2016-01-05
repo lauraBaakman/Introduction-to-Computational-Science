@@ -52,6 +52,7 @@ void Canvas::initializeBuffers()
     this->gridArrayObject.bind();
 
     this->locationBufferObject = new QOpenGLBuffer(QOpenGLBuffer::VertexBuffer);
+    this->locationBufferObject->setUsagePattern(QOpenGLBuffer::DynamicDraw);
     this->locationBufferObject->create();
     this->locationBufferObject->bind();
 
@@ -62,17 +63,21 @@ void Canvas::initializeBuffers()
 
     // Not bound to the VAO...
     this->freeParticleIndicesBufferObject = new QOpenGLBuffer(QOpenGLBuffer::IndexBuffer);
+    this->freeParticleIndicesBufferObject->setUsagePattern(QOpenGLBuffer::DynamicDraw);
     this->freeParticleIndicesBufferObject->create();
 
     this->fixedParticleIndicesBufferObject = new QOpenGLBuffer(QOpenGLBuffer::IndexBuffer);
+    this->fixedParticleIndicesBufferObject->setUsagePattern(QOpenGLBuffer::DynamicDraw);
     this->fixedParticleIndicesBufferObject->create();
 
     this->springIndicesBufferObject = new QOpenGLBuffer(QOpenGLBuffer::IndexBuffer);
+    this->springIndicesBufferObject->setUsagePattern(QOpenGLBuffer::DynamicDraw);
     this->springIndicesBufferObject->create();
 }
 
 void Canvas::updateLocationBuffer(QVector<QVector3D> locations)
 {
+
     this->locationBufferObject->bind();
     this->locationBufferObject->allocate(locations.data(), locations.size() * sizeof(locations[0]));
     this->locationBufferObject->release();
@@ -174,7 +179,10 @@ void Canvas::reset()
 void Canvas::build(Grid *grid)
 {
     reset();
-    updateLocationBuffer(grid->getParticleLocations());
+    QVector<QVector3D> locations = grid->getParticleLocations();
+    locations = mapLocationsToRange(locations, grid->getSettings());
+    qDebug() << locations;
+    updateLocationBuffer(locations);
 
     QVector<FreeParticle*> freeParticles = grid->getFreeParticles();
     QVector<int> freeParticleIndices = buildFreeParticleIndices(freeParticles);
@@ -230,6 +238,21 @@ QVector<int> Canvas::buildSpringIndices(QVector<Spring> springs)
         springLocationIndices.append(b->getGlobalID());
     }
     return springLocationIndices;
+}
+
+QVector<QVector3D> Canvas::mapLocationsToRange(QVector<QVector3D> locations, Grid::Settings* settings)
+{ // Assuming the -1 to 1 range for now... and ever (probably)
+    float rowSlope = (2.0 / ((float)settings->rows - 1.0));
+    float columnSlope = (2.0 / ((float)settings->columns - 1.0));
+
+    for (int i = 0; i < locations.size(); i++)
+    {
+        QVector3D mappedLocation =locations.at(i);
+        mappedLocation.setX((mappedLocation.x() * columnSlope) - 1.0);
+        mappedLocation.setY((mappedLocation.y() * rowSlope) - 1.0);
+        locations.replace(i, mappedLocation);
+    }
+    return locations;
 }
 
 bool Canvas::event(QEvent *event)

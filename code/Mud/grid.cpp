@@ -1,5 +1,6 @@
 #include "grid.h"
 #include <QDebug>
+#include <math.h>
 
 Grid::Grid(QObject *parent) : QObject(parent)
 {
@@ -16,13 +17,15 @@ Grid::~Grid()
 
 void Grid::gridFactory(Settings settings)
 {
+    this->settings = settings;
+
     switch(settings.type)
     {
     case SQUARE:
-        selectGridCreator(settings, &Grid::uniformSquareGrid, &Grid::variableSquareGrid);
+        selectGridCreator(&Grid::uniformSquareGrid, &Grid::variableSquareGrid);
         break;
     case HEXAGONAL:
-        selectGridCreator(settings, &Grid::uniformHexagonalGrid, &Grid::variableHexagonalGrid);
+        selectGridCreator(&Grid::uniformHexagonalGrid, &Grid::variableHexagonalGrid);
         break;
     }
 }
@@ -128,9 +131,14 @@ void Grid::addSpring(Spring spring)
     spring.getParticleB()->addSpring(springPtr);
 }
 
-void Grid::selectGridCreator(Settings settings, gridCreator uniform, gridCreator variable)
+Grid::Settings* Grid::getSettings()
 {
-    switch(settings.typeDistribution)
+    return &this->settings;
+}
+
+void Grid::selectGridCreator(gridCreator uniform, gridCreator variable)
+{
+    switch(this->settings.typeDistribution)
     {
     case UNIFORM:
         (this->*uniform)();
@@ -146,7 +154,34 @@ void Grid::uniformSquareGrid()
     qDebug() << "uniformSquareGrid kinda implemented.";
 
     clear();
-//    reserve(4, 5);
+    int rows = ceil(sqrt(this->settings.numParticles));
+    int columns = rows;
+    this->settings.rows = rows;
+    this->settings.columns = columns;
+    qDebug() << rows;
+    qDebug() << columns;
+    int numParticles = rows * columns;
+    int numSprings = (2 *(columns * rows + 2)) - (3 * (rows + columns));
+    qDebug() << numParticles;
+    qDebug() << numSprings;
+
+    reserve(numParticles, numSprings);
+
+    for (int row = 0; row < rows; row++)
+    {
+        for(int column = 0; column < columns; column++)
+        {
+            if(onBorder(row, column, rows, columns) &&
+                    !onCorner(row, column, rows, columns))
+            { // Fixed border particles
+                addParticle(QVector3D((float)row, (float)column, 0.0), new FixedParticle());
+            } else if (!onBorder(row, column, rows, columns))
+            { // Free particles
+                addParticle(QVector3D((float)row, (float)column, 0.0), new FreeParticle());
+            }
+        }
+    }
+
 
 //    Particle *a = addParticle(QVector3D(0.0, 1.0, 0.0));
 //    Particle *b = addParticle(QVector3D(1.0, 1.0, 0.0));
@@ -158,6 +193,17 @@ void Grid::uniformSquareGrid()
 //    addSpring(Spring(c, d));
 //    addSpring(Spring(d, a));
 //    addSpring(Spring(a, c));
+}
+
+bool Grid::onCorner(int row, int column, int rows, int columns)
+{
+    bool cornerColumn = (column == 0 || column == (columns - 1));
+    return (row == 0 && cornerColumn) || (row == (rows - 1) && cornerColumn);
+}
+
+bool Grid::onBorder(int row, int column, int rows, int columns)
+{
+    return row == 0 || row == (rows - 1) || column == 0 || column == (columns - 1);
 }
 
 void Grid::variableSquareGrid()

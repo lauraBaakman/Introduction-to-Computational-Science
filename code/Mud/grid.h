@@ -27,6 +27,8 @@ public:
         Type type;
         TypeDistribution typeDistribution;
         int numParticles;
+        int rows;
+        int columns;
     };
 
     explicit Grid(QObject *parent = 0);
@@ -56,9 +58,9 @@ private:
     QVector<FreeParticle *> freeParticles;
     QVector<FixedParticle *>  fixedParticles;
     QVector<QVector3D> particleLocations;
-
-
     QVector<Spring> springs;
+
+    Settings settings;
 
     void clear();
     void reserve(int numParticles, int numSprings);
@@ -76,11 +78,16 @@ private:
     void uniformHexagonalGrid();
     void variableHexagonalGrid();
 
+    bool onBorder(int row, int column, int rows, int columns);
+    bool onCorner(int row, int column, int rows, int columns);
+
     typedef void (Grid::*gridCreator)();
-    void selectGridCreator(Settings settings, gridCreator uniform, gridCreator variable);
+    void selectGridCreator(gridCreator uniform, gridCreator variable);
 signals:
 
 public slots:
+
+    Settings* getSettings();
 };
 
 #endif // GRID_H
