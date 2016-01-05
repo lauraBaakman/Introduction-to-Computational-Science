@@ -62,7 +62,7 @@ private:
     QVector<int> buildFreeParticleIndices(QVector<FreeParticle*> freeParticles);
     QVector<int> buildFixedParticleIndices(QVector<FixedParticle*> fixedParticles);
     QVector<int> buildSpringIndices(QVector<Spring> springs);
-    QVector<QVector3D> mapLocationsToRange(QVector<QVector3D> locations, Grid::Settings* settings);
+    QVector<QVector3D> mapLocationsToRange(QVector<QVector3D> locations, Grid::Settings* settings, float start, float end);
 
     // Draw
     int numFreeParticles;

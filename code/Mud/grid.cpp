@@ -154,19 +154,26 @@ void Grid::uniformSquareGrid()
     qDebug() << "uniformSquareGrid kinda implemented.";
 
     clear();
+
+    // Get a bunch of numbers.
     int rows = ceil(sqrt(this->settings.numParticles));
     int columns = rows;
-    this->settings.rows = rows;
-    this->settings.columns = columns;
-    qDebug() << rows;
-    qDebug() << columns;
     int numParticles = rows * columns;
     int numSprings = (2 *(columns * rows + 2)) - (3 * (rows + columns));
-    qDebug() << numParticles;
-    qDebug() << numSprings;
 
+    // Updating settings struct of grid.
+    this->settings.rows = rows;
+    this->settings.columns = columns;
+    this->settings.numParticles = numParticles;
+
+    // Memory
     reserve(numParticles, numSprings);
 
+    Particle *left = nullptr;
+    Particle *center = nullptr;
+    Particle *top = nullptr;
+
+    // Klap dit stukje maar gewoon even dicht...
     for (int row = 0; row < rows; row++)
     {
         for(int column = 0; column < columns; column++)
@@ -174,28 +181,47 @@ void Grid::uniformSquareGrid()
             if(onBorder(row, column, rows, columns) &&
                     !onCorner(row, column, rows, columns))
             { // Fixed border particles
-                addParticle(QVector3D((float)row, (float)column, 0.0), new FixedParticle());
-                qDebug() << row << column << "Fixed";
-            } else if (!onBorder(row, column, rows, columns))
-            { // Free particles
-                qDebug() << row << column << "Free";
-                addParticle(QVector3D((float)row, (float)column, 0.0), new FreeParticle());
+                 center = addParticle(QVector3D((float)column, (float)row, 0.0), new FixedParticle());
+                 // Add springs...
+                 if(left != nullptr && !left->isFixed()){addSpring(Spring(center, left));}
+                 if(row == (rows - 1)) {
+                     top = getParticleById(fromCoordinateToId(row - 1, column, rows, columns));
+                     addSpring(Spring(center, top));
+                 }
+
+            } else if (!onBorder(row, column, rows, columns)) { // Free particles
+                center = addParticle(QVector3D((float)column, (float)row, 0.0), new FreeParticle());
+                // Add springs...
+                if (left != nullptr) {addSpring(Spring(center, left));}
+                top = getParticleById(fromCoordinateToId(row - 1, column, rows, columns));
+                addSpring(Spring(center, top));
             }
+            left = center;
         }
     }
+}
 
+int Grid::fromCoordinateToId(int row, int column, int rows, int columns)
+{
+    int corners = 1;
+    if(row > 0 && row < (rows - 1)) {
+        corners = 2;
+    } else if (row == (rows - 1)) {
+        corners = 3;
+    }
+    return ((row * columns) + column) - corners;
+}
 
-
-//    Particle *a = addParticle(QVector3D(0.0, 1.0, 0.0));
-//    Particle *b = addParticle(QVector3D(1.0, 1.0, 0.0));
-//    Particle *c = addParticle(QVector3D(0.0, 0.0, 0.0));
-//    Particle *d = addParticle(QVector3D(1.0, 0.0, 0.0));
-
-//    addSpring(Spring(a, b));
-//    addSpring(Spring(b, c));
-//    addSpring(Spring(c, d));
-//    addSpring(Spring(d, a));
-//    addSpring(Spring(a, c));
+Particle *Grid::getParticleById(int id)
+{
+    for(int i = 0; i < this->particles.size(); i++)
+    {
+        Particle *particle = particles.at(i);
+        if(particle->getGlobalID() == id)
+        {
+            return particle;
+        }
+    }
 }
 
 bool Grid::onCorner(int row, int column, int rows, int columns)

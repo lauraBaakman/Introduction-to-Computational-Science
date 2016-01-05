@@ -67,6 +67,7 @@ private:
 
     Particle* addParticle(QVector3D location, Particle* particle);
     Particle* addParticle(Particle* particle);
+    Particle* getParticleById(int id);
 
     QVector3D* addParticleLocation(QVector3D location, int globalParticleId);
 
@@ -80,6 +81,7 @@ private:
 
     bool onBorder(int row, int column, int rows, int columns);
     bool onCorner(int row, int column, int rows, int columns);
+    int fromCoordinateToId(int row, int column, int rows, int columns);
 
     typedef void (Grid::*gridCreator)();
     void selectGridCreator(gridCreator uniform, gridCreator variable);
