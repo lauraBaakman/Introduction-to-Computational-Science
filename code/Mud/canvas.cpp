@@ -8,11 +8,9 @@ Canvas::Canvas(QWidget *parent) :
 {
     qDebug() << "Constructor Canvas";
 
-    this->zoomingFactor = 1.0;
-    this->rotationAngle = 1.0;
-    this->mvpMatrix.setToIdentity();
+    reset();
 
-    // Register all gesture event, because this is not the default.
+    // Register all gesture events.
     grabGesture(Qt::PinchGesture);
 }
 
@@ -21,7 +19,10 @@ Canvas::~Canvas()
     qDebug() << "Destructor Canvas";
 
     delete this->shaderProgram;
-    delete this->particlesBufferObject;
+    delete this->locationBufferObject;
+    delete this->freeParticleIndicesBufferObject;
+    delete this->fixedParticleIndicesBufferObject;
+    delete this->springIndicesBufferObject;
 
     this->gridArrayObject.destroy();
 }
@@ -31,8 +32,6 @@ void Canvas::initializeGL()
     initializeOpenGLFunctions();
 
     glEnable(GL_DEPTH_TEST);
-    // glEnable(GL_CULL_FACE);
-
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
     initializeShaders();
@@ -52,39 +51,84 @@ void Canvas::initializeBuffers()
     this->gridArrayObject.create();
     this->gridArrayObject.bind();
 
-    this->particlesBufferObject = new QOpenGLBuffer(QOpenGLBuffer::VertexBuffer);
-    this->particlesBufferObject->create();
-    this->particlesBufferObject->bind();
+    this->locationBufferObject = new QOpenGLBuffer(QOpenGLBuffer::VertexBuffer);
+    this->locationBufferObject->setUsagePattern(QOpenGLBuffer::DynamicDraw);
+    this->locationBufferObject->create();
+    this->locationBufferObject->bind();
 
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
 
     this->gridArrayObject.release();
+
+    // Not bound to the VAO...
+    this->freeParticleIndicesBufferObject = new QOpenGLBuffer(QOpenGLBuffer::IndexBuffer);
+    this->freeParticleIndicesBufferObject->setUsagePattern(QOpenGLBuffer::DynamicDraw);
+    this->freeParticleIndicesBufferObject->create();
+
+    this->fixedParticleIndicesBufferObject = new QOpenGLBuffer(QOpenGLBuffer::IndexBuffer);
+    this->fixedParticleIndicesBufferObject->setUsagePattern(QOpenGLBuffer::DynamicDraw);
+    this->fixedParticleIndicesBufferObject->create();
+
+    this->springIndicesBufferObject = new QOpenGLBuffer(QOpenGLBuffer::IndexBuffer);
+    this->springIndicesBufferObject->setUsagePattern(QOpenGLBuffer::DynamicDraw);
+    this->springIndicesBufferObject->create();
 }
 
-void Canvas::updateBuffers(QVector<QVector3D> locations)
+void Canvas::updateLocationBuffer(QVector<QVector3D> locations)
 {
-    this->particlesBufferObject->bind();
-    this->particlesBufferObject->allocate(locations.data(), locations.size() * sizeof(locations[0]));
-    this->particlesBufferObject->release();
+
+    this->locationBufferObject->bind();
+    this->locationBufferObject->allocate(locations.data(), locations.size() * sizeof(locations[0]));
+    this->locationBufferObject->release();
+}
+
+void Canvas::updateFreeParticleBuffer(QVector<int> indices)
+{
+    this->freeParticleIndicesBufferObject->bind();
+    this->freeParticleIndicesBufferObject->allocate(indices.data(), indices.size() * sizeof(indices[0]));
+    this->freeParticleIndicesBufferObject->release();
+}
+
+void Canvas::updateFixedParticleBuffer(QVector<int> indices)
+{
+    this->fixedParticleIndicesBufferObject->bind();
+    this->fixedParticleIndicesBufferObject->allocate(indices.data(), indices.size() * sizeof(indices[0]));
+    this->fixedParticleIndicesBufferObject->release();
+}
+
+void Canvas::updateSpringBuffer(QVector<int> indices)
+{
+    this->springIndicesBufferObject->bind();
+    this->springIndicesBufferObject->allocate(indices.data(), indices.size() * sizeof(indices[0]));
+    this->springIndicesBufferObject->release();
 }
 
 void Canvas::paintGL()
 {
     glClear(GL_COLOR_BUFFER_BIT);
 
-    if (isAllocated(this->particlesBufferObject)) {
+    if (isAllocated(this->locationBufferObject)) {
         this->shaderProgram->bind();
-        setUniformValues();
-        drawParticles();
+        this->gridArrayObject.bind();
+        setMvpValue();
+        drawFreeParticles();
+        drawFixedParticles();
+        drawSprings();
+        this->gridArrayObject.release();
         this->shaderProgram->release();
     }
 }
 
-void Canvas::setUniformValues()
+void Canvas::setMvpValue()
 {
     constructModelViewProjectionMatrix();
     this->shaderProgram->setUniformValue("mvpMatrix", mvpMatrix);
+}
+
+void Canvas::setColorValue(QColor color)
+{
+    this->shaderProgram->setUniformValue("color", color);
 }
 
 void Canvas::constructModelViewProjectionMatrix()
@@ -99,23 +143,117 @@ bool Canvas::isAllocated(QOpenGLBuffer *buffer)
     return buffer->size() != 0;
 }
 
-void Canvas::drawParticles()
-{
-    this->gridArrayObject.bind();
-
+void Canvas::drawFreeParticles()
+{ // Todo: remove magic.
+    setColorValue(QColor(Qt::red));
+    this->freeParticleIndicesBufferObject->bind();
     glPointSize(10.0f);
-    glDrawArrays(GL_POINTS, 0, 3);
+    glDrawElements(GL_POINTS, this->numFreeParticles, GL_UNSIGNED_INT, (void*)(0));
+    this->freeParticleIndicesBufferObject->release();
+}
 
-    this->gridArrayObject.release();
+void Canvas::drawFixedParticles()
+{ // Todo: remove magic.
+    setColorValue(QColor(Qt::blue));
+    this->fixedParticleIndicesBufferObject->bind();
+    glPointSize(20.0f);
+    glDrawElements(GL_POINTS, this->numFixedParticles, GL_UNSIGNED_INT, (void*)(0));
+    this->fixedParticleIndicesBufferObject->release();
+}
+
+void Canvas::drawSprings()
+{
+    setColorValue(QColor(Qt::green));
+    this->springIndicesBufferObject->bind();
+    glDrawElements(GL_LINES, this->numSprings * 2, GL_UNSIGNED_INT, (void*)(0));
+    this->springIndicesBufferObject->release();
+}
+
+void Canvas::reset()
+{
+    this->zoomingFactor = 1.0;
+    this->rotationAngle = 1.0;
+    this->mvpMatrix.setToIdentity();
 }
 
 void Canvas::build(Grid *grid)
 {
-    // Todo: remove magic.
-    this->zoomingFactor = 1.0;
-    this->rotationAngle = 1.0;
-    this->mvpMatrix.setToIdentity();
-    updateBuffers(grid->getParticleLocations());
+    reset();
+    QVector<QVector3D> locations = grid->getParticleLocations();
+    locations = mapLocationsToRange(locations, grid->getSettings());
+    updateLocationBuffer(locations);
+
+    QVector<FreeParticle*> freeParticles = grid->getFreeParticles();
+    QVector<int> freeParticleIndices = buildFreeParticleIndices(freeParticles);
+    qDebug() << freeParticleIndices << "Free";
+    updateFreeParticleBuffer(freeParticleIndices);
+
+    // Check if this is needed.
+    QVector<FixedParticle*> fixedParticles = grid->getFixedParticles();
+    QVector<int> fixedParticleIndices = buildFixedParticleIndices(fixedParticles);
+    qDebug() << fixedParticleIndices << "Fixed";
+    updateFixedParticleBuffer(fixedParticleIndices);
+
+    QVector<Spring> springs = grid->getSprings();
+    QVector<int> springIndices = buildSpringIndices(springs);
+    updateSpringBuffer(springIndices);
+}
+
+QVector<int> Canvas::buildFreeParticleIndices(QVector<FreeParticle*> freeParticles)
+{
+    this->numFreeParticles = freeParticles.size();
+    QVector<int> freeParticleIndices;
+    for (int i = 0; i < this->numFreeParticles; i++)
+    {
+        freeParticleIndices.append(freeParticles.at(i)->getGlobalID());
+    }
+    return freeParticleIndices;
+}
+
+QVector<int> Canvas::buildFixedParticleIndices(QVector<FixedParticle*> fixedParticles)
+{
+    this->numFixedParticles = fixedParticles.size();
+    QVector<int> fixedParticleIndices;
+    for (int i = 0; i < this->numFixedParticles; i++)
+    {
+        fixedParticleIndices.append(fixedParticles.at(i)->getGlobalID());
+    }
+    return fixedParticleIndices;
+}
+
+QVector<int> Canvas::buildSpringIndices(QVector<Spring> springs)
+{
+    this->numSprings = springs.size();
+    QVector<int> springLocationIndices;
+    Particle *a, *b;
+    Spring spring;
+
+    for (int i = 0; i < this->numSprings; i++)
+    {
+        spring = springs.at(i);
+
+        a = spring.getParticleA();
+        b = spring.getParticleB();
+
+        springLocationIndices.append(a->getGlobalID());
+        springLocationIndices.append(b->getGlobalID());
+    }
+    return springLocationIndices;
+}
+
+QVector<QVector3D> Canvas::mapLocationsToRange(QVector<QVector3D> locations, Grid::Settings* settings)
+{ // Assuming the -1 to 1 range for now... and ever (probably)
+    float rowSlope = (2.0 / ((float)settings->rows - 1.0));
+    float columnSlope = (2.0 / ((float)settings->columns - 1.0));
+
+    for (int i = 0; i < locations.size(); i++)
+    {
+        QVector3D mappedLocation =locations.at(i);
+        mappedLocation.setX((mappedLocation.x() * rowSlope) - 1.0);
+        mappedLocation.setY((mappedLocation.y() * columnSlope) - 1.0);
+        locations.replace(i, mappedLocation);
+    }
+    return locations;
 }
 
 bool Canvas::event(QEvent *event)

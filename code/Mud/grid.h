@@ -26,8 +26,9 @@ public:
     struct Settings {
         Type type;
         TypeDistribution typeDistribution;
-//        int width;
-//        int height;
+        int numParticles;
+        int rows;
+        int columns;
     };
 
     explicit Grid(QObject *parent = 0);
@@ -58,6 +59,7 @@ private:
     QVector<QVector3D> particleLocations;
 
     QVector<Spring> springs;
+    Settings settings;
 
     void breakSpringsWithHighestStrain(int numSpringsToBreak);
     void breakSpringsWithStrainGreaterThan(float breakingStrain);
@@ -78,11 +80,16 @@ private:
     void uniformHexagonalGrid();
     void variableHexagonalGrid();
 
+    bool onBorder(int row, int column, int rows, int columns);
+    bool onCorner(int row, int column, int rows, int columns);
+
     typedef void (Grid::*gridCreator)();
-    void selectGridCreator(Settings settings, gridCreator uniform, gridCreator variable);
+    void selectGridCreator(gridCreator uniform, gridCreator variable);
 signals:
 
 public slots:
+
+    Settings* getSettings();
 };
 
 #endif // GRID_H

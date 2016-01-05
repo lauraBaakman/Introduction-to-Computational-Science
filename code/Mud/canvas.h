@@ -28,23 +28,51 @@ protected:
     bool event(QEvent *event) Q_DECL_OVERRIDE;
 
 private:
+    // Shaders
     QOpenGLShaderProgram *shaderProgram;
     void initializeShaders();
 
-    QOpenGLBuffer *particlesBufferObject;
+    // Buffers
+    QOpenGLBuffer *locationBufferObject;
+    QOpenGLBuffer *springIndicesBufferObject;
+    QOpenGLBuffer *freeParticleIndicesBufferObject;
+    QOpenGLBuffer *fixedParticleIndicesBufferObject;
+
+    //?
     QOpenGLVertexArrayObject gridArrayObject;
     void initializeBuffers();
-    void updateBuffers(QVector<QVector3D> locations);
+    void updateLocationBuffer(QVector<QVector3D> locations);
+    void updateFreeParticleBuffer(QVector<int> indices);
+    void updateFixedParticleBuffer(QVector<int> indices);
+    void updateSpringBuffer(QVector<int> indices);
 
+    // Transformations
     QMatrix4x4 mvpMatrix;
     float zoomingFactor;
     float rotationAngle;
 
-    void setUniformValues();
+    // Helpers
+    void setMvpValue();
+    void setColorValue(QColor color);
     void constructModelViewProjectionMatrix();
-    void drawParticles();
     bool isAllocated(QOpenGLBuffer *buffer);
+    void reset();
 
+    // Helpers for build
+    QVector<int> buildFreeParticleIndices(QVector<FreeParticle*> freeParticles);
+    QVector<int> buildFixedParticleIndices(QVector<FixedParticle*> fixedParticles);
+    QVector<int> buildSpringIndices(QVector<Spring> springs);
+    QVector<QVector3D> mapLocationsToRange(QVector<QVector3D> locations, Grid::Settings* settings);
+
+    // Draw
+    int numFreeParticles;
+    int numFixedParticles;
+    int numSprings;
+    void drawFreeParticles();
+    void drawFixedParticles();
+    void drawSprings();
+
+    // Events
     bool gestureEvent(QGestureEvent *event);
     void pinchTriggered(QPinchGesture *gesture);
 };

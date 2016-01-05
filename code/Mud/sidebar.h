@@ -30,6 +30,7 @@ private:
 
     Grid::Type getGridType() const;
     Grid::TypeDistribution getGridTypeDistribution() const;
+    int getNumParticles();
 };
 
 #endif // SIDEBAR_H

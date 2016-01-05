@@ -55,7 +55,6 @@ private:
     static std::normal_distribution<float> normalDistribution;
     static std::default_random_engine randomNumberGenerator;
 
-
 };
 
 #endif // SPRING_H
