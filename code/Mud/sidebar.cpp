@@ -1,11 +1,17 @@
 #include "sidebar.h"
 #include "ui_sidebar.h"
 
+float Sidebar::breakingSpringsMinMaxStrain = 0.1;
+float Sidebar::breakingSpringsMaxMaxStrain = 5.0;
+int Sidebar::breakingSpringsMinNumberOfSpringsToBreak = 1;
+int Sidebar::breakingSpringsMaxNumberOfSpringsToBreak;
+
 Sidebar::Sidebar(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Sidebar)
 {
     ui->setupUi(this);
+    Sidebar::breakingSpringsMaxNumberOfSpringsToBreak = ui->horizontalSlider->value();
 }
 
 Sidebar::~Sidebar()
@@ -38,7 +44,6 @@ int Sidebar::getNumParticles() const
 float Sidebar::getSpringBreakingParameter() const
 {
     int value = ui->breakingSpringsParameterSlider->value();
-    qDebug() << value;
     return static_cast<float>(value);
 }
 

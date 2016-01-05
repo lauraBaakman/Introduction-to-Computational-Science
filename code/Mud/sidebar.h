@@ -33,6 +33,11 @@ private:
     Grid::SpringBreakMethod getSpringBreakMethod() const;
     int getNumParticles() const;
     float getSpringBreakingParameter() const;
+
+    static float breakingSpringsMinMaxStrain;
+    static float breakingSpringsMaxMaxStrain;
+    static int breakingSpringsMinNumberOfSpringsToBreak;
+    static int breakingSpringsMaxNumberOfSpringsToBreak;
 };
 
 #endif // SIDEBAR_H
