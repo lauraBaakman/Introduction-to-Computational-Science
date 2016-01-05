@@ -23,16 +23,31 @@ public:
         VARIABLE
     };
 
+    enum SpringBreakMethod {
+        X_SPRINGS_WITH_HIGHEST_STRAIN,
+        SPRINGS_WITH_STRAIN_GREATER_THAN
+    };
+
     struct Settings {
         Type type;
         TypeDistribution typeDistribution;
+        SpringBreakMethod springBreakMethod;
         int numParticles;
         int rows;
         int columns;
+        float springBreakParameter;
     };
 
     explicit Grid(QObject *parent = 0);
     ~Grid();
+
+    //Call this method with: (grid->*grid->breakSprings)();
+    //http://stackoverflow.com/a/990637/1357229
+private:
+    typedef void (Grid::*breakMethod)(void);
+
+public:
+    breakMethod breakSprings;
 
     void gridFactory(Settings settings);
 
@@ -50,8 +65,6 @@ public:
     QVector<QVector3D> getParticleLocations() const;
     QVector<FixedParticle *> getFixedParticles() const;
 
-    void breakSprings();
-
 private:
     QVector<Particle *> particles;
     QVector<FreeParticle *> freeParticles;
@@ -61,8 +74,9 @@ private:
     QVector<Spring> springs;
     Settings settings;
 
-    void breakSpringsWithHighestStrain(int numSpringsToBreak);
-    void breakSpringsWithStrainGreaterThan(float breakingStrain);
+    void setBreakMethod(Settings settings);
+    void breakSpringsWithHighestStrain();
+    void breakSpringsWithStrainGreaterThan();
 
     void clear();
     void reserve(int numParticles, int numSprings);

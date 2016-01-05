@@ -19,6 +19,7 @@ void Grid::gridFactory(Settings settings)
 {
     this->settings = settings;
 
+    setBreakMethod(settings);
     switch(settings.type)
     {
     case SQUARE:
@@ -70,15 +71,24 @@ QVector<FixedParticle *> Grid::getFixedParticles() const
     return fixedParticles;
 }
 
-void Grid::breakSprings()
+void Grid::setBreakMethod(Grid::Settings settings)
 {
-    qDebug() << "Grid::breakSprings() needs a decent implementation!";
-    breakSpringsWithHighestStrain(2);
+    switch(settings.springBreakMethod){
+    case SPRINGS_WITH_STRAIN_GREATER_THAN:
+        breakSprings = &Grid::breakSpringsWithStrainGreaterThan;
+        break;
+    case X_SPRINGS_WITH_HIGHEST_STRAIN: //fall through
+    default:
+        breakSprings = &Grid::breakSpringsWithHighestStrain;
+        break;
+    }
 }
 
-void Grid::breakSpringsWithHighestStrain(int springsToBreak)
+void Grid::breakSpringsWithHighestStrain()
 {
     std::map<float, Spring*> map;
+
+    int springsToBreak = settings.springBreakParameter;
 
     for (QVector<Spring>::iterator spring = springs.begin(); spring != springs.end(); spring++) {
         if(!spring->isBroken()) map[spring->strain()] = spring;
@@ -93,8 +103,9 @@ void Grid::breakSpringsWithHighestStrain(int springsToBreak)
     }
 }
 
-void Grid::breakSpringsWithStrainGreaterThan(float breakingStrain)
+void Grid::breakSpringsWithStrainGreaterThan()
 {
+    float breakingStrain = settings.springBreakParameter;
     for (QVector<Spring>::iterator spring = springs.begin(); spring != springs.end(); spring++) {
         if(spring->strain() > breakingStrain) spring->breakIt();
     }
