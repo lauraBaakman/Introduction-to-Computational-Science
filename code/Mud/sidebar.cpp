@@ -24,9 +24,22 @@ Grid::TypeDistribution Sidebar::getGridTypeDistribution() const
                 ui->gridTypeDistribution->currentIndex());
 }
 
-int Sidebar::getNumParticles()
+Grid::SpringBreakMethod Sidebar::getSpringBreakMethod() const
+{
+    return static_cast<Grid::SpringBreakMethod>(
+                ui->springBreakingMethod->currentIndex());
+}
+
+int Sidebar::getNumParticles() const
 {
     return ui->horizontalSlider->value();
+}
+
+float Sidebar::getSpringBreakingParameter() const
+{
+    int value = ui->breakingSpringsParameterSlider->value();
+    qDebug() << value;
+    return static_cast<float>(value);
 }
 
 void Sidebar::on_initApplyButton_clicked()
@@ -40,8 +53,7 @@ Grid::Settings Sidebar::getGridSettings()
     settings.type = getGridType();
     settings.typeDistribution = getGridTypeDistribution();
     settings.numParticles = getNumParticles();
-    //TEMPORARY, until it is fixed in the UI
-    settings.springBreakMethod = Grid::SpringBreakMethod::X_SPRINGS_WITH_HIGHEST_STRAIN;
-    settings.springBreakParameter = 2;
+    settings.springBreakMethod = getSpringBreakMethod();
+    settings.springBreakParameter = getSpringBreakingParameter();
     return settings;
 }

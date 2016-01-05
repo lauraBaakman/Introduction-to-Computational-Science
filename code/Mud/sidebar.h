@@ -30,7 +30,9 @@ private:
 
     Grid::Type getGridType() const;
     Grid::TypeDistribution getGridTypeDistribution() const;
-    int getNumParticles();
+    Grid::SpringBreakMethod getSpringBreakMethod() const;
+    int getNumParticles() const;
+    float getSpringBreakingParameter() const;
 };
 
 #endif // SIDEBAR_H
