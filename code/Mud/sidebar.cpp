@@ -48,8 +48,7 @@ int Sidebar::getNumParticles() const
 
 float Sidebar::getSpringBreakingParameter() const
 {
-    int value = ui->breakingSpringsParameterSlider->value();
-    return static_cast<float>(value);
+    return mapSpringBreakingParameterToCorrectRange();
 }
 
 float Sidebar::mapSpringBreakingParameterToCorrectRange(Grid::SpringBreakMethod method) const
@@ -60,6 +59,11 @@ float Sidebar::mapSpringBreakingParameterToCorrectRange(Grid::SpringBreakMethod 
 float Sidebar::mapSpringBreakingParameterToCorrectRange(int value) const
 {
     return mapSpringBreakingParameterToCorrectRange(getSpringBreakMethod(), value);
+}
+
+float Sidebar::mapSpringBreakingParameterToCorrectRange() const
+{
+    return mapSpringBreakingParameterToCorrectRange(getSpringBreakMethod());
 }
 
 float Sidebar::mapSpringBreakingParameterToCorrectRange(Grid::SpringBreakMethod method, int value) const

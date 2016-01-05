@@ -42,6 +42,7 @@ private:
 
     float mapSpringBreakingParameterToCorrectRange(Grid::SpringBreakMethod method) const;
     float mapSpringBreakingParameterToCorrectRange(int value) const;
+    float mapSpringBreakingParameterToCorrectRange() const;
     float mapSpringBreakingParameterToCorrectRange(Grid::SpringBreakMethod method, int value) const;
 
     float map(int value, float newMin, float newMax, int oldMin, int oldMax) const;
