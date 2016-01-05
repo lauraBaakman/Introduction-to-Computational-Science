@@ -6,15 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>289</width>
-    <height>243</height>
+    <width>612</width>
+    <height>563</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="1" column="1" colspan="2">
+   <item row="2" column="1" colspan="2">
     <widget class="QGroupBox" name="groupBox">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
@@ -92,13 +92,6 @@
       <string>Number of Particles</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_3">
-      <item row="1" column="0">
-       <widget class="QLabel" name="label">
-        <property name="text">
-         <string> 16 &lt;=</string>
-        </property>
-       </widget>
-      </item>
       <item row="1" column="1">
        <widget class="QLabel" name="label_2">
         <property name="text">
@@ -106,6 +99,19 @@
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0" colspan="3">
+       <widget class="QSlider" name="horizontalSlider">
+        <property name="minimum">
+         <number>16</number>
+        </property>
+        <property name="maximum">
+         <number>256</number>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
         </property>
        </widget>
       </item>
@@ -122,16 +128,66 @@
         </property>
        </widget>
       </item>
-      <item row="0" column="0" colspan="3">
-       <widget class="QSlider" name="horizontalSlider">
-        <property name="minimum">
-         <number>16</number>
+      <item row="1" column="0">
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string> 16 &lt;=</string>
         </property>
-        <property name="maximum">
-         <number>256</number>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="1" column="1" colspan="2">
+    <widget class="QGroupBox" name="groupBox_3">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="title">
+      <string>Breaking Springs</string>
+     </property>
+     <layout class="QGridLayout" name="gridLayout_4">
+      <item row="3" column="0">
+       <widget class="QLabel" name="breakingSpringsMin">
+        <property name="text">
+         <string>TextLabel</string>
         </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QLabel" name="breakingSpringsValue">
+        <property name="text">
+         <string>TextLabel</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="breakingSpringsParameterDescription">
+        <property name="text">
+         <string>TextLabel</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0" colspan="3">
+       <widget class="QSlider" name="horizontalSlider_2">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0" colspan="3">
+       <widget class="QComboBox" name="comboBox"/>
+      </item>
+      <item row="3" column="2">
+       <widget class="QLabel" name="breakingSpringsMax">
+        <property name="text">
+         <string>TextLabel</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
         </property>
        </widget>
       </item>
