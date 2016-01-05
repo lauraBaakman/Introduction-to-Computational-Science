@@ -147,7 +147,7 @@ void Canvas::drawFreeParticles()
 { // Todo: remove magic.
     setColorValue(QColor(Qt::red));
     this->freeParticleIndicesBufferObject->bind();
-    glPointSize(10.0f);
+    glPointSize(8.0f);
     glDrawElements(GL_POINTS, this->numFreeParticles, GL_UNSIGNED_INT, (void*)(0));
     this->freeParticleIndicesBufferObject->release();
 }
@@ -156,7 +156,7 @@ void Canvas::drawFixedParticles()
 { // Todo: remove magic.
     setColorValue(QColor(Qt::blue));
     this->fixedParticleIndicesBufferObject->bind();
-    glPointSize(20.0f);
+    glPointSize(16.0f);
     glDrawElements(GL_POINTS, this->numFixedParticles, GL_UNSIGNED_INT, (void*)(0));
     this->fixedParticleIndicesBufferObject->release();
 }
@@ -180,7 +180,7 @@ void Canvas::build(Grid *grid)
 {
     reset();
     QVector<QVector3D> locations = grid->getParticleLocations();
-    locations = mapLocationsToRange(locations, grid->getSettings(), -1.0, 1.0);
+    locations = mapLocationsToRange(locations, grid->getSettings(), -10.0, 10.0);
     updateLocationBuffer(locations);
 
     QVector<FreeParticle*> freeParticles = grid->getFreeParticles();

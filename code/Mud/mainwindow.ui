@@ -20,6 +20,12 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
+   <property name="sizeIncrement">
+    <size>
+     <width>10</width>
+     <height>10</height>
+    </size>
+   </property>
    <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="0">
      <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,3">
@@ -41,14 +47,14 @@
       <item>
        <widget class="Sidebar" name="sidebar" native="true">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
         <property name="minimumSize">
          <size>
-          <width>200</width>
+          <width>300</width>
           <height>0</height>
          </size>
         </property>
@@ -64,8 +70,8 @@
         </property>
         <property name="minimumSize">
          <size>
-          <width>576</width>
-          <height>576</height>
+          <width>600</width>
+          <height>600</height>
          </size>
         </property>
         <property name="palette">
