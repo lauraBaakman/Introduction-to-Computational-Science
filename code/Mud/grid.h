@@ -23,12 +23,19 @@ public:
         VARIABLE
     };
 
+    enum SpringBreakMethod {
+        X_SPRINGS_WITH_HEAVIEST_STRAIN,
+        SPRINGS_WITH_STRAIN_GREATER_THAN
+    };
+
     struct Settings {
         Type type;
         TypeDistribution typeDistribution;
+        SpringBreakMethod springBreakMethod;
         int numParticles;
         int rows;
         int columns;
+        float springBreakParameter;
     };
 
     explicit Grid(QObject *parent = 0);
