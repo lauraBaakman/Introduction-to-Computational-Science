@@ -18,7 +18,11 @@ void GridController::replaceGridSlot(Grid::Settings settings)
 
 void GridController::doStep()
 {
-      qDebug() << "Do a step";
+    // Break springs?
+
+    // solver solve grid
+
+    // this->visualiseGrid();
 }
 
 void GridController::visualiseGrid()
