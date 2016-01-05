@@ -19,7 +19,7 @@ FreeParticle::FreeParticle(QVector3D *location, FreeParticle inputParticle):
 
 FreeParticle::~FreeParticle(){
     //destructor body
-    qDebug() << "FreeParticle destructor";
+    //qDebug() << "FreeParticle destructor";
 }
 
 QDebug operator<<(QDebug stream, const FreeParticle &particle)

@@ -4,12 +4,12 @@
 
 Grid::Grid(QObject *parent) : QObject(parent)
 {
-    qDebug() << "Constructor Grid";
+    //qDebug() << "Constructor Grid";
 }
 
 Grid::~Grid()
 {
-    qDebug() << "Destructor Grid";
+    //qDebug() << "Destructor Grid";
     for(const Particle* particle : particles){
         delete particle;
     }
@@ -181,19 +181,15 @@ void Grid::selectGridCreator(gridCreator uniform, gridCreator variable)
 
 void Grid::uniformSquareGrid()
 {
-    qDebug() << "uniformSquareGrid kinda implemented.";
-
     clear();
+
     int rows = ceil(sqrt(this->settings.numParticles));
     int columns = rows;
     this->settings.rows = rows;
     this->settings.columns = columns;
-    qDebug() << rows;
-    qDebug() << columns;
+
     int numParticles = rows * columns;
     int numSprings = (2 *(columns * rows + 2)) - (3 * (rows + columns));
-    qDebug() << numParticles;
-    qDebug() << numSprings;
 
     reserve(numParticles, numSprings);
 
@@ -205,11 +201,9 @@ void Grid::uniformSquareGrid()
                     !onCorner(row, column, rows, columns))
             { // Fixed border particles
                 addParticle(QVector3D((float)row, (float)column, 0.0), new FixedParticle());
-                qDebug() << row << column << "Fixed";
             } else if (!onBorder(row, column, rows, columns))
             { // Free particles
-                qDebug() << row << column << "Free";
-                addParticle(QVector3D((float)row, (float)column, 0.0), new FreeParticle());
+                addParticle(QVector3D((float) row, (float) column, 0.0), new FreeParticle());
             }
         }
     }
