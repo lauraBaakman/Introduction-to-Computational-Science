@@ -146,6 +146,12 @@ void Sidebar::updateSpringBreakingMethodSliderValueLabel(Grid::SpringBreakMethod
     updateSpringBreakingMethodSliderValueLabel(method, value);
 }
 
+void Sidebar::updateSpringBreakingMethodSliderValueLabel(int value)
+{
+    Grid::SpringBreakMethod method = getSpringBreakMethod();
+    updateSpringBreakingMethodSliderValueLabel(method, value);
+}
+
 void Sidebar::on_initApplyButton_clicked()
 {
     emit replaceGridSignal(getGridSettings());
@@ -165,4 +171,9 @@ Grid::Settings Sidebar::getGridSettings()
 void Sidebar::on_springBreakingMethod_currentIndexChanged(int index)
 {
     updateSpringBreakingMethodSlider(static_cast<Grid::SpringBreakMethod>(index));
+}
+
+void Sidebar::on_breakingSpringsParameterSlider_sliderMoved(int position)
+{
+    updateSpringBreakingMethodSliderValueLabel(position);
 }

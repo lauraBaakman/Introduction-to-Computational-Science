@@ -29,6 +29,8 @@ private slots:
 
     void on_springBreakingMethod_currentIndexChanged(int index);
 
+    void on_breakingSpringsParameterSlider_sliderMoved(int position);
+
 private:
     Ui::Sidebar *ui;
 
@@ -46,8 +48,10 @@ private:
     int map(int value, int newMin, int newMax, int oldMin, int oldMax) const;
 
     void updateSpringBreakingMethodSlider(Grid::SpringBreakMethod method);
+
     void updateSpringBreakingMethodSliderValueLabel(Grid::SpringBreakMethod method, int value);
     void updateSpringBreakingMethodSliderValueLabel(Grid::SpringBreakMethod method);
+    void updateSpringBreakingMethodSliderValueLabel(int value);
 
     static float breakingSpringsMinMaxStrain;
     static float breakingSpringsMaxMaxStrain;
