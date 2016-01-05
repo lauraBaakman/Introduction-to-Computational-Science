@@ -66,6 +66,11 @@ void Spring::setSpringConstantDistributionParameters(float mean, float standardD
     Spring::normalDistribution = std::normal_distribution<float> (mean, standardDeviation);
 }
 
+bool Spring::isBroken() const
+{
+    return broken;
+}
+
 float Spring::sampleSpringConstant()
 {
     float number = Spring::normalDistribution(Spring::randomNumberGenerator);

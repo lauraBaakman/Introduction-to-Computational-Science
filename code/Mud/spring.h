@@ -26,6 +26,8 @@ public:
 
     float getSpringConstant() const;
 
+    bool isBroken() const;
+
     const Particle *getOtherParticle(const Particle* particle) const;
 
     float strain() const;
