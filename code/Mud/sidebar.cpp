@@ -208,7 +208,6 @@ void Sidebar::on_initApplyButton_clicked()
     emit replaceGridSignal(getGridSettings());
 }
 
-
 Grid::Settings Sidebar::getGridSettings()
 {
     Grid::Settings settings;

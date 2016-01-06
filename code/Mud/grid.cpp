@@ -18,9 +18,11 @@ Grid::~Grid()
 void Grid::gridFactory(Settings settings)
 {
     this->settings = settings;
+    clear();
+
+    Spring::setSpringConstantDistributionParameters(settings.springConstantmean, settings.springConstantSD);
 
     setBreakMethod(settings);
-    Spring::setSpringConstantDistributionParameters(settings.springConstantmean, settings.springConstantSD);
     switch(settings.type)
     {
     case SQUARE:
@@ -133,6 +135,7 @@ void Grid::clear()
     FreeParticle::clear();
     FixedParticle::clear();
     Particle::clear();
+
     Spring::clear();
 }
 
@@ -203,8 +206,6 @@ void Grid::selectGridCreator(gridCreator uniform, gridCreator variable)
 
 void Grid::uniformSquareGrid()
 {
-    clear();
-
     // Get a bunch of numbers.
     int rows = ceil(sqrt(this->settings.numParticles));
     int columns = rows;
@@ -288,9 +289,6 @@ bool Grid::onBorder(int row, int column, int rows, int columns)
 
 void Grid::variableSquareGrid()
 {
-    qDebug() << "variableSquareGrid kinda implemented. But not really...";
-
-    clear();
     reserve(3, 3);
 
     Particle *a = addParticle(QVector3D(0.0, 1.0, 0.0), new FixedParticle());
