@@ -36,6 +36,8 @@ public:
         int rows;
         int columns;
         float springBreakParameter;
+        double springConstantmean;
+        double springConstantSD;
     };
 
     explicit Grid(QObject *parent = 0);
