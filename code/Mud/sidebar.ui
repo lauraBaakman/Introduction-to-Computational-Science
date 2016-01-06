@@ -29,31 +29,62 @@
       </sizepolicy>
      </property>
      <property name="title">
-      <string>Grid type</string>
+      <string>Grid Initialization</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_2">
-      <item row="4" column="1">
-       <widget class="QPushButton" name="initApplyButton">
+      <item row="2" column="0">
+       <widget class="QLabel" name="NumParticleLabel">
         <property name="text">
-         <string>Apply</string>
+         <string>Number of Particles:</string>
         </property>
        </widget>
       </item>
-      <item row="1" column="0" colspan="2">
-       <widget class="QComboBox" name="gridTypeDistribution">
-        <property name="currentIndex">
-         <number>1</number>
+      <item row="3" column="1">
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string> 16</string>
         </property>
-        <item>
-         <property name="text">
-          <string>Uniform</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Variable</string>
-         </property>
-        </item>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="QSlider" name="horizontalSlider">
+        <property name="minimum">
+         <number>16</number>
+        </property>
+        <property name="maximum">
+         <number>1200</number>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="0">
+       <widget class="QLabel" name="label_2">
+        <property name="text">
+         <string>Spring Constant Mean:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="1">
+       <widget class="QLabel" name="SpringConstantStandardDeviationValue">
+        <property name="text">
+         <string>TextLabel</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="0">
+       <widget class="QSlider" name="springConstantMean">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="1">
+       <widget class="QLabel" name="springConstantMeanLabel">
+        <property name="text">
+         <string>TextLabel</string>
+        </property>
        </widget>
       </item>
       <item row="0" column="0" colspan="2">
@@ -70,7 +101,7 @@
         </item>
        </widget>
       </item>
-      <item row="4" column="0">
+      <item row="8" column="0">
        <spacer name="horizontalSpacer">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
@@ -83,30 +114,41 @@
         </property>
        </spacer>
       </item>
-      <item row="3" column="0">
-       <widget class="QSlider" name="horizontalSlider">
-        <property name="minimum">
-         <number>16</number>
+      <item row="1" column="0" colspan="2">
+       <widget class="QComboBox" name="gridTypeDistribution">
+        <property name="currentIndex">
+         <number>0</number>
         </property>
-        <property name="maximum">
-         <number>1200</number>
+        <item>
+         <property name="text">
+          <string>Uniform</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Variable</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item row="8" column="1">
+       <widget class="QPushButton" name="initApplyButton">
+        <property name="text">
+         <string>Apply</string>
         </property>
+       </widget>
+      </item>
+      <item row="7" column="0">
+       <widget class="QSlider" name="springConstantStandardDeviation">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
         </property>
        </widget>
       </item>
-      <item row="2" column="0">
-       <widget class="QLabel" name="NumParticleLabel">
+      <item row="6" column="0">
+       <widget class="QLabel" name="label_3">
         <property name="text">
-         <string>Number of Particles:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="1">
-       <widget class="QLabel" name="label">
-        <property name="text">
-         <string> 16</string>
+         <string>Spring Constant Standard Deviation:</string>
         </property>
        </widget>
       </item>
