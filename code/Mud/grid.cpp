@@ -71,6 +71,16 @@ QVector<FixedParticle *> Grid::getFixedParticles() const
     return fixedParticles;
 }
 
+float Grid::energy()
+{
+    float energy = 0;
+    for (auto particle:particles)
+    {
+        energy += particle->energy();
+    }
+    return energy;
+}
+
 void Grid::setBreakMethod(Grid::Settings settings)
 {
     switch(settings.springBreakMethod){

@@ -65,6 +65,8 @@ public:
     QVector<QVector3D> getParticleLocations() const;
     QVector<FixedParticle *> getFixedParticles() const;
 
+    float energy();
+
 private:
     QVector<Particle *> particles;
     QVector<FreeParticle *> freeParticles;

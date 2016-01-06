@@ -39,8 +39,12 @@ float Particle::energy()
     float energy = 0;
     for(auto spring:springs)
     {
-        energy += spring.getConstant() * (location->distanceToPoint(spring->getOtherParticle(this)->getLocation()) );
+        if(!spring->isBroken()) {
+            float stretch = (location->distanceToPoint(*(spring->getOtherParticle(this)->getLocation())) - spring->getNaturalLength());
+            energy += spring->getSpringConstant() * (stretch * stretch);
+        }
     }
+    return 0.5 * energy;
 }
 
 void Particle::clear()

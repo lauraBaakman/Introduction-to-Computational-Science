@@ -26,19 +26,23 @@ void GridController::doBreak()
 {
     qDebug() << "doBreak()";
     // Break springs?
+    qDebug() << "Grid (before) energy: "<< grid->energy();
     (grid->*grid->breakSprings)();
 
     gridSolver->update();
 
+    qDebug() << "Grid (after) energy: "<< grid->energy();
     this->visualiseGrid();
 }
 
 void GridController::doSolve()
 {
     qDebug() << "doSolve()";
+    qDebug() << "Grid (before) energy: "<< grid->energy();
     // solver solve grid
     gridSolver->solve();
 
+    qDebug() << "Grid (after) energy: "<< grid->energy();
     this->visualiseGrid();
 }
 
