@@ -2,6 +2,7 @@
 #define SIDEBAR_H
 
 #include <QWidget>
+#include <QPair>
 
 #include <c++/v1/map>
 
@@ -43,6 +44,8 @@ private slots:
 
     void on_doStabilizeButton_clicked();
 
+    void on_springConstantStandardDeviation_valueChanged(int value);
+
 private:
     Ui::Sidebar *ui;
 
@@ -59,6 +62,8 @@ private:
 
     float map(int value, float newMin, float newMax, int oldMin, int oldMax) const;
     int map(int value, int newMin, int newMax, int oldMin, int oldMax) const;
+    double map(int value, double newMin, double newMax, int oldMin, int oldMax);
+    double map(int value, QPair<double, double> newMinMax, int oldMin, int oldMax);
 
     void updateSpringBreakingMethodSlider(Grid::SpringBreakMethod method);
     void updateSpringBreakingMethodSlider();
@@ -71,8 +76,12 @@ private:
 
     static float breakingSpringsMinMaxStrain;
     static float breakingSpringsMaxMaxStrain;
+
     static int breakingSpringsMinNumberOfSpringsToBreak;
     static int breakingSpringsMaxNumberOfSpringsToBreak;
+
+    static QPair<double, double> springConstantMeanMinMax;
+    static QPair<double, double> springConstantStdMinMax;
 
     static char numberFormat;
     static int numberPrecision;

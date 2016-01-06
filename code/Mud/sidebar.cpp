@@ -7,6 +7,9 @@ float Sidebar::breakingSpringsMaxMaxStrain = 5.0;
 int Sidebar::breakingSpringsMinNumberOfSpringsToBreak = 1;
 int Sidebar::breakingSpringsMaxNumberOfSpringsToBreak;
 
+QPair<double, double> Sidebar::springConstantMeanMinMax = QPair<double, double>(0.0, 5.0);
+QPair<double, double> Sidebar::springConstantStdMinMax = QPair<double, double>(0.0, 2.0);
+
 char Sidebar::numberFormat = 'f';
 int Sidebar::numberPrecision = 2;
 
@@ -17,6 +20,7 @@ Sidebar::Sidebar(QWidget *parent) :
     ui->setupUi(this);
     //Set the max value of the slider if we are setting number of springs to break to the total number of particles.
     updateMaxNumSpringsToBreak(ui->horizontalSlider->value());
+    on_springConstantStandardDeviation_valueChanged(ui->springConstantStandardDeviation->value());
 }
 
 Sidebar::~Sidebar()
@@ -104,6 +108,21 @@ int Sidebar::map(int value, int newMin, int newMax, int oldMin, int oldMax) cons
     float scaledValue = (static_cast<float>(value - oldMin)) / oldRange;
 
     return newMin + (scaledValue * newRange);
+}
+
+double Sidebar::map(int value, double newMin, double newMax, int oldMin, int oldMax)
+{
+    double newRange = newMax - newMin;
+    double oldRange = (static_cast<double>(oldMax - oldMin));
+
+    double scaledValue = (static_cast<double>(value - oldMin)) / oldRange;
+
+    return newMin + (scaledValue * newRange);
+}
+
+double Sidebar::map(int value, QPair<double, double> newMinMax, int oldMin, int oldMax)
+{
+    return map(value, newMinMax.first, newMinMax.second, oldMin, oldMax);
 }
 
 void Sidebar::updateSpringBreakingMethodSlider(Grid::SpringBreakMethod method)
@@ -215,4 +234,13 @@ void Sidebar::on_simulateStepButton_clicked()
 void Sidebar::on_doStabilizeButton_clicked()
 {
     emit doSolve();
+}
+
+void Sidebar::on_springConstantStandardDeviation_valueChanged(int value)
+{
+    QString label;
+    double mappedValue = map(value,
+                             springConstantStdMinMax,
+                             ui->springConstantStandardDeviation->minimum(), ui->springConstantStandardDeviation->maximum());
+    ui->SpringConstantStandardDeviationValue->setText(label.setNum(mappedValue, numberFormat, numberPrecision));
 }
