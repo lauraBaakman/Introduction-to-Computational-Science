@@ -91,7 +91,7 @@
        </widget>
       </item>
       <item row="2" column="0">
-       <widget class="QLabel" name="label">
+       <widget class="QLabel" name="numberOfParticlesLabel">
         <property name="text">
          <string>Number of Particles:</string>
         </property>
@@ -184,7 +184,7 @@
   <connection>
    <sender>horizontalSlider</sender>
    <signal>actionTriggered(int)</signal>
-   <receiver>label</receiver>
+   <receiver>numberOfParticlesLabel</receiver>
    <slot>setNum(int)</slot>
    <hints>
     <hint type="sourcelabel">
