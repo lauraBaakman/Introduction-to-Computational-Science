@@ -56,6 +56,16 @@ float Sidebar::getSpringBreakingParameter() const
     return mapSpringBreakingParameterToCorrectRange();
 }
 
+double Sidebar::getSpringConstantMean() const
+{
+    return ui->springConstantMean->value();
+}
+
+double Sidebar::getSpringConstantSD() const
+{
+
+}
+
 float Sidebar::mapSpringBreakingParameterToCorrectRange(Grid::SpringBreakMethod method) const
 {
     return mapSpringBreakingParameterToCorrectRange(method, ui->breakingSpringsParameterSlider->value());

@@ -56,6 +56,8 @@ private:
     Grid::SpringBreakMethod getSpringBreakMethod() const;
     int getNumParticles() const;
     float getSpringBreakingParameter() const;
+    double getSpringConstantMean() const;
+    double getSpringConstantSD() const;
 
     float mapSpringBreakingParameterToCorrectRange(Grid::SpringBreakMethod method) const;
     float mapSpringBreakingParameterToCorrectRange(int value) const;
