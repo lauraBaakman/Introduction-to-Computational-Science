@@ -13,6 +13,10 @@ void GridController::replaceGridSlot(Grid::Settings settings)
 {
     qDebug() << "Replace grid slot...";
     grid->gridFactory(settings);
+
+    delete gridSolver;
+    this->gridSolver = new GridSolver(grid);
+
     visualiseGrid();
 }
 
