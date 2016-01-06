@@ -28,6 +28,17 @@ void GridSolver::solve()
     updateLocations(solution);
 }
 
+void GridSolver::update()
+{
+    springConstantsMatrix = arma::Mat<float> (grid->numSprings(), grid->numSprings(), arma::fill::zeros);
+    adjacencyMatrix = arma::Mat<float> (grid->numSprings(), grid->numFreeParticles(), arma::fill::zeros);
+    signMatrix = arma::Mat<float> (grid->numFreeParticles(), grid->numFreeParticles(), arma::fill::ones);
+
+    buildSpringConstantMatrix();
+    buildAdjacencyMatrix();
+    buildSignMatrix();
+}
+
 arma::Col<float> GridSolver::solveForAxis(
         arma::Mat<float> lhs,
         GridSolver::elementGetter getter)
@@ -42,12 +53,10 @@ arma::Col<float> GridSolver::solveForAxis(
 
 void GridSolver::updateLocations(arma::Mat<float> newLocations)
 {
-    qDebug() << grid->getParticleLocations();
     for (unsigned long long i = 0; i < newLocations.n_rows; i++){
         grid->getFreeParticles()[i]->setLocation(
-                    newLocations(i, 0), newLocations(i, 1), newLocations(i, 2));
+                    newLocations(i, 0), newLocations(i, 1), newLocations(i, 2));        
     }
-    qDebug() << grid->getParticleLocations();
 }
 
 void GridSolver::buildSpringConstantMatrix()

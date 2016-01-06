@@ -14,6 +14,8 @@ public:
 
     void solve();
 
+    void update();
+
 private:
     Grid *grid;
 
