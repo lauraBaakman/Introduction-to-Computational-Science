@@ -21,6 +21,8 @@ public:
     ~Sidebar();
 
     Grid::Settings getGridSettings();
+public slots:
+    void onEnergyChanged(float energy);
 
 signals:
     void replaceGridSignal(Grid::Settings settings);

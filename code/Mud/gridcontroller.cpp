@@ -13,6 +13,7 @@ void GridController::replaceGridSlot(Grid::Settings settings)
 {
     qDebug() << "Replace grid slot...";
     grid->gridFactory(settings);
+    emit energyChanged(grid->energy());
 
     delete gridSolver;
     this->gridSolver = new GridSolver(grid);
@@ -24,25 +25,21 @@ void GridController::replaceGridSlot(Grid::Settings settings)
 
 void GridController::doBreak()
 {
-    qDebug() << "doBreak()";
-    // Break springs?
-    qDebug() << "Grid (before) energy: "<< grid->energy();
     (grid->*grid->breakSprings)();
 
     gridSolver->update();
 
-    qDebug() << "Grid (after) energy: "<< grid->energy();
+    emit energyChanged(grid->energy());
+
     this->visualiseGrid();
 }
 
 void GridController::doSolve()
 {
-    qDebug() << "doSolve()";
-    qDebug() << "Grid (before) energy: "<< grid->energy();
-    // solver solve grid
     gridSolver->solve();
 
-    qDebug() << "Grid (after) energy: "<< grid->energy();
+    emit energyChanged(grid->energy());
+
     this->visualiseGrid();
 }
 

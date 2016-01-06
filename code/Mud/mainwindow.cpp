@@ -34,7 +34,8 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(ui->sidebar, SIGNAL(updateBreakParameterSignal(float)),
                      this->gridController, SLOT(setBreakMethodParameter(float)));
 
-
+    QObject::connect(this->gridController, SIGNAL(energyChanged(float)),
+                     ui->sidebar, SLOT(onEnergyChanged(float)));
 
 }
 

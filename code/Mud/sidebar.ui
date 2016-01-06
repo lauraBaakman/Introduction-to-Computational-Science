@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>612</width>
-    <height>542</height>
+    <height>755</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -75,6 +75,9 @@
       </item>
       <item row="5" column="0">
        <widget class="QSlider" name="springConstantMean">
+        <property name="value">
+         <number>0</number>
+        </property>
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
         </property>
@@ -140,6 +143,9 @@
       </item>
       <item row="7" column="0">
        <widget class="QSlider" name="springConstantStandardDeviation">
+        <property name="value">
+         <number>49</number>
+        </property>
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
         </property>
@@ -230,17 +236,24 @@
       <string>Simulation</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_3">
-      <item row="0" column="0">
+      <item row="1" column="0">
        <widget class="QPushButton" name="simulateStepButton">
         <property name="text">
          <string>Break</string>
         </property>
        </widget>
       </item>
-      <item row="1" column="0">
+      <item row="2" column="0">
        <widget class="QPushButton" name="doStabilizeButton">
         <property name="text">
          <string>Stabilize</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="energyLabel">
+        <property name="text">
+         <string>Energy: 0</string>
         </property>
        </widget>
       </item>
