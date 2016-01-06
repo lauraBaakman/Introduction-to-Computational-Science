@@ -10,13 +10,13 @@ GridSolver::GridSolver(Grid *grid, QObject *parent) :
     buildSpringConstantMatrix();
     buildAdjacencyMatrix();
     buildSignMatrix();
-
-    std::cout << signMatrix;
 }
 
 void GridSolver::solve()
 {
     arma::Mat<float> lhs = computeLHS();
+
+    std::cout << lhs;
 
     arma::Mat<float> solution = arma::Mat<float>(lhs.n_rows, 3);
 
@@ -83,8 +83,7 @@ void GridSolver::buildSignMatrix()
 arma::Mat<float> GridSolver::computeLHS()
 {
     arma::Mat<float> lhs = arma::Mat<float>(grid->numSprings(), grid->numFreeParticles());
-    lhs = adjacencyMatrix.t() * springConstantsMatrix * adjacencyMatrix;
-    lhs.diag() *= -1;
+    lhs = (adjacencyMatrix.t() * springConstantsMatrix * adjacencyMatrix) % signMatrix;
     return lhs;
 }
 
