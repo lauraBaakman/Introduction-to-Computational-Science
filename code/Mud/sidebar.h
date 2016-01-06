@@ -46,6 +46,8 @@ private slots:
 
     void on_springConstantStandardDeviation_valueChanged(int value);
 
+    void on_springConstantMean_valueChanged(int value);
+
 private:
     Ui::Sidebar *ui;
 

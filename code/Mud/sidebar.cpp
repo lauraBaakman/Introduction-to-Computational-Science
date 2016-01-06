@@ -21,6 +21,7 @@ Sidebar::Sidebar(QWidget *parent) :
     //Set the max value of the slider if we are setting number of springs to break to the total number of particles.
     updateMaxNumSpringsToBreak(ui->horizontalSlider->value());
     on_springConstantStandardDeviation_valueChanged(ui->springConstantStandardDeviation->value());
+    on_springConstantMean_valueChanged(ui->springConstantMean->value());
 }
 
 Sidebar::~Sidebar()
@@ -243,4 +244,13 @@ void Sidebar::on_springConstantStandardDeviation_valueChanged(int value)
                              springConstantStdMinMax,
                              ui->springConstantStandardDeviation->minimum(), ui->springConstantStandardDeviation->maximum());
     ui->SpringConstantStandardDeviationValue->setText(label.setNum(mappedValue, numberFormat, numberPrecision));
+}
+
+void Sidebar::on_springConstantMean_valueChanged(int value)
+{
+    QString label;
+    double mappedValue = map(value,
+                             springConstantMeanMinMax,
+                             ui->springConstantMean->minimum(), ui->springConstantMean->maximum());
+    ui->springConstantMeanLabel->setText(label.setNum(mappedValue, numberFormat, numberPrecision));
 }
