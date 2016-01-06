@@ -22,8 +22,12 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(ui->sidebar, SIGNAL(replaceGridSignal(Grid::Settings)),
                      this->gridController, SLOT(replaceGridSlot(Grid::Settings)));
 
-    QObject::connect(ui->sidebar, SIGNAL(doStep()),
-                     this->gridController, SLOT(doStep()));
+    QObject::connect(ui->sidebar, SIGNAL(doBreak()),
+                     this->gridController, SLOT(doBreak()));
+
+    QObject::connect(ui->sidebar, SIGNAL(doSolve()),
+                     this->gridController, SLOT(doSolve()));
+
 
 }
 

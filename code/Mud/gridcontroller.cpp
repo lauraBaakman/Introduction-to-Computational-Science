@@ -17,18 +17,28 @@ void GridController::replaceGridSlot(Grid::Settings settings)
     delete gridSolver;
     this->gridSolver = new GridSolver(grid);
 
+    canvas->reset();
+
     visualiseGrid();
 }
 
-void GridController::doStep()
+void GridController::doBreak()
 {
+    qDebug() << "doBreak()";
     // Break springs?
     (grid->*grid->breakSprings)();
 
+    gridSolver->update();
+
+    this->visualiseGrid();
+}
+
+void GridController::doSolve()
+{
+    qDebug() << "doSolve()";
     // solver solve grid
     gridSolver->solve();
 
-    // this->visualiseGrid();
     this->visualiseGrid();
 }
 

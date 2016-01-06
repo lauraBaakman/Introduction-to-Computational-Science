@@ -25,7 +25,8 @@ signals:
 
 public slots:
     void replaceGridSlot(Grid::Settings settings);
-    void doStep();
+    void doBreak();
+    void doSolve();
 };
 
 #endif // GRIDCONTROLLER_H

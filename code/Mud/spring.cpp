@@ -31,6 +31,7 @@ Particle *Spring::getParticleB() const
 
 float Spring::getSpringConstant() const
 {
+    if(broken) return 0.0;
     return springConstant;
 }
 

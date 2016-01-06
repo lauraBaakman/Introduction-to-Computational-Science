@@ -209,5 +209,10 @@ void Sidebar::on_breakingSpringsParameterSlider_valueChanged(int value)
 
 void Sidebar::on_simulateStepButton_clicked()
 {
-    emit doStep();
+    emit doBreak();
+}
+
+void Sidebar::on_doStabilizeButton_clicked()
+{
+    emit doSolve();
 }

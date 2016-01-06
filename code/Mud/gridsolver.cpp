@@ -15,15 +15,12 @@ GridSolver::GridSolver(Grid *grid, QObject *parent) :
 void GridSolver::solve()
 {
     arma::Mat<float> lhs = computeLHS();
-
-    std::cout << lhs;
-
-    arma::Mat<float> solution = arma::Mat<float>(lhs.n_rows, 3);
+    arma::Mat<float> solution = arma::Mat<float>(lhs.n_rows, 2);
 
     //Solve the system
     solution.col(0) = solveForAxis(lhs, &QVector3D::x);
     solution.col(1) = solveForAxis(lhs, &QVector3D::y);
-    solution.col(2) = solveForAxis(lhs, &QVector3D::z);
+//    solution.col(2) = solveForAxis(lhs, &QVector3D::z);
 
     updateLocations(solution);
 }
@@ -31,12 +28,7 @@ void GridSolver::solve()
 void GridSolver::update()
 {
     springConstantsMatrix = arma::Mat<float> (grid->numSprings(), grid->numSprings(), arma::fill::zeros);
-    adjacencyMatrix = arma::Mat<float> (grid->numSprings(), grid->numFreeParticles(), arma::fill::zeros);
-    signMatrix = arma::Mat<float> (grid->numFreeParticles(), grid->numFreeParticles(), arma::fill::ones);
-
     buildSpringConstantMatrix();
-    buildAdjacencyMatrix();
-    buildSignMatrix();
 }
 
 arma::Col<float> GridSolver::solveForAxis(
@@ -55,7 +47,7 @@ void GridSolver::updateLocations(arma::Mat<float> newLocations)
 {
     for (unsigned long long i = 0; i < newLocations.n_rows; i++){
         grid->getFreeParticles()[i]->setLocation(
-                    newLocations(i, 0), newLocations(i, 1), newLocations(i, 2));        
+                    newLocations(i, 0), newLocations(i, 1), 0.0);
     }
 }
 

@@ -20,6 +20,7 @@ public:
 
     // TODO: Const?
     void build(Grid *grid);
+    void reset();
 
 protected:
     void initializeGL() Q_DECL_OVERRIDE;
@@ -56,7 +57,6 @@ private:
     void setColorValue(QColor color);
     void constructModelViewProjectionMatrix();
     bool isAllocated(QOpenGLBuffer *buffer);
-    void reset();
 
     // Helpers for build
     QVector<int> buildFreeParticleIndices(QVector<FreeParticle*> freeParticles);

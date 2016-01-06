@@ -178,7 +178,6 @@ void Canvas::reset()
 
 void Canvas::build(Grid *grid)
 {
-    reset();
     QVector<QVector3D> locations = grid->getParticleLocations();
     locations = mapLocationsToRange(locations, grid->getSettings(), -1.0, 1.0);
     updateLocationBuffer(locations);
@@ -230,11 +229,13 @@ QVector<int> Canvas::buildSpringIndices(QVector<Spring> springs)
     {
         spring = springs.at(i);
 
-        a = spring.getParticleA();
-        b = spring.getParticleB();
+        if(!spring.isBroken()) {
+            a = spring.getParticleA();
+            b = spring.getParticleB();
 
-        springLocationIndices.append(a->getGlobalID());
-        springLocationIndices.append(b->getGlobalID());
+            springLocationIndices.append(a->getGlobalID());
+            springLocationIndices.append(b->getGlobalID());
+        }
     }
     return springLocationIndices;
 }

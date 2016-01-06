@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>612</width>
-    <height>422</height>
+    <height>490</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -89,7 +89,7 @@
          <number>16</number>
         </property>
         <property name="maximum">
-         <number>32768</number>
+         <number>1200</number>
         </property>
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
@@ -198,7 +198,14 @@
       <item row="0" column="0">
        <widget class="QPushButton" name="simulateStepButton">
         <property name="text">
-         <string>Step</string>
+         <string>Break</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QPushButton" name="doStabilizeButton">
+        <property name="text">
+         <string>Stabilize</string>
         </property>
        </widget>
       </item>
