@@ -202,7 +202,9 @@ QVector<int> Canvas::buildFreeParticleIndices(QVector<FreeParticle*> freeParticl
     QVector<int> freeParticleIndices;
     for (int i = 0; i < this->numFreeParticles; i++)
     {
-        freeParticleIndices.append(freeParticles.at(i)->getGlobalID());
+        if(!freeParticles.at(i)->isDisconnected()) {
+            freeParticleIndices.append(freeParticles.at(i)->getGlobalID());
+        }
     }
     return freeParticleIndices;
 }
