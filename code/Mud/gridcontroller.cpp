@@ -46,6 +46,16 @@ void GridController::doSolve()
     this->visualiseGrid();
 }
 
+void GridController::setBreakMethod(Grid::SpringBreakMethod method)
+{
+    grid->setBreakMethod(method);
+}
+
+void GridController::setBreakMethodParameter(float parameter)
+{
+    grid->setBreakMethodParameter(parameter);
+}
+
 void GridController::visualiseGrid()
 {
     canvas->build(grid);

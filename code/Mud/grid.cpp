@@ -84,9 +84,9 @@ float Grid::energy()
     return energy;
 }
 
-void Grid::setBreakMethod(Grid::Settings settings)
+void Grid::setBreakMethod(Grid::SpringBreakMethod method)
 {
-    switch(settings.springBreakMethod){
+    switch(method){
     case SPRINGS_WITH_STRAIN_GREATER_THAN:
         breakSprings = &Grid::breakSpringsWithStrainGreaterThan;
         break;
@@ -95,6 +95,16 @@ void Grid::setBreakMethod(Grid::Settings settings)
         breakSprings = &Grid::breakSpringsWithHighestStrain;
         break;
     }
+}
+
+void Grid::setBreakMethodParameter(float parameter)
+{
+    settings.springBreakParameter = parameter;
+}
+
+void Grid::setBreakMethod(Grid::Settings settings)
+{
+    setBreakMethod(settings.springBreakMethod);
 }
 
 void Grid::breakSpringsWithHighestStrain()

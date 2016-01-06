@@ -224,12 +224,16 @@ Grid::Settings Sidebar::getGridSettings()
 void Sidebar::on_springBreakingMethod_currentIndexChanged(int index)
 {
     updateSpringBreakingMethodSlider(static_cast<Grid::SpringBreakMethod>(index));
+    emit updateBreakMethodSignal(getSpringBreakMethod());
+
 }
 
 void Sidebar::on_breakingSpringsParameterSlider_sliderMoved(int position)
 {
     updateSpringBreakingMethodSliderValueLabel(position);
+    emit updateBreakParameterSignal(getSpringBreakingParameter());
 }
+
 
 void Sidebar::on_horizontalSlider_sliderMoved(int position)
 {
@@ -244,6 +248,7 @@ void Sidebar::on_horizontalSlider_sliderPressed()
 void Sidebar::on_breakingSpringsParameterSlider_valueChanged(int value)
 {
     updateSpringBreakingMethodSliderValueLabel(value);
+    emit updateBreakParameterSignal(getSpringBreakingParameter());
 }
 
 void Sidebar::on_simulateStepButton_clicked()
