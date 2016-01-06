@@ -34,6 +34,15 @@ int Particle::getGlobalID() const
     return globalID;
 }
 
+bool Particle::isDisconnected()
+{
+    for(auto spring:springs)
+    {
+        if (!spring->isBroken()) return false;
+    }
+    return true;
+}
+
 float Particle::energy()
 {
     float energy = 0;
