@@ -6,7 +6,7 @@ GridController::GridController(Grid *grid, GridSolver *gridSolver, Canvas *canva
     gridSolver(gridSolver),
     canvas(canvas)
 {
-    //qDebug() << "Constructor GridController";
+    //
 }
 
 void GridController::replaceGridSlot(Grid::Settings settings)
