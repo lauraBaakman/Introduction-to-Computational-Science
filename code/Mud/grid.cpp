@@ -86,8 +86,6 @@ void Grid::setBreakMethod(Grid::Settings settings)
 
 void Grid::breakSpringsWithHighestStrain()
 {
-    qDebug() << "breakSpringsWithHighestStrain()";
-
     std::map<float, Spring*> map;
 
     int springsToBreak = settings.springBreakParameter;
@@ -100,7 +98,6 @@ void Grid::breakSpringsWithHighestStrain()
         (springsToBreak != 0) && (item != map.end());
         item++)
     {
-        qDebug() << item->second;
         item->second->breakIt();
         springsToBreak--;
     }
@@ -108,7 +105,6 @@ void Grid::breakSpringsWithHighestStrain()
 
 void Grid::breakSpringsWithStrainGreaterThan()
 {
-    qDebug() << "breakSpringsWithStrainGreaterThan()";
     float breakingStrain = settings.springBreakParameter;
     for (QVector<Spring>::iterator spring = springs.begin(); spring != springs.end(); spring++) {
         if(spring->strain() > breakingStrain) spring->breakIt();

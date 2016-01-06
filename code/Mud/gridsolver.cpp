@@ -40,6 +40,8 @@ arma::Col<float> GridSolver::solveForAxis(
     arma::Col<float> solution = arma::Col<float>(lhs.n_rows);
 
     arma::solve(solution, lhs, rhs);
+
+    std::cout << "solution(max,min)(" <<solution.max() <<","<< solution.min() <<")" << &endl;
     return solution;
 }
 
