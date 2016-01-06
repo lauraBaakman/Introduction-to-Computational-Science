@@ -28,6 +28,8 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(ui->sidebar, SIGNAL(doSolve()),
                      this->gridController, SLOT(doSolve()));
 
+    QObject::connect(this->gridController, SIGNAL(energyChanged(float)),
+                     ui->sidebar, SLOT(onEnergyChanged(float)));
 
 }
 

@@ -22,6 +22,7 @@ private:
     void visualiseGrid();
 
 signals:
+    void energyChanged(float energy);
 
 public slots:
     void replaceGridSlot(Grid::Settings settings);

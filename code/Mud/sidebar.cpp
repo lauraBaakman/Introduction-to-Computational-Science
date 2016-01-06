@@ -270,3 +270,8 @@ void Sidebar::on_springConstantMean_valueChanged(int value)
     double mappedValue = getSpringConstantMean();
     ui->springConstantMeanLabel->setText(label.setNum(mappedValue, numberFormat, numberPrecision));
 }
+
+void Sidebar::onEnergyChanged(float energy)
+{
+    ui->energyLabel->setText(QString("Energy: ") + QString::number(energy, numberFormat, numberPrecision));
+}
