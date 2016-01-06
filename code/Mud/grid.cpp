@@ -305,12 +305,12 @@ QDebug operator<<(QDebug stream, const Grid &grid)
 {
     stream << "Grid ["
            << "\tparticles: "               << grid.particles           << &endl
-           << "\tparticle locations: "                                  << &endl
-           << "\t"                          << grid.particleLocations   << &endl
-           << "\tfree particles: "                                      << &endl
-           << "\t"                          << grid.freeParticles       << &endl
-           << "\tfixed particles: "                                     << &endl
-           << "\t"                          << grid.fixedParticles      << &endl
+//           << "\tparticle locations: "                                  << &endl
+//           << "\t"                          << grid.particleLocations   << &endl
+//           << "\tfree particles: "                                      << &endl
+//           << "\t"                          << grid.freeParticles       << &endl
+//           << "\tfixed particles: "                                     << &endl
+//           << "\t"                          << grid.fixedParticles      << &endl
            << "\tsprings: "                 << grid.springs             << &endl
            << "]" << &endl;
     return stream;
