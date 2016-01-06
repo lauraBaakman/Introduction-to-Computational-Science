@@ -58,12 +58,20 @@ float Sidebar::getSpringBreakingParameter() const
 
 double Sidebar::getSpringConstantMean() const
 {
-    return ui->springConstantMean->value();
+    int value = ui->springConstantMean->value();
+    double mappedValue = map(value,
+                             springConstantMeanMinMax,
+                             ui->springConstantMean->minimum(), ui->springConstantMean->maximum());
+    return mappedValue;
 }
 
 double Sidebar::getSpringConstantSD() const
 {
-
+    int value = ui->springConstantStandardDeviation->value();
+    double mappedValue = map(value,
+                             springConstantStdMinMax,
+                             ui->springConstantStandardDeviation->minimum(), ui->springConstantStandardDeviation->maximum());
+    return mappedValue;
 }
 
 float Sidebar::mapSpringBreakingParameterToCorrectRange(Grid::SpringBreakMethod method) const
@@ -121,7 +129,7 @@ int Sidebar::map(int value, int newMin, int newMax, int oldMin, int oldMax) cons
     return newMin + (scaledValue * newRange);
 }
 
-double Sidebar::map(int value, double newMin, double newMax, int oldMin, int oldMax)
+double Sidebar::map(int value, double newMin, double newMax, int oldMin, int oldMax) const
 {
     double newRange = newMax - newMin;
     double oldRange = (static_cast<double>(oldMax - oldMin));
@@ -131,7 +139,7 @@ double Sidebar::map(int value, double newMin, double newMax, int oldMin, int old
     return newMin + (scaledValue * newRange);
 }
 
-double Sidebar::map(int value, QPair<double, double> newMinMax, int oldMin, int oldMax)
+double Sidebar::map(int value, QPair<double, double> newMinMax, int oldMin, int oldMax) const
 {
     return map(value, newMinMax.first, newMinMax.second, oldMin, oldMax);
 }
@@ -209,6 +217,8 @@ Grid::Settings Sidebar::getGridSettings()
     settings.numParticles = getNumParticles();
     settings.springBreakMethod = getSpringBreakMethod();
     settings.springBreakParameter = getSpringBreakingParameter();
+    settings.springConstantmean = getSpringConstantMean();
+    settings.springConstantSD = getSpringConstantSD();
     return settings;
 }
 
@@ -250,17 +260,13 @@ void Sidebar::on_doStabilizeButton_clicked()
 void Sidebar::on_springConstantStandardDeviation_valueChanged(int value)
 {
     QString label;
-    double mappedValue = map(value,
-                             springConstantStdMinMax,
-                             ui->springConstantStandardDeviation->minimum(), ui->springConstantStandardDeviation->maximum());
+    double mappedValue = getSpringConstantSD();
     ui->SpringConstantStandardDeviationValue->setText(label.setNum(mappedValue, numberFormat, numberPrecision));
 }
 
 void Sidebar::on_springConstantMean_valueChanged(int value)
 {
     QString label;
-    double mappedValue = map(value,
-                             springConstantMeanMinMax,
-                             ui->springConstantMean->minimum(), ui->springConstantMean->maximum());
+    double mappedValue = getSpringConstantMean();
     ui->springConstantMeanLabel->setText(label.setNum(mappedValue, numberFormat, numberPrecision));
 }

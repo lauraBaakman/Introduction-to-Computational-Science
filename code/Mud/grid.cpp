@@ -20,6 +20,7 @@ void Grid::gridFactory(Settings settings)
     this->settings = settings;
 
     setBreakMethod(settings);
+    Spring::setSpringConstantDistributionParameters(settings.springConstantmean, settings.springConstantSD);
     switch(settings.type)
     {
     case SQUARE:

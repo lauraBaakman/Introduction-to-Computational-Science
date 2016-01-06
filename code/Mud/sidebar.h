@@ -66,8 +66,8 @@ private:
 
     float map(int value, float newMin, float newMax, int oldMin, int oldMax) const;
     int map(int value, int newMin, int newMax, int oldMin, int oldMax) const;
-    double map(int value, double newMin, double newMax, int oldMin, int oldMax);
-    double map(int value, QPair<double, double> newMinMax, int oldMin, int oldMax);
+    double map(int value, double newMin, double newMax, int oldMin, int oldMax) const;
+    double map(int value, QPair<double, double> newMinMax, int oldMin, int oldMax) const;
 
     void updateSpringBreakingMethodSlider(Grid::SpringBreakMethod method);
     void updateSpringBreakingMethodSlider();
