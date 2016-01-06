@@ -3,11 +3,18 @@
 GridSolver::GridSolver(Grid *grid, QObject *parent) :
     QObject(parent),
     grid(grid),
-    springConstantsMatrix(grid->numSprings(), grid->numSprings()),
-    adjacencyMatrix(grid->numSprings(), grid->numFreeParticles())
+    springConstantsMatrix(grid->numSprings(), grid->numSprings(), arma::fill::zeros),
+    adjacencyMatrix(grid->numSprings(), grid->numFreeParticles(), arma::fill::zeros)
 {
     buildSpringConstantMatrix();
+
+
+    qDebug() << grid;
+    std::cout << springConstantsMatrix;
+
     buildAdjacencyMatrix();
+
+//    std::cout << adjacencyMatrix;
 }
 
 void GridSolver::solve()
@@ -29,6 +36,7 @@ arma::Col<float> GridSolver::solveForAxis(
         GridSolver::elementGetter getter)
 {
     arma::Col<float> rhs = computeRHS(getter);
+
     arma::Col<float> solution = arma::Col<float>(lhs.n_rows);
 
     arma::solve(solution, lhs, rhs);
@@ -51,7 +59,7 @@ void GridSolver::buildSpringConstantMatrix()
     arma::Col<float> springConstants = arma::Col<float>(numSprings);
     for(const Spring &spring : grid->getSprings())
     {
-        springConstants(spring.getId()) = -1 * spring.getSpringConstant();
+        springConstants(spring.getId()) = spring.getSpringConstant();
     }
     springConstantsMatrix.diag() = springConstants;
 }
