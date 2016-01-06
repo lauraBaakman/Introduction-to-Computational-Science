@@ -260,6 +260,8 @@ Particle *Grid::getParticleById(int id)
             return particle;
         }
     }
+    qDebug() << "getParticleById could not find the particle with id " << id;
+    return nullptr;
 }
 
 bool Grid::onCorner(int row, int column, int rows, int columns)
