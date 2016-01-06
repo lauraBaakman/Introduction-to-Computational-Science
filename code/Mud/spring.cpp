@@ -67,6 +67,11 @@ void Spring::setSpringConstantDistributionParameters(float mean, float standardD
     Spring::normalDistribution = std::normal_distribution<float> (mean, standardDeviation);
 }
 
+float Spring::getNaturalLength() const
+{
+    return naturalLength;
+}
+
 bool Spring::isBroken() const
 {
     return broken;

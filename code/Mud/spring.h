@@ -39,6 +39,8 @@ public:
 
     static void setSpringConstantDistributionParameters(float mean = 0.0, float standardDeviation = 1.0);
 
+    float getNaturalLength() const;
+
 private:
     float springConstant;
     float naturalLength;
