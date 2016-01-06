@@ -28,6 +28,8 @@ signals:
     void replaceGridSignal(Grid::Settings settings);
     void doBreak();
     void doSolve();
+    void updateBreakMethodSignal(Grid::SpringBreakMethod breakMethod);
+    void updateBreakParameterSignal(float parameter);
 
 private slots:
     void on_initApplyButton_clicked();

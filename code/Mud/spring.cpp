@@ -56,8 +56,6 @@ void Spring::breakIt()
 void Spring::clear()
 {
     Spring::nextId = 0;
-    //Reset normal distribution to default parameters
-    Spring::setSpringConstantDistributionParameters();
     //Reset the random number generator
     Spring::randomNumberGenerator = std::default_random_engine();
 }

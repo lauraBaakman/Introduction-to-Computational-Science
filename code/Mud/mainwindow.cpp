@@ -28,6 +28,12 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(ui->sidebar, SIGNAL(doSolve()),
                      this->gridController, SLOT(doSolve()));
 
+    QObject::connect(ui->sidebar, SIGNAL(updateBreakMethodSignal(Grid::SpringBreakMethod)),
+                     this->gridController, SLOT(setBreakMethod(Grid::SpringBreakMethod)));
+
+    QObject::connect(ui->sidebar, SIGNAL(updateBreakParameterSignal(float)),
+                     this->gridController, SLOT(setBreakMethodParameter(float)));
+
     QObject::connect(this->gridController, SIGNAL(energyChanged(float)),
                      ui->sidebar, SLOT(onEnergyChanged(float)));
 

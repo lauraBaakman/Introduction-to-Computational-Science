@@ -28,6 +28,8 @@ public slots:
     void replaceGridSlot(Grid::Settings settings);
     void doBreak();
     void doSolve();
+    void setBreakMethod(Grid::SpringBreakMethod method);
+    void setBreakMethodParameter(float parameter);
 };
 
 #endif // GRIDCONTROLLER_H

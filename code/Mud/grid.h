@@ -45,10 +45,7 @@ public:
 
     //Call this method with: (grid->*grid->breakSprings)();
     //http://stackoverflow.com/a/990637/1357229
-private:
     typedef void (Grid::*breakMethod)(void);
-
-public:
     breakMethod breakSprings;
 
     void gridFactory(Settings settings);
@@ -68,6 +65,9 @@ public:
     QVector<FixedParticle *> getFixedParticles() const;
 
     float energy();
+
+    void setBreakMethod(Grid::SpringBreakMethod method);
+    void setBreakMethodParameter(float parameter);
 
 private:
     QVector<Particle *> particles;
