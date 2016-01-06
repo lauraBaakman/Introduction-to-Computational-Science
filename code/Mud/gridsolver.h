@@ -25,9 +25,11 @@ private:
 
     arma::Mat<float> springConstantsMatrix;
     arma::Mat<float> adjacencyMatrix;
+    arma::Mat<float> signMatrix;
 
     void buildSpringConstantMatrix();
     void buildAdjacencyMatrix();
+    void buildSignMatrix();
 
     arma::Mat<float> computeLHS();
     float computeVectorElement(const Particle* particle, elementGetter getter);
