@@ -34,6 +34,15 @@ int Particle::getGlobalID() const
     return globalID;
 }
 
+float Particle::energy()
+{
+    float energy = 0;
+    for(auto spring:springs)
+    {
+        energy += spring.getConstant() * (location->distanceToPoint(spring->getOtherParticle(this)->getLocation()) );
+    }
+}
+
 void Particle::clear()
 {
     Particle::nextGlobalID = 0;

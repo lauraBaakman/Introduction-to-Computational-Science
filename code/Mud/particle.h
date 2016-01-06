@@ -32,6 +32,7 @@ public:
     virtual void doPrint(QDebug stream) const;
 
     int getGlobalID() const;
+    float energy();
 
     static void clear();
 
