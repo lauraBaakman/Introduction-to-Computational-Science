@@ -48,9 +48,9 @@ private slots:
 
     void on_doStabilizeButton_clicked();
 
-    void on_springConstantStandardDeviation_valueChanged(int value);
+    void on_springConstantStandardDeviation_valueChanged();
 
-    void on_springConstantMean_valueChanged(int value);
+    void on_springConstantMean_valueChanged();
 
 private:
     Ui::Sidebar *ui;
