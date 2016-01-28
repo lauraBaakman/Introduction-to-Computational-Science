@@ -27,7 +27,6 @@
 
 \newcommand{\drawFixedParticles}[2]{
   {
-    \pgfmathtruncatemacro{\numRowsCols}{#1 - 1}
       % Draw upper row of fixed nodes
     {
       \newcommand\y{#1}  
@@ -82,6 +81,22 @@
   }
 }
 
+\newcommand{\drawSpringsBetweenFreeParticles}{
+      \foreach \x in {0,...,\numRowsCols}
+      \foreach \y [count=\yi] in {0,...,\numRowsColsMinusOne}  {
+          % Vertical springs
+          \pgfmathtruncatemacro{\label}{\x + \numFreeRowsCols * (\numFreeRowsCols - 1 - \y) + (\numFreeRowsCols + 1) * (\numFreeRowsCols - 1 - \y)}{
+            \draw (\x\y)--(\x\yi) node[spring] {\spring{\label}};
+          }
+
+          % Horizontal springs
+          \pgfmathtruncatemacro{\label}{\y + (\numFreeRowsCols - 1) * (\numFreeRowsCols - 1 - \x) + (\numFreeRowsCols - \x) * (\numFreeRowsCols + 2) - 1}{
+            \draw (\y\x)--(\yi\x) node[spring] {\spring{\label}};
+          }
+          
+      }
+}
+
 \begin{document}
 	
 \begin{tikzpicture}
@@ -95,21 +110,7 @@
          {\pgfmathtruncatemacro{\label}{\x - 3 *  \y + 7 - 1}
          \node [free]  (\x\y) at (\gridSpacing*\x,\gridSpacing*\y) {\freeParticle{\label}};} 
 
-    % Draw edges between free particles in grid
-    \foreach \x in {0,...,\numRowsCols}
-      \foreach \y [count=\yi] in {0,...,\numRowsColsMinusOne}  {
-          % Vertical springs
-          \pgfmathtruncatemacro{\label}{\x + \numFreeRowsCols * (\numFreeRowsCols - 1 - \y) + (\numFreeRowsCols + 1) * (\numFreeRowsCols - 1 - \y)}{
-            \draw (\x\y)--(\x\yi) node[spring] {\spring{\label}};
-          }
-
-          % Horizontal springs
-          \pgfmathtruncatemacro{\label}{\y + (\numFreeRowsCols - 1) * (\numFreeRowsCols - 1 - \x) + (\numFreeRowsCols - \x) * (\numFreeRowsCols + 2) - 1}{
-            \draw (\y\x)--(\yi\x) node[spring] {\spring{\label}};
-          }
-          
-      }
-
+      \drawSpringsBetweenFreeParticles
       \drawFixedParticles{\numFreeRowsCols}{\gridSpacing}      
   }
 
