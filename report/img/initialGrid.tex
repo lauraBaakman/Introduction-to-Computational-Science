@@ -3,6 +3,7 @@
 \usepackage{color}
 \usepackage{tikz}
 \usetikzlibrary{positioning}
+\usetikzlibrary{calc}
 
 
 % \definecolor{myred}{RGB}{175,53,71}
@@ -25,6 +26,8 @@
 }
 
 \newcommand{\drawFixedParticles}[2]{
+  {
+    \pgfmathtruncatemacro{\numRowsCols}{#1 - 1}
       % Draw upper row of fixed nodes
     {
       \newcommand\y{#1}  
@@ -76,6 +79,7 @@
         \draw (\x\y)--(\xi\y) node[spring] {\spring{\springlabel}};
       } 
     }
+  }
 }
 
 \begin{document}
