@@ -37,8 +37,19 @@
 
     % Draw edges between free particles in grid
     \foreach \x in {0,...,\numRowsCols}
-      \foreach \y [count=\yi] in {0,...,\numRowsColsMinusOne}  
-        \draw (\x\y)--(\x\yi) (\y\x)--(\yi\x);
+      \foreach \y [count=\yi] in {0,...,\numRowsColsMinusOne}  {
+          % Vertical springs
+          \pgfmathtruncatemacro{\label}{\x + \numFreeRowsCols * (\numFreeRowsCols - 1 - \y) + (\numFreeRowsCols + 1) * (\numFreeRowsCols - 1 - \y)}{
+            \draw (\x\y)--(\x\yi) node[anchor=center, left, midway] {$k_{\label}$};
+          }
+
+          % Horizontal springs
+          % \pgfmathtruncatemacro{\label}{\x - 3 *  \y + 7 - 1}{
+          %   \draw (\y\x)--(\yi\x) node[anchor=center, above, midway] {$y$};
+          % }
+          
+      }
+
 
     % Draw upper row of fixed nodes
     {
