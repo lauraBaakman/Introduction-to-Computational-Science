@@ -44,9 +44,9 @@
           }
 
           % Horizontal springs
-          % \pgfmathtruncatemacro{\label}{\x - 3 *  \y + 7 - 1}{
-          %   \draw (\y\x)--(\yi\x) node[anchor=center, above, midway] {$y$};
-          % }
+          \pgfmathtruncatemacro{\label}{\y + (\numFreeRowsCols - 1) * (\numFreeRowsCols - 1 - \x) + (\numFreeRowsCols - \x) * (\numFreeRowsCols + 2) - 1}{
+            \draw (\y\x)--(\yi\x) node[anchor=center, above, midway] {$k_{\label}$};
+          }
           
       }
 
