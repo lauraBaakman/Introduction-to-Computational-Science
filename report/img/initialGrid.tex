@@ -98,8 +98,9 @@
       \foreach \y in {0,...,\numRowsCols}
       {
         \pgfmathtruncatemacro{\label}{(3 * \numFreeRowsCols - 1) - \y}
+        \pgfmathtruncatemacro{\springlabel}{2 * \numFreeRowsCols + (\numFreeRowsCols - \y - 1) * ((2 * \numFreeRowsCols) + 1)}
         \node [fixed] (\x\y) [label=right:{\fixedParticle{\label}}] at (\gridSpacing*\x,\gridSpacing*\y) {}; 
-        \draw (\x\y)--(\xi\y);
+        \draw (\x\y)--(\xi\y) node[anchor=center, above, midway] {\spring{\springlabel}};
       } 
     }      
   }
