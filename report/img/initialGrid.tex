@@ -88,6 +88,16 @@
       } 
     }    
 
+    \newcounter{k}
+    \foreach \y in {-0.75, 0.75, ..., 3.75}
+      \foreach \x in {0, 1.5, ..., 3}
+      {
+        % \pgfmathtruncatemacro{\label}{\k}
+        \stepcounter{k}
+        \node (\x\y) [label={[label distance=-0.2cm]0:{$k_{\arabic{k}}$}}] at (\x,\y) {};     
+      }
+
+    % \node (someNode) [label={[label distance=-0.2cm]0:{$k$}}] at (0,-0.75) {}; 
   }
 
   
