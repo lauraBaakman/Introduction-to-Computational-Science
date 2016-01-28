@@ -14,12 +14,13 @@
 \newcommand{\spring}[1]{\ensuremath{k_{#1}}}
 
 \newcommand\numFreeRowsCols{3}
-\newcommand\gridSpacing{1.5}
+\newcommand\gridSpacing{2}
 
 \tikzset{
 		edgeStyle/.style = {line width = 1.3pt},
 		fixed/.style = 		 {anchor=base,fill,circle,inner sep=1pt},
 		free/.style =	     {circle,draw},
+    spring/.style =    {fill=white,circle,inner sep = 0.1pt, anchor=center, midway},
 		node distance=2.3cm
 }
 
@@ -41,12 +42,12 @@
       \foreach \y [count=\yi] in {0,...,\numRowsColsMinusOne}  {
           % Vertical springs
           \pgfmathtruncatemacro{\label}{\x + \numFreeRowsCols * (\numFreeRowsCols - 1 - \y) + (\numFreeRowsCols + 1) * (\numFreeRowsCols - 1 - \y)}{
-            \draw (\x\y)--(\x\yi) node[anchor=center, left, midway] {\spring{\label}};
+            \draw (\x\y)--(\x\yi) node[spring] {\spring{\label}};
           }
 
           % Horizontal springs
           \pgfmathtruncatemacro{\label}{\y + (\numFreeRowsCols - 1) * (\numFreeRowsCols - 1 - \x) + (\numFreeRowsCols - \x) * (\numFreeRowsCols + 2) - 1}{
-            \draw (\y\x)--(\yi\x) node[anchor=center, above, midway] {\spring{\label}};
+            \draw (\y\x)--(\yi\x) node[spring] {\spring{\label}};
           }
           
       }
@@ -61,7 +62,7 @@
         \pgfmathtruncatemacro{\label}{\x}
         \pgfmathtruncatemacro{\springlabel}{\x}
         \node [fixed] (\x\y) [label=above:{\fixedParticle{\label}}] at (\gridSpacing*\x,\gridSpacing*\y) {};
-        \draw (\x\y)--(\x\yi) node[anchor=center, left, midway] {\spring{\springlabel}};
+        \draw (\x\y)--(\x\yi) node[spring] {\spring{\springlabel}};
       }
     }
 
@@ -74,7 +75,7 @@
         \pgfmathtruncatemacro{\label}{\numFreeRowsCols * 3 + \x}
         \pgfmathtruncatemacro{\springlabel}{\x + \numFreeRowsCols * (\numFreeRowsCols - 1 - \y) + (\numFreeRowsCols + 1) * (\numFreeRowsCols - 1 - \y)}
         \node [fixed] (\x\y) [label=below:{\fixedParticle{\label}}] at (\gridSpacing*\x,\gridSpacing*\y) {}; 
-        \draw (\x\y)--(\x\yi) node[anchor=center, left, midway] {\spring{\springlabel}};
+        \draw (\x\y)--(\x\yi) node[spring] {\spring{\springlabel}};
       } 
     }
 
@@ -87,7 +88,7 @@
         \pgfmathtruncatemacro{\label}{(2 * \numFreeRowsCols - 1) - \y}
         \pgfmathtruncatemacro{\springlabel}{\numFreeRowsCols + (\numFreeRowsCols - \y - 1) * ((2 * \numFreeRowsCols) + 1)}        
         \node [fixed] (\x\y) [label=left:{\fixedParticle{\label}}] at (\gridSpacing*\x,\gridSpacing*\y) {}; 
-        \draw (\x\y)--(\xi\y) node[anchor=center, above, midway] {\spring{\springlabel}};
+        \draw (\x\y)--(\xi\y) node[spring] {\spring{\springlabel}};
       } 
     }
 
@@ -100,7 +101,7 @@
         \pgfmathtruncatemacro{\label}{(3 * \numFreeRowsCols - 1) - \y}
         \pgfmathtruncatemacro{\springlabel}{2 * \numFreeRowsCols + (\numFreeRowsCols - \y - 1) * ((2 * \numFreeRowsCols) + 1)}
         \node [fixed] (\x\y) [label=right:{\fixedParticle{\label}}] at (\gridSpacing*\x,\gridSpacing*\y) {}; 
-        \draw (\x\y)--(\xi\y) node[anchor=center, above, midway] {\spring{\springlabel}};
+        \draw (\x\y)--(\xi\y) node[spring] {\spring{\springlabel}};
       } 
     }      
   }
