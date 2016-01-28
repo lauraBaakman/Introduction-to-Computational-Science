@@ -33,42 +33,53 @@
     % Draw edges between free particles in grid
     \foreach \x in {0,...,\numRowsCols}
       \foreach \y [count=\yi] in {0,...,\numRowsColsMinusOne}  
-        \draw (\x\y)--(\x\yi) (\y\x)--(\yi\x) ;
+        \draw (\x\y)--(\x\yi) (\y\x)--(\yi\x);
 
     % Draw upper row of fixed nodes
     {
       \newcommand\y{\numFreeRowsCols}  
+      \pgfmathtruncatemacro{\yi}{\y - 1}
       \foreach \x in {0,...,\numRowsCols}
-          \node [fixed] (\x\y) [label=above:{$f_\x$}] at (1.5*\x,1.5*\y) {};
+      {
+        \pgfmathtruncatemacro{\label}{\x}
+          \node [fixed] (\x\y) [label=above:{$f_\label$}] at (1.5*\x,1.5*\y) {};
+          \draw (\x\y)--(\x\yi);
+      }
     }
 
     % Draw lower row of fixed nodes
     {
       \newcommand\y{-1}  
+      \pgfmathtruncatemacro{\yi}{\y + 1}
       \foreach \x in {0,...,\numRowsCols}
       {
         \pgfmathtruncatemacro{\label}{\numFreeRowsCols * 3 + \x}
-        \node [fixed] (\x\y) [label=above:{$f_{\label}$}] at (1.5*\x,1.5*\y) {}; 
+        \node [fixed] (\x\y) [label=below:{$f_{\label}$}] at (1.5*\x,1.5*\y) {}; 
+        \draw (\x\y)--(\x\yi);
       } 
     }
 
     % Draw left column of fixed nodes
     {
       \newcommand\x{-1}  
+      \pgfmathtruncatemacro{\xi}{\x + 1}
       \foreach \y in {0,...,\numRowsCols}
       {
         \pgfmathtruncatemacro{\label}{(2 * \numFreeRowsCols - 1) - \y}
-        \node [fixed] (\x\y) [label=above:{$f_{\label}$}] at (1.5*\x,1.5*\y) {}; 
+        \node [fixed] (\x\y) [label=left:{$f_{\label}$}] at (1.5*\x,1.5*\y) {}; 
+        \draw (\x\y)--(\xi\y);
       } 
     }
 
     %Draw right column of fixed nodes
     {
       \newcommand\x{\numFreeRowsCols}  
+      \pgfmathtruncatemacro{\xi}{\x - 1}
       \foreach \y in {0,...,\numRowsCols}
       {
         \pgfmathtruncatemacro{\label}{(3 * \numFreeRowsCols - 1) - \y}
-        \node [fixed] (\x\y) [label=above:{$f_{\label}$}] at (1.5*\x,1.5*\y) {}; 
+        \node [fixed] (\x\y) [label=right:{$f_{\label}$}] at (1.5*\x,1.5*\y) {}; 
+        \draw (\x\y)--(\xi\y);
       } 
     }    
 
