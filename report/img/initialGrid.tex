@@ -12,6 +12,9 @@
 \newcommand{\freeParticle}[1]{\ensuremath{v_{#1}}}
 \newcommand{\fixedParticle}[1]{\ensuremath{f_{#1}}}
 
+\newcommand\numFreeRowsCols{3}
+\newcommand\gridSpacing{1.5}
+
 \tikzset{
 		edgeStyle/.style = {line width = 1.3pt},
 		fixed/.style = 		 {anchor=base,fill,circle,inner sep=1pt},
@@ -22,7 +25,6 @@
 \begin{document}
 	
 \begin{tikzpicture}
-  \newcommand\numFreeRowsCols{3}
   {
     \pgfmathtruncatemacro{\numRowsCols}{\numFreeRowsCols - 1}
     \pgfmathtruncatemacro{\numRowsColsMinusOne}{\numRowsCols - 1}
@@ -31,7 +33,7 @@
     \foreach \x in {0,...,\numRowsCols}
       \foreach \y in {0,...,\numRowsCols} 
          {\pgfmathtruncatemacro{\label}{\x - 3 *  \y + 7 - 1}
-         \node [free]  (\x\y) at (1.5*\x,1.5*\y) {\freeParticle{\label}};} 
+         \node [free]  (\x\y) at (\gridSpacing*\x,\gridSpacing*\y) {\freeParticle{\label}};} 
 
     % Draw edges between free particles in grid
     \foreach \x in {0,...,\numRowsCols}
@@ -45,7 +47,7 @@
       \foreach \x in {0,...,\numRowsCols}
       {
         \pgfmathtruncatemacro{\label}{\x}
-          \node [fixed] (\x\y) [label=above:{\fixedParticle{\label}}] at (1.5*\x,1.5*\y) {};
+          \node [fixed] (\x\y) [label=above:{\fixedParticle{\label}}] at (\gridSpacing*\x,\gridSpacing*\y) {};
           \draw (\x\y)--(\x\yi);
       }
     }
@@ -57,7 +59,7 @@
       \foreach \x in {0,...,\numRowsCols}
       {
         \pgfmathtruncatemacro{\label}{\numFreeRowsCols * 3 + \x}
-        \node [fixed] (\x\y) [label=below:{\fixedParticle{\label}}] at (1.5*\x,1.5*\y) {}; 
+        \node [fixed] (\x\y) [label=below:{\fixedParticle{\label}}] at (\gridSpacing*\x,\gridSpacing*\y) {}; 
         \draw (\x\y)--(\x\yi);
       } 
     }
@@ -69,7 +71,7 @@
       \foreach \y in {0,...,\numRowsCols}
       {
         \pgfmathtruncatemacro{\label}{(2 * \numFreeRowsCols - 1) - \y}
-        \node [fixed] (\x\y) [label=left:{\fixedParticle{\label}}] at (1.5*\x,1.5*\y) {}; 
+        \node [fixed] (\x\y) [label=left:{\fixedParticle{\label}}] at (\gridSpacing*\x,\gridSpacing*\y) {}; 
         \draw (\x\y)--(\xi\y);
       } 
     }
@@ -81,7 +83,7 @@
       \foreach \y in {0,...,\numRowsCols}
       {
         \pgfmathtruncatemacro{\label}{(3 * \numFreeRowsCols - 1) - \y}
-        \node [fixed] (\x\y) [label=right:{\fixedParticle{\label}}] at (1.5*\x,1.5*\y) {}; 
+        \node [fixed] (\x\y) [label=right:{\fixedParticle{\label}}] at (\gridSpacing*\x,\gridSpacing*\y) {}; 
         \draw (\x\y)--(\xi\y);
       } 
     }    
