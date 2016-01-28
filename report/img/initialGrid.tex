@@ -24,7 +24,7 @@
 		node distance=2.3cm
 }
 
-\newcommand{\drawFixedParticles}[1]{
+\newcommand{\drawFixedParticles}[2]{
       % Draw upper row of fixed nodes
     {
       \newcommand\y{#1}  
@@ -33,7 +33,7 @@
       {
         \pgfmathtruncatemacro{\label}{\x}
         \pgfmathtruncatemacro{\springlabel}{\x}
-        \node [fixed] (\x\y) [label=above:{\fixedParticle{\label}}] at (\gridSpacing*\x,\gridSpacing*\y) {};
+        \node [fixed] (\x\y) [label=above:{\fixedParticle{\label}}] at (#2 *\x,#2 *\y) {};
         \draw (\x\y)--(\x\yi) node[spring] {\spring{\springlabel}};
       }
     }
@@ -46,7 +46,7 @@
       {
         \pgfmathtruncatemacro{\label}{#1 * 3 + \x}
         \pgfmathtruncatemacro{\springlabel}{\x + #1 * (#1 - 1 - \y) + (#1 + 1) * (#1 - 1 - \y)}
-        \node [fixed] (\x\y) [label=below:{\fixedParticle{\label}}] at (\gridSpacing*\x,\gridSpacing*\y) {}; 
+        \node [fixed] (\x\y) [label=below:{\fixedParticle{\label}}] at (#2 *\x,#2 *\y) {}; 
         \draw (\x\y)--(\x\yi) node[spring] {\spring{\springlabel}};
       } 
     }
@@ -59,7 +59,7 @@
       {
         \pgfmathtruncatemacro{\label}{(2 * #1 - 1) - \y}
         \pgfmathtruncatemacro{\springlabel}{#1 + (#1 - \y - 1) * ((2 * #1) + 1)}        
-        \node [fixed] (\x\y) [label=left:{\fixedParticle{\label}}] at (\gridSpacing*\x,\gridSpacing*\y) {}; 
+        \node [fixed] (\x\y) [label=left:{\fixedParticle{\label}}] at (#2 *\x,#2 *\y) {}; 
         \draw (\x\y)--(\xi\y) node[spring] {\spring{\springlabel}};
       } 
     }
@@ -72,7 +72,7 @@
       {
         \pgfmathtruncatemacro{\label}{(3 * #1 - 1) - \y}
         \pgfmathtruncatemacro{\springlabel}{2 * #1 + (#1 - \y - 1) * ((2 * #1) + 1)}
-        \node [fixed] (\x\y) [label=right:{\fixedParticle{\label}}] at (\gridSpacing*\x,\gridSpacing*\y) {}; 
+        \node [fixed] (\x\y) [label=right:{\fixedParticle{\label}}] at (#2 *\x,#2 *\y) {}; 
         \draw (\x\y)--(\xi\y) node[spring] {\spring{\springlabel}};
       } 
     }
@@ -106,7 +106,7 @@
           
       }
 
-      \drawFixedParticles{\numFreeRowsCols}      
+      \drawFixedParticles{\numFreeRowsCols}{\gridSpacing}      
   }
 
   
