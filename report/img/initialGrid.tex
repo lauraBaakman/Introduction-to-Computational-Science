@@ -5,14 +5,13 @@
 \usetikzlibrary{positioning}
 
 
-\definecolor{myred}{RGB}{175,53,71}
-% \definecolor{myred}{RGB}{255,127,0}
-\definecolor{myblue}{RGB}{0,116,188}
+% \definecolor{myred}{RGB}{175,53,71}
+% \definecolor{myblue}{RGB}{0,116,188}
 
 \tikzset{
-		edgeStyle/.style = 	{line width = 1.3pt},
-		fixed/.style = 		{line width = 1.2pt, color=myred, text=black, circle, draw},
-		free/.style=	{circle,draw,minimum size=20},
+		edgeStyle/.style = {line width = 1.3pt},
+		fixed/.style = 		 {anchor=base,fill,circle,inner sep=1pt},
+		free/.style =	     {circle,draw},
 		node distance=2.3cm
 }
 
@@ -24,6 +23,7 @@
   {
     \pgfmathtruncatemacro{\numRowsCols}{\numFreeRowsCols - 1}
     \pgfmathtruncatemacro{\numRowsColsMinusOne}{\numRowsCols - 1}
+
     % Draw free particles on grid
     \foreach \x in {0,...,\numRowsCols}
       \foreach \y in {0,...,\numRowsCols} 
@@ -35,9 +35,46 @@
       \foreach \y [count=\yi] in {0,...,\numRowsColsMinusOne}  
         \draw (\x\y)--(\x\yi) (\y\x)--(\yi\x) ;
 
+    % Draw upper row of fixed nodes
+    {
+      \newcommand\y{\numFreeRowsCols}  
+      \foreach \x in {0,...,\numRowsCols}
+          \node [fixed] (\x\y) [label=above:{$f_\x$}] at (1.5*\x,1.5*\y) {};
+    }
+
+    % Draw lower row of fixed nodes
+    {
+      \newcommand\y{-1}  
+      \foreach \x in {0,...,\numRowsCols}
+      {
+        \pgfmathtruncatemacro{\label}{\numFreeRowsCols * 3 + \x}
+        \node [fixed] (\x\y) [label=above:{$f_{\label}$}] at (1.5*\x,1.5*\y) {}; 
+      } 
+    }
+
+    % Draw left column of fixed nodes
+    {
+      \newcommand\x{-1}  
+      \foreach \y in {0,...,\numRowsCols}
+      {
+        \pgfmathtruncatemacro{\label}{(2 * \numFreeRowsCols - 1) - \y}
+        \node [fixed] (\x\y) [label=above:{$f_{\label}$}] at (1.5*\x,1.5*\y) {}; 
+      } 
+    }
+
+    %Draw right column of fixed nodes
+    {
+      \newcommand\x{\numFreeRowsCols}  
+      \foreach \y in {0,...,\numRowsCols}
+      {
+        \pgfmathtruncatemacro{\label}{(3 * \numFreeRowsCols - 1) - \y}
+        \node [fixed] (\x\y) [label=above:{$f_{\label}$}] at (1.5*\x,1.5*\y) {}; 
+      } 
+    }    
+
   }
 
-
+  
 
 \end{tikzpicture}	
 
