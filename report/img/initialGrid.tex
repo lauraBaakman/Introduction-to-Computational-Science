@@ -11,6 +11,7 @@
 
 \newcommand{\freeParticle}[1]{\ensuremath{v_{#1}}}
 \newcommand{\fixedParticle}[1]{\ensuremath{f_{#1}}}
+\newcommand{\spring}[1]{\ensuremath{k_{#1}}}
 
 \newcommand\numFreeRowsCols{3}
 \newcommand\gridSpacing{1.5}
@@ -40,12 +41,12 @@
       \foreach \y [count=\yi] in {0,...,\numRowsColsMinusOne}  {
           % Vertical springs
           \pgfmathtruncatemacro{\label}{\x + \numFreeRowsCols * (\numFreeRowsCols - 1 - \y) + (\numFreeRowsCols + 1) * (\numFreeRowsCols - 1 - \y)}{
-            \draw (\x\y)--(\x\yi) node[anchor=center, left, midway] {$k_{\label}$};
+            \draw (\x\y)--(\x\yi) node[anchor=center, left, midway] {\spring{\label}};
           }
 
           % Horizontal springs
           \pgfmathtruncatemacro{\label}{\y + (\numFreeRowsCols - 1) * (\numFreeRowsCols - 1 - \x) + (\numFreeRowsCols - \x) * (\numFreeRowsCols + 2) - 1}{
-            \draw (\y\x)--(\yi\x) node[anchor=center, above, midway] {$k_{\label}$};
+            \draw (\y\x)--(\yi\x) node[anchor=center, above, midway] {\spring{\label}};
           }
           
       }
@@ -58,8 +59,9 @@
       \foreach \x in {0,...,\numRowsCols}
       {
         \pgfmathtruncatemacro{\label}{\x}
-          \node [fixed] (\x\y) [label=above:{\fixedParticle{\label}}] at (\gridSpacing*\x,\gridSpacing*\y) {};
-          \draw (\x\y)--(\x\yi);
+        \pgfmathtruncatemacro{\springlabel}{\x}
+        \node [fixed] (\x\y) [label=above:{\fixedParticle{\label}}] at (\gridSpacing*\x,\gridSpacing*\y) {};
+        \draw (\x\y)--(\x\yi) node[anchor=center, left, midway] {\spring{\springlabel}};
       }
     }
 
@@ -70,8 +72,9 @@
       \foreach \x in {0,...,\numRowsCols}
       {
         \pgfmathtruncatemacro{\label}{\numFreeRowsCols * 3 + \x}
+        \pgfmathtruncatemacro{\springlabel}{\x + \numFreeRowsCols * (\numFreeRowsCols - 1 - \y) + (\numFreeRowsCols + 1) * (\numFreeRowsCols - 1 - \y)}
         \node [fixed] (\x\y) [label=below:{\fixedParticle{\label}}] at (\gridSpacing*\x,\gridSpacing*\y) {}; 
-        \draw (\x\y)--(\x\yi);
+        \draw (\x\y)--(\x\yi) node[anchor=center, left, midway] {\spring{\springlabel}};
       } 
     }
 
@@ -82,8 +85,9 @@
       \foreach \y in {0,...,\numRowsCols}
       {
         \pgfmathtruncatemacro{\label}{(2 * \numFreeRowsCols - 1) - \y}
+        \pgfmathtruncatemacro{\springlabel}{\numFreeRowsCols + (\numFreeRowsCols - \y - 1) * ((2 * \numFreeRowsCols) + 1)}        
         \node [fixed] (\x\y) [label=left:{\fixedParticle{\label}}] at (\gridSpacing*\x,\gridSpacing*\y) {}; 
-        \draw (\x\y)--(\xi\y);
+        \draw (\x\y)--(\xi\y) node[anchor=center, above, midway] {\spring{\springlabel}};
       } 
     }
 
