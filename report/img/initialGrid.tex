@@ -19,14 +19,25 @@
 \begin{document}
 	
 \begin{tikzpicture}
-  \foreach \x in {0,...,2}
-    \foreach \y in {0,...,2} 
-       {\pgfmathtruncatemacro{\label}{\x - 3 *  \y + 7 - 1}
-       \node [free]  (\x\y) at (1.5*\x,1.5*\y) {$v_\label$};} 
+  \newcommand\numFreeRowsCols{3}
 
-  \foreach \x in {0,...,2}
-    \foreach \y [count=\yi] in {0,...,1}  
-      \draw (\x\y)--(\x\yi) (\y\x)--(\yi\x) ;
+  {
+    \pgfmathtruncatemacro{\numRowsCols}{\numFreeRowsCols - 1}
+    \pgfmathtruncatemacro{\numRowsColsMinusOne}{\numRowsCols - 1}
+    % Draw free particles on grid
+    \foreach \x in {0,...,\numRowsCols}
+      \foreach \y in {0,...,\numRowsCols} 
+         {\pgfmathtruncatemacro{\label}{\x - 3 *  \y + 7 - 1}
+         \node [free]  (\x\y) at (1.5*\x,1.5*\y) {$v_\label$};} 
+
+    % Draw edges between free particles in grid
+    \foreach \x in {0,...,\numRowsCols}
+      \foreach \y [count=\yi] in {0,...,\numRowsColsMinusOne}  
+        \draw (\x\y)--(\x\yi) (\y\x)--(\yi\x) ;
+
+  }
+
+
 
 \end{tikzpicture}	
 
