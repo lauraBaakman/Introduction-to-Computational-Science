@@ -115,7 +115,6 @@
 
 \newcommand{\stabilizedInitialGrid}{
 	\pgfmathsetseed{1138}
-	\textbf{Stabilized Initial Grid}	
 	\begin{tikzpicture}
   	{
     	\pgfmathtruncatemacro{\numRowsCols}{\numFreeRowsCols - 1}
@@ -125,7 +124,11 @@
     	\foreach \x in {0,...,\numRowsCols}
       		\foreach \y in {0,...,\numRowsCols} {
           		\pgfmathtruncatemacro{\label}{\x - 3 *  \y + 7 - 1}
-          		\node [free]  (\x\y) at (\gridSpacing*\x + rand,\gridSpacing*\y + rand) {\freeParticle{\label}};
+          		\node [free]  (\x\y) at (
+          			{\gridSpacing*\x + (rand + 1) / 1.75},
+          			{\gridSpacing*\y + (rand + 1) / 1.75}
+          			) 
+          			{\freeParticle{\label}};
       		} 
 
     	\drawSpringsBetweenFreeParticles
