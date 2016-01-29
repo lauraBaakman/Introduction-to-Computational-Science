@@ -138,8 +138,34 @@
 
 \newcommand{\cutGrid}{
 	\pgfmathsetseed{1138}
-	\textbf{Cut Grid}	
-	\pgfmathsetmacro{\test}{rand}\test
+	\begin{tikzpicture}
+  	{
+    	\pgfmathtruncatemacro{\numRowsCols}{\numFreeRowsCols - 1}
+    	\pgfmathtruncatemacro{\numRowsColsMinusOne}{\numRowsCols - 1}
+
+    	\drawFreeParticles{-0.5}{0.5}
+
+    	\draw (02)--(12) node[spring] {\spring{4}};
+    	\draw (12)--(22) node[spring] {\spring{5}};
+
+    	\draw (02)--(01) node[spring] {\spring{7}};
+    	\draw (12)--(11) node[spring] {\spring{8}};
+    	\draw (22)--(21) node[spring] {\spring{9}};
+
+    	\draw (01)--(11) node[spring] {\spring{11}};
+    	\draw (11)--(21) node[spring] {\spring{12}};
+
+    	\draw (01)--(00) node[spring] {\spring{14}};
+    	\draw (11)--(10) node[spring] {\spring{15}};
+    	\draw (21)--(20) node[spring] {\spring{16}};
+
+		\draw (00)--(10) node[spring] {\spring{18}};
+    	\draw (10)--(20) node[spring] {\spring{19}};
+
+
+    	\drawFixedParticles{\numFreeRowsCols}{\gridSpacing}      
+  }	
+  \end{tikzpicture}	%
 }
 
 \newcommand{\stabilizedCutGrid}{
