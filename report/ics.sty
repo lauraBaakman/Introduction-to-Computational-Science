@@ -1,19 +1,15 @@
-\documentclass{standalone}
+\ProvidesPackage{ics}[2016/01/30 ICS Package]
 
-\usepackage{color}
-\usepackage{tikz}
+\RequirePackage{tikz}
 \usetikzlibrary{positioning}
 \usetikzlibrary{calc}
 
-
-% \definecolor{myred}{RGB}{175,53,71}
-% \definecolor{myblue}{RGB}{0,116,188}
-
-
+% Define text based macros
 \newcommand{\freeParticle}[1]{\ensuremath{v_{#1}}}
 \newcommand{\fixedParticle}[1]{\ensuremath{f_{#1}}}
 \newcommand{\spring}[1]{\ensuremath{k_{#1}}}
 
+% Define numbers
 \newcommand\numFreeRowsCols{3}
 \newcommand\gridSpacing{1.6}
 
@@ -97,25 +93,24 @@
       }
 }
 
-\begin{document}
-	
-\begin{tikzpicture}
-  {
-    \pgfmathtruncatemacro{\numRowsCols}{\numFreeRowsCols - 1}
-    \pgfmathtruncatemacro{\numRowsColsMinusOne}{\numRowsCols - 1}
+\newcommand{\initialGrid}{%
+	\begin{tikzpicture}
+  	{
+    	\pgfmathtruncatemacro{\numRowsCols}{\numFreeRowsCols - 1}
+    	\pgfmathtruncatemacro{\numRowsColsMinusOne}{\numRowsCols - 1}
 
-    % Draw free particles on grid
-    \foreach \x in {0,...,\numRowsCols}
-      \foreach \y in {0,...,\numRowsCols} 
-         {\pgfmathtruncatemacro{\label}{\x - 3 *  \y + 7 - 1}
-         \node [free]  (\x\y) at (\gridSpacing*\x,\gridSpacing*\y) {\freeParticle{\label}};} 
+    	% Draw free particles on grid
+    	\foreach \x in {0,...,\numRowsCols}
+      		\foreach \y in {0,...,\numRowsCols} {
+          		\pgfmathtruncatemacro{\label}{\x - 3 *  \y + 7 - 1}
+          		\node [free]  (\x\y) at (\gridSpacing*\x,\gridSpacing*\y) {\freeParticle{\label}};
+      		} 
 
-      \drawSpringsBetweenFreeParticles
-      \drawFixedParticles{\numFreeRowsCols}{\gridSpacing}      
-  }
+    	\drawSpringsBetweenFreeParticles
 
-  
+    	\drawFixedParticles{\numFreeRowsCols}{\gridSpacing}      
+  }	
+  \end{tikzpicture}	%
+}
 
-\end{tikzpicture}	
-
-\end{document}
+\endinput
