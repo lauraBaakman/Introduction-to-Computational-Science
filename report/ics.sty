@@ -17,7 +17,7 @@
 		edgeStyle/.style = {line width = 1.3pt},
 		fixed/.style = 		 {anchor=base,fill,circle,inner sep=1.5pt},
 		free/.style =	     {circle,draw, inner sep = 1pt},
-    spring/.style =    {fill=white,circle,inner sep = 0.1pt, anchor=center, midway},
+    	spring/.style =    {fill=white,circle,inner sep = 0.1pt, anchor=center, midway},
 		node distance=2.3cm
 }
 
@@ -111,6 +111,38 @@
     	\drawFixedParticles{\numFreeRowsCols}{\gridSpacing}      
   }	
   \end{tikzpicture}	%
+}
+
+\newcommand{\stabilizedInitialGrid}{
+	\pgfmathsetseed{1138}
+	\textbf{Stabilized Initial Grid}	
+	\begin{tikzpicture}
+  	{
+    	\pgfmathtruncatemacro{\numRowsCols}{\numFreeRowsCols - 1}
+    	\pgfmathtruncatemacro{\numRowsColsMinusOne}{\numRowsCols - 1}
+
+    	% Draw free particles on grid
+    	\foreach \x in {0,...,\numRowsCols}
+      		\foreach \y in {0,...,\numRowsCols} {
+          		\pgfmathtruncatemacro{\label}{\x - 3 *  \y + 7 - 1}
+          		\node [free]  (\x\y) at (\gridSpacing*\x + rand,\gridSpacing*\y + rand) {\freeParticle{\label}};
+      		} 
+
+    	\drawSpringsBetweenFreeParticles
+
+    	\drawFixedParticles{\numFreeRowsCols}{\gridSpacing}      
+  }	
+  \end{tikzpicture}	%
+}
+
+\newcommand{\cutGrid}{
+	\pgfmathsetseed{1138}
+	\textbf{Cut Grid}	
+	\pgfmathsetmacro{\test}{rand}\test
+}
+
+\newcommand{\stabilizedCutGrid}{
+	\textbf{Stabilized Cut Grid}	
 }
 
 \endinput
