@@ -99,18 +99,25 @@
     	\pgfmathtruncatemacro{\numRowsCols}{\numFreeRowsCols - 1}
     	\pgfmathtruncatemacro{\numRowsColsMinusOne}{\numRowsCols - 1}
 
-    	% Draw free particles on grid
-    	\foreach \x in {0,...,\numRowsCols}
-      		\foreach \y in {0,...,\numRowsCols} {
-          		\pgfmathtruncatemacro{\label}{\x - 3 *  \y + 7 - 1}
-          		\node [free]  (\x\y) at (\gridSpacing*\x,\gridSpacing*\y) {\freeParticle{\label}};
-      		} 
+		\drawFreeParticles{0}{0}
 
     	\drawSpringsBetweenFreeParticles
 
     	\drawFixedParticles{\numFreeRowsCols}{\gridSpacing}      
   }	
   \end{tikzpicture}	%
+}
+
+\newcommand{\drawFreeParticles}[2]{
+    	\foreach \x in {0,...,\numRowsCols}
+      		\foreach \y in {0,...,\numRowsCols} {
+          		\pgfmathtruncatemacro{\label}{\x - 3 *  \y + 7 - 1}
+          		\node [free]  (\x\y) at (
+          			{\gridSpacing*\x + (rand + 1) / 2 * (#2 - #1) + #1},
+          			{\gridSpacing*\y + (rand + 1) / 2 * (#2 - #1) + #1}
+          			) 
+          			{\freeParticle{\label}};
+      		} 	
 }
 
 \newcommand{\stabilizedInitialGrid}{
@@ -120,16 +127,7 @@
     	\pgfmathtruncatemacro{\numRowsCols}{\numFreeRowsCols - 1}
     	\pgfmathtruncatemacro{\numRowsColsMinusOne}{\numRowsCols - 1}
 
-    	% Draw free particles on grid
-    	\foreach \x in {0,...,\numRowsCols}
-      		\foreach \y in {0,...,\numRowsCols} {
-          		\pgfmathtruncatemacro{\label}{\x - 3 *  \y + 7 - 1}
-          		\node [free]  (\x\y) at (
-          			{\gridSpacing*\x + (rand + 1) / 1.75},
-          			{\gridSpacing*\y + (rand + 1) / 1.75}
-          			) 
-          			{\freeParticle{\label}};
-      		} 
+    	\drawFreeParticles{-0.5}{0.5}
 
     	\drawSpringsBetweenFreeParticles
 
