@@ -141,17 +141,19 @@
   \end{tikzpicture}	%
 }
 
-\newcommand{\drawSpringsBetweenFreeParticleCond}{
-       \foreach \x in {0,...,\numRowsCols}
+\newcommand{\drawSpringsBetweenFreeParticleCond}[1]{
+  \foreach \x in {0,...,\numRowsCols}
       \foreach \y [count=\yi] in {0,...,\numRowsColsMinusOne}  {
           % Vertical springs
           \pgfmathtruncatemacro{\label}{\x + \numFreeRowsCols * (\numFreeRowsCols - 1 - \y) + (\numFreeRowsCols + 1) * (\numFreeRowsCols - 1 - \y)}{
-            \draw (\x\y)--(\x\yi) node[spring] {\spring{\label}};
+            %\draw (\x\y)--(\x\yi) node[spring] {\spring{\label}};
+            \drawSpringCond{\x\y}{\x\yi}{\label}{#1}
           }
 
           % Horizontal springs
           \pgfmathtruncatemacro{\label}{\y + (\numFreeRowsCols - 1) * (\numFreeRowsCols - 1 - \x) + (\numFreeRowsCols - \x) * (\numFreeRowsCols + 2) - 1}{
-            \draw (\y\x)--(\yi\x) node[spring] {\spring{\label}};
+            %\draw (\y\x)--(\yi\x) node[spring] {\spring{\label}};
+            \drawSpringCond{\y\x}{\yi\x}{\label}{#1}
           }
           
       } 
