@@ -248,7 +248,27 @@
 }
 
 \newcommand{\stabilizedCutGrid}{
-	\textbf{Stabilized Cut Grid}	
+  \begin{tikzpicture}
+  {
+    \pgfmathtruncatemacro{\numRowsCols}{\numFreeRowsCols - 1}
+    \pgfmathtruncatemacro{\numRowsColsMinusOne}{\numRowsCols - 1}
+
+    \node [free]  (00) at (\gridSpacing * 0, \gridSpacing * 0) {\freeParticle{6}};
+    \node [free]  (10) at (\gridSpacing * 1, \gridSpacing * 0) {\freeParticle{7}};
+    \node [free]  (20) at (\gridSpacing * 2, \gridSpacing * 0) {\freeParticle{8}};
+
+    \node [free]  (01) at (\gridSpacing * 0, \gridSpacing * 1) {\freeParticle{3}};
+    \node [free]  (11) at (\gridSpacing * 1, \gridSpacing * 1) {\freeParticle{4}};
+    \node [free]  (21) at (\gridSpacing * 2, \gridSpacing * 1) {\freeParticle{5}};
+        
+    \node [free]  (02) at (\gridSpacing * 0, \gridSpacing * 2) {\freeParticle{0}};
+    \node [free]  (12) at (\gridSpacing * 1, \gridSpacing * 2) {\freeParticle{1}};
+    \node [free]  (22) at (\gridSpacing * 2, \gridSpacing * 2) {\freeParticle{2}};
+
+    \drawFixedParticlesCond{\numFreeRowsCols}{\gridSpacing}{\stillExistingSprings}
+    \drawSpringsBetweenFreeParticleCond{\stillExistingSprings}
+  } 
+  \end{tikzpicture} %
 }
 
 \endinput
