@@ -33,6 +33,8 @@
 *.vrb
 *.xdy
 *.tdo
+*.run.xml
+*.-blx.bib
 
 *.app
 *.qmake.stash
