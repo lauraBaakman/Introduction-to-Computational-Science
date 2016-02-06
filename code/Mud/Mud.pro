@@ -19,6 +19,7 @@ QMAKE_LFLAGS += -L./libs/superlu43/lib
 QMAKE_LFLAGS += -L./libs/armadillo/lib
 QMAKE_LFLAGS += -L./libs/arpack/lib
 QMAKE_LFLAGS += -L./libs/veclibfort/lib
+QMAKE_LFLAGS += -L./libs/lib -larmadillo.6.40.3
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -52,7 +53,7 @@ HEADERS  += mainwindow.h \
 FORMS  += mainwindow.ui \
         sidebar.ui
 
-macx: LIBS += -L/usr/local/lib/ -larmadillo.6.40.3
+#macx: LIBS += -L/usr/local/lib/ -larmadillo.6.40.3
 
 #DEPENDPATH += /usr/local/include
 
