@@ -27,7 +27,7 @@ public:
     virtual bool isFixed() const = 0;
 
     friend QDebug operator<<(QDebug stream, const Particle &particle);
-    friend QDebug operator<<(QDebug stream, Particle* particle);
+//    friend QDebug operator<<(QDebug stream, Particle* particle);
 
     virtual void doPrint(QDebug stream) const;
 
