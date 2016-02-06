@@ -113,10 +113,6 @@ void Grid::breakSpringsWithHighestStrain()
 
     int springsToBreak = settings.springBreakParameter;
 
-//    for (QList<Spring>::iterator spring = springs.begin(); spring != springs.end(); spring++) {
-//        if(!spring->isBroken()) map[spring->strain()] = spring;
-//    }
-
     foreach (Spring spring, springs){
         if(!spring.isBroken()) map[spring.strain()] = &spring;
     }
@@ -125,7 +121,7 @@ void Grid::breakSpringsWithHighestStrain()
         (springsToBreak != 0) && (item != map.end());
         item++)
     {
-        item->second->breakIt();
+        springs[item->second->getId()].breakIt();
         springsToBreak--;
     }
 }
