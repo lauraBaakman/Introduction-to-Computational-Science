@@ -20,8 +20,7 @@ void GridSolver::solve()
     //Solve the system
     solution.col(0) = solveForAxis(lhs, &QVector3D::x);
     solution.col(1) = solveForAxis(lhs, &QVector3D::y);
-//    solution.col(2) = solveForAxis(lhs, &QVector3D::z);
-
+    solution.col(2) = solveForAxis(lhs, &QVector3D::z);
     updateLocations(solution);
 }
 
