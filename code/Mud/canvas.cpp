@@ -191,7 +191,7 @@ void Canvas::build(Grid *grid)
     QVector<int> fixedParticleIndices = buildFixedParticleIndices(fixedParticles);
     updateFixedParticleBuffer(fixedParticleIndices);
 
-    QVector<Spring> springs = grid->getSprings();
+    QList<Spring> springs = grid->getSprings();
     QVector<int> springIndices = buildSpringIndices(springs);
     updateSpringBuffer(springIndices);
 }
@@ -220,7 +220,7 @@ QVector<int> Canvas::buildFixedParticleIndices(QVector<FixedParticle*> fixedPart
     return fixedParticleIndices;
 }
 
-QVector<int> Canvas::buildSpringIndices(QVector<Spring> springs)
+QVector<int> Canvas::buildSpringIndices(QList<Spring> springs)
 {
     this->numSprings = springs.size();
     QVector<int> springLocationIndices;
