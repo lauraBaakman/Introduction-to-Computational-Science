@@ -233,7 +233,6 @@ void Grid::uniformSquareGrid()
     Particle *left = nullptr;
     Particle *center = nullptr;
     Particle *top = nullptr;
-    Particle *grounding = nullptr;
 
     // Klap dit stukje maar gewoon even dicht...
     for (int row = 0; row < rows; row++)
@@ -256,13 +255,17 @@ void Grid::uniformSquareGrid()
                 if (left != nullptr) {addSpring(Spring(center, left));}
                 top = getParticleById(fromCoordinateToId(row - 1, column, rows, columns));
                 addSpring(Spring(center, top));
-
-                // Add grounding particle
-//                grounding = addParticle(QVector3D((float)column, (float)row, 0.0), new FixedParticle());
-//                addSpring(Spring(center, grounding));
             }
             left = center;
         }
+    }
+
+    Particle *groundingParticle = nullptr;
+    // Add grounding particle
+    for (int i = 0; i < freeParticles.size(); i++) {
+        Particle *freeParticle = freeParticles.at(i);
+        groundingParticle = addParticle(QVector3D(freeParticle->getLocation()->x(), freeParticle->getLocation()->y(), 0.0), new FixedParticle());
+//        addSpring(Spring(freeParticle, groundingParticle));
     }
 }
 
