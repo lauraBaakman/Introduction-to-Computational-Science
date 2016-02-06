@@ -3,6 +3,7 @@
 
 #include <QVector>
 #include <QObject>
+#include <QList>
 
 #include "freeparticle.h"
 #include "fixedparticle.h"
@@ -56,7 +57,7 @@ public:
     friend QDebug operator<<(QDebug stream, const Grid &grid);
     friend QDebug operator<<(QDebug stream, Grid *grid);
 
-    QVector<Spring> getSprings() const;
+    QList<Spring> getSprings() const;
     Spring getSpring(int index) const;
 
     QVector<Particle *> getParticles() const;
@@ -75,7 +76,7 @@ private:
     QVector<FixedParticle *>  fixedParticles;
     QVector<QVector3D> particleLocations;
 
-    QVector<Spring> springs;
+    QList<Spring> springs;
     Settings settings;
 
     void setBreakMethod(Settings settings);

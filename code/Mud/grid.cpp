@@ -44,7 +44,7 @@ int Grid::numFreeParticles()
     return freeParticles.size();
 }
 
-QVector<Spring> Grid::getSprings() const
+QList<Spring> Grid::getSprings() const
 {
     return springs;
 }
@@ -113,8 +113,12 @@ void Grid::breakSpringsWithHighestStrain()
 
     int springsToBreak = settings.springBreakParameter;
 
-    for (QVector<Spring>::iterator spring = springs.begin(); spring != springs.end(); spring++) {
-        if(!spring->isBroken()) map[spring->strain()] = spring;
+//    for (QList<Spring>::iterator spring = springs.begin(); spring != springs.end(); spring++) {
+//        if(!spring->isBroken()) map[spring->strain()] = spring;
+//    }
+
+    foreach (Spring spring, springs){
+        if(!spring.isBroken()) map[spring.strain()] = &spring;
     }
 
     for(auto item = map.begin();
@@ -129,7 +133,7 @@ void Grid::breakSpringsWithHighestStrain()
 void Grid::breakSpringsWithStrainGreaterThan()
 {
     float breakingStrain = settings.springBreakParameter;
-    for (QVector<Spring>::iterator spring = springs.begin(); spring != springs.end(); spring++) {
+    for (QList<Spring>::iterator spring = springs.begin(); spring != springs.end(); spring++) {
         if(spring->strain() > breakingStrain) spring->breakIt();
     }
 }
@@ -265,7 +269,6 @@ void Grid::uniformSquareGrid()
     // Add grounding particle
     for (int i = 0; i < freeParticles.size(); i++) {
         freeParticle = getParticleById(freeParticles.at(i)->getGlobalID());
-        qDebug() << freeParticle;
         groundingParticle = addParticle(
             QVector3D(
                 freeParticle->getLocation()->x(),
