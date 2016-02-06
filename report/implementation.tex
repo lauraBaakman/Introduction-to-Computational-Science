@@ -2,6 +2,29 @@
 
 \todo[inline]{Pseudocode: init, stabilize, break, stabilize, break.}
 
+\begin{algorithm}[t]
+	\setstretch{1.2}
+	% \SetAlgoShortEnd
+	\DontPrintSemicolon
+	\SetKwInOut{Input}{input}\SetKwInOut{Output}{output}
+	\Input{$N$ size\\
+		$p$ probability\\
+		$mask$ $r \times c$ binary matrix\\
+		$seed$ for the random generator}
+	\Output{$grid$ $(2N + 1) \times (2N + 1)$ matrix}
+	\BlankLine
+
+	\FuncSty{push($queue$, $center$)}\; 
+	$grid$ := \FuncSty{initGrid($N$, $N$)}\; 
+	$probabilities$ := \FuncSty{rand($N$, $N$)}\; 
+
+	\While{not \FuncSty{isEmpty($queue$)}}{
+
+	}\; 
+	\caption{\FuncSty{percolation}$(mask, N, p)$\label{alg:percolation}}
+\end{algorithm}
+
+
 \todo[inline]{Hoe werkt init, leg uit hoe die matrices gebouwd worden}
 
 \todo[inline]{Hoe werkt stabilize}
