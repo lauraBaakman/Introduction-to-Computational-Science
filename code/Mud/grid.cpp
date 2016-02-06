@@ -261,13 +261,20 @@ void Grid::uniformSquareGrid()
     }
 
     Particle *groundingParticle = nullptr;
+    Particle *freeParticle = nullptr;
     // Add grounding particle
     for (int i = 0; i < freeParticles.size(); i++) {
-        Particle *freeParticle = getParticleById(freeParticles.at(i)->getGlobalID());
+        freeParticle = getParticleById(freeParticles.at(i)->getGlobalID());
         qDebug() << freeParticle;
-        groundingParticle = addParticle(QVector3D(freeParticle->getLocation()->x(), freeParticle->getLocation()->y(), 0.0), new FixedParticle());
+        groundingParticle = addParticle(
+            QVector3D(
+                freeParticle->getLocation()->x(),
+                freeParticle->getLocation()->y(),
+                0.0
+            ),
+            new FixedParticle());
         qDebug() << groundingParticle;
-        addSpring(Spring(freeParticle, groundingParticle));
+        addSpring(Spring(groundingParticle, freeParticle));
     }
 }
 
