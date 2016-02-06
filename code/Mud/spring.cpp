@@ -50,7 +50,8 @@ float Spring::strain() const
 
 void Spring::breakIt()
 {
-    broken = true;
+//    broken = true;
+    springConstant = springConstant / 2.0;
 }
 
 void Spring::clear()
