@@ -9,6 +9,7 @@
 %\stabilizedInitialGrid
 %\cutGrid
 %\stabilizedCutGrid
+%\singleSpring
 
 % Define text based macros
 \newcommand{\freeParticle}[1]{\ensuremath{v_{#1}}}
@@ -32,7 +33,9 @@
 		edgeStyle/.style = {line width = 1.3pt},
 		fixed/.style = 		 {anchor=base,fill,circle,inner sep=1.5pt},
 		free/.style =	     {circle,draw, inner sep = 1pt},
-    spring/.style =    {fill=white,circle,inner sep = 0.1pt, anchor=center, midway},
+    spring/.style =    {fill=white,circle,inner sep = 0.1pt, anchor=center, 
+    midway},
+    label/.style =    {inner sep = 0.1pt, anchor=center, midway, above=1ex},
 		node distance=2.3cm
 }
 
@@ -301,6 +304,23 @@
     \drawFixedParticlesCond{\numFreeRowsCols}{\gridSpacing}{\stillExistingSprings}
     \drawSpringsBetweenFreeParticleCond{\stillExistingSprings}
   } 
+  \end{tikzpicture} %
+}
+
+\newcommand{\singleSpring}{
+  \pgfmathsetseed{1138}
+  \begin{tikzpicture}
+    \node [free]  (left)  at  (0,0)   {\freeParticle{i}};
+    \node [free]  (right)   at  (4,0) {\freeParticle{j}};
+    \drawSpring{left}{right}{0}
+
+    \node (leftUpper) at (0,0.5) {};
+    \node (rightUpper) at (4,0.5) {};
+    \draw[dashed, <->] (leftUpper)--(rightUpper) node[label] {$X = \abs{x_i - x_j}$};
+
+    \node (leftLower) at (1,-0.9) {};
+    \node (rightLower) at (3,-0.9) {};
+    \draw[dashed, <->] (leftLower)--(rightLower) node[label] {$l_0$};
   \end{tikzpicture} %
 }
 
