@@ -46,7 +46,7 @@
 % References
 \usepackage{varioref}
 \usepackage{hyperref}
-\usepackage[noabbrev]{cleveref}
+\usepackage[noabbrev, capitalize]{cleveref}
 
 % References
 \usepackage[backend=bibtex]{biblatex}
@@ -70,7 +70,6 @@
 % Math commands
 \newcommand{\normal}[2]{\ensuremath{\mathcal{N}\left(#1,\, #2\right)}}
 \renewcommand{\vec}[1]{\ensuremath{\mathbf{#1}}}
-
 % Lists
 \usepackage{paralist}
 
@@ -92,22 +91,27 @@
 \maketitle
 
 \section{Introduction}
+\label{s:introduction}
 \input{intro.tex}
 
 \section{Method}
-\input{method.tex}
+\label{s:method}
+% \input{method.tex}
 
 \section{Implementation}
-\input{implementation.tex}
+\label{s:implementation}
+% \input{implementation.tex}
 
 \section{Experiments \& Discussion}
-\input{experiment.tex}	
+\label{s:ExperimentsDiscussion}
+% \input{experiment.tex}	
 
 % \section{Discussion}
 % \input{discussion}
 
 \section{Conclusion}
-\input{conclusion.tex}
+\label{s:conclusion}
+% \input{conclusion.tex}
 
 \printbibliography
 

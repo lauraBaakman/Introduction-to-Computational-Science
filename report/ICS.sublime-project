@@ -37,7 +37,8 @@
 				"*.xdy",
 				"*.tdo",
 				"*-blx.bib",
-				"*.run.xml"
+				"*.run.xml",
+				"*.fls"
 			],
 			"folder_exclude_patterns":
 			[
