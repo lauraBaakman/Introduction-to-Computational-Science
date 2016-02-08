@@ -15,13 +15,18 @@ To model the rupture dynamics of mud we opted for a spring simulation. In this s
 	\label{fig:method:spring}
 \end{figure}
 
-The image in \cref{fig:method:spring} shows the illustration of a single connection between two particles $v_i$ and $v_j$. The connection, as stated in the previous paragraph, is modeled with using a spring. The force on a Hookean spring is given by $F = -k X\,$, where $F$ is restoring force exerted by the spring on whatever is pulling on the other end. If the stress on a spring exceeds some threshold, or is among the $k$ springs with the highest stress (see \cref{s:implementation}), it breaks and cracks appear.
+The image in \cref{fig:method:spring} shows the illustration of a single connection between two particles $v_i$ and $v_j$. The connection, as stated in the previous paragraph, is modeled using a spring. The force on a Hookean spring is given by $F = -k X\,$, where $F$ is restoring force exerted by the spring on whatever is pulling on the other end; and $X = |x_i - x_j|$ the distance between the two particles. If the stress on a spring exceeds some threshold, or is among the $k$ springs with the highest stress (see \cref{s:implementation}), it breaks and cracks appear.
 
-\laura{Read the following paragraph(s) which should implement the following todo: ``Describe our model: 2. Initialization of the grid and spring constants. (Which distribution and parameters)''}
+\rick{Write the following paragraph(s) such that they implement the following todo: ``Describe our model: 2. Initialization of the grid and spring constants. (Which distribution and parameters)''}
 
-\plaatje{Illustration of a uniform square grid.}
+The previous paragraphs described a single connection between particles. This is not enough to simulate an area of rupturing mud. To simulate this we opted to layout the particles in a uniform square grid. The particles all have a valency of four, where their neighbors are, in the beginning, for every free particle... \todo[inline]{(fuck forgot to introduce the difference between free and fixed particles. )}
 
-
+\begin{figure}
+	\centering
+	\missingfigure{\plaatje{Illustration of a uniform square grid. There is no need for particle names and that kind of stuff, just a visualization of the uniform square grid, with a reasonable number of particles.}}
+	\caption{Starting layout of the particles representing uncracked mud.}
+	\label{fig:model:layout}
+\end{figure}
 
 \todo[inline]{Describe how the model can be solved/stabilized}
 
