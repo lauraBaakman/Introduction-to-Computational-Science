@@ -70,6 +70,21 @@
 % Math commands
 \newcommand{\normal}[2]{\ensuremath{\mathcal{N}\left(#1,\, #2\right)}}
 \renewcommand{\vec}[1]{\ensuremath{\mathbf{#1}}}
+\usepackage{mathtools}
+
+\DeclarePairedDelimiter\abs{\lvert}{\rvert}%
+\DeclarePairedDelimiter\norm{\lVert}{\rVert}%
+
+% Swap the definition of \abs* and \norm*, so that \abs
+% and \norm resizes the size of the brackets, and the 
+% starred version does not.
+\makeatletter
+\let\oldabs\abs
+\def\abs{\@ifstar{\oldabs}{\oldabs*}}
+%
+\let\oldnorm\norm
+\def\norm{\@ifstar{\oldnorm}{\oldnorm*}}
+\makeatother
 % Lists
 \usepackage{paralist}
 
@@ -96,22 +111,22 @@
 
 \section{Method}
 \label{s:method}
-% \input{method.tex}
+\input{method.tex}
 
 \section{Implementation}
 \label{s:implementation}
-% \input{implementation.tex}
+\input{implementation.tex}
 
 \section{Experiments \& Discussion}
 \label{s:ExperimentsDiscussion}
-% \input{experiment.tex}	
+\input{experiment.tex}	
 
 % \section{Discussion}
 % \input{discussion}
 
 \section{Conclusion}
 \label{s:conclusion}
-% \input{conclusion.tex}
+\input{conclusion.tex}
 
 \printbibliography
 
