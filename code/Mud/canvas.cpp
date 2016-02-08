@@ -145,7 +145,7 @@ bool Canvas::isAllocated(QOpenGLBuffer *buffer)
 
 void Canvas::drawFreeParticles()
 { // Todo: remove magic.
-    setColorValue(QColor(Qt::red));
+    setColorValue(QColor(175, 53, 71));
     this->freeParticleIndicesBufferObject->bind();
     glPointSize(8.0f);
     glDrawElements(GL_POINTS, this->numFreeParticles, GL_UNSIGNED_INT, (void*)(0));
@@ -154,7 +154,7 @@ void Canvas::drawFreeParticles()
 
 void Canvas::drawFixedParticles()
 { // Todo: remove magic.
-    setColorValue(QColor(Qt::blue));
+    setColorValue(QColor(0, 116, 188));
     this->fixedParticleIndicesBufferObject->bind();
     glPointSize(16.0f);
     glDrawElements(GL_POINTS, this->numFixedParticles, GL_UNSIGNED_INT, (void*)(0));
@@ -163,7 +163,7 @@ void Canvas::drawFixedParticles()
 
 void Canvas::drawSprings()
 {
-    setColorValue(QColor(Qt::green));
+    setColorValue(QColor(20, 132, 69));
     this->springIndicesBufferObject->bind();
     glDrawElements(GL_LINES, this->numSprings * 2, GL_UNSIGNED_INT, (void*)(0));
     this->springIndicesBufferObject->release();
