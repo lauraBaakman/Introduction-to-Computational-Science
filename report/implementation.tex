@@ -5,10 +5,44 @@ This section discusses our implementation of our simulation, based on the theory
 \todo[inline]{Hoe werkt init, leg uit hoe die matrices gebouwd worden}
 
 \subsection{Stabilize}
+
+\begin{equation}\label{eq:implementation:forceOnVo}
+	\begin{split}
+	F_{\freeParticle{0}} 	& = - [				\spring{0} \left(\fixedParticle{0} - \freeParticle{0}\right) +
+												\spring{3} \left(\fixedParticle{3} - \freeParticle{0}\right) + \\
+							& \quad\quad\;\;	\spring{4} \left(\freeParticle{1} - \freeParticle{0}\right)  +
+												\spring{7} \left(\freeParticle{3} - \freeParticle{0}\right) ]
+	\end{split}
+\end{equation}
+
+
+\begin{equation}\label{eq:implementation:forceOnVoVersimpled}
+	\begin{split}
+	\spring{0}\fixedParticle{0} + \spring{3}\fixedParticle{3} 
+		&= - \spring{4}\freeParticle{1} - \spring{7}\freeParticle{3} + \\
+		& \quad\: \freeParticle{0} \left( \spring{0} + \spring{3} + \spring{4} + \spring{7} \right)
+	\end{split}
+\end{equation}
+
+\begin{equation}\label{eq:implementation:rhs}
+{
+	\arraycolsep=1pt
+	\begin{bmatrix}
+		\spring{0 + 3 + 4 + 7}	& -\spring{4}			& \cdots & 0\\
+		- \spring{4} 			& \spring{1 + 4+ 5 + 8}	& \cdots & 0\\
+		\vdots					& \vdots 				& \ddots & \vdots\\
+		0						& 0 					& \cdots & \spring{16 + 19 + 20 + 23}\\
+	\end{bmatrix}
+}
+\end{equation}
+
+where $\spring{a + b} = \spring{a} + \spring{b}$. 
+
+
 \todo[inline]{Hoe werkt stabilize}
 
 \subsection{Break Springs}
-\todo[inline]{Hoe werkt break}
+\todo[inline]{Hoe werkt break: denk dat deze sectie eruit gaat, zo boeiend is break niet.}
 
 \begin{figure}
 	\centering
@@ -19,29 +53,29 @@ This section discusses our implementation of our simulation, based on the theory
 	\label{fig:1:}
 \end{figure}
 
-\begin{figure}
-	\centering
-	\resizebox{0.9\columnwidth}{!}{%
-		\stabilizedInitialGrid
-	}
-	\caption{Caption here}
-	\label{fig:2:}
-\end{figure}
+% \begin{figure}
+% 	\centering
+% 	\resizebox{0.9\columnwidth}{!}{%
+% 		\stabilizedInitialGrid
+% 	}
+% 	\caption{Caption here}
+% 	\label{fig:2:}
+% \end{figure}
 
-\begin{figure}
-	\centering
-	\resizebox{0.9\columnwidth}{!}{%
-		\cutGrid
-	}
-	\caption{Caption here}
-	\label{fig:3:}
-\end{figure}
+% \begin{figure}
+% 	\centering
+% 	\resizebox{0.9\columnwidth}{!}{%
+% 		\cutGrid
+% 	}
+% 	\caption{Caption here}
+% 	\label{fig:3:}
+% \end{figure}
 
-\begin{figure}
-	\centering
-	\resizebox{0.9\columnwidth}{!}{%
-		\stabilizedCutGrid
-	}
-	\caption{Caption here}
-	\label{fig:4:}
-\end{figure}
+% \begin{figure}
+% 	\centering
+% 	\resizebox{0.9\columnwidth}{!}{%
+% 		\stabilizedCutGrid
+% 	}
+% 	\caption{Caption here}
+% 	\label{fig:4:}
+% \end{figure}
