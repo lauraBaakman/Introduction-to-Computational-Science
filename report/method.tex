@@ -10,10 +10,25 @@ To model the rupture dynamics of mud we opted for a spring simulation. In this s
 
 \begin{figure}
 	\centering
-	\singleSpring
+	  \begin{tikzpicture}
+	    \node [free]  (left)  at  (0,0)   {\freeParticle{i}};
+	    \node [free]  (right)   at  (4,0) {\freeParticle{j}};
+	    \drawSpring{left}{right}{0}
+
+	    \node (leftUpper) at (0,0.5) {};
+	    \node (rightUpper) at (4,0.5) {};
+	    \draw[dashed, <->] (leftUpper)--(rightUpper) node[label] {$X = \abs{x_i - x_j}$};
+
+	    \node (leftLower) at (1,-0.9) {};
+	    \node (rightLower) at (3,-0.9) {};
+	    \draw[dashed, <->] (leftLower)--(rightLower) node[label] {$l_0$};
+	  \end{tikzpicture} %
 	\caption{Illustration of a single connection, i.e., a spring, between two particles. The distance between particle $v_i$ and $v_j$ is given by $X$. The variable $l_0$ is used to denote the natural length of a spring with spring constant $k_0$.}
 	\label{fig:method:spring}
 \end{figure}
+
+
+\todo[inline]{Decribe how springs break (two or three methods)}
 
 The image in \cref{fig:method:spring} shows the illustration of a single connection between two particles $v_i$ and $v_j$. The connection, as stated in the previous paragraph, is modeled using a spring. The force on a Hookean spring is given by $F = -k X\,$, where $F$ is restoring force exerted by the spring on whatever is pulling on the other end; and $X = |x_i - x_j|$ the distance between the two particles. If the stress on a spring exceeds some threshold, or is among the $k$ springs with the highest stress (see \cref{s:implementation}), it breaks and cracks appear.
 
@@ -32,18 +47,28 @@ In the previous paragraphs we described a single connection between particles. A
 The force on a single particle is then given by:
 %
 \begin{equation}\label{eq:single:force}
-	F_i = - \Sigma_{j \in N_i} k_{ij} \frac{x_i - x_j}{|x_i - x_j|}[|x_i - x_j| - l_0]
+	F_i = - \Sigma_{j \in N_i} k_{ij} \frac{x_i - x_j}{|x_i - x_j|}[|x_i - x_j| - l_0].
 \end{equation}
 %
 The set $N_i$ are the neighboring particles of particle $v_i$. For every spring between two particles $v_i$ and $v_j$ a constants $k_ij$ can be chosen randomly or from some distribution, see \cref{s:implementation} for the discussion about the details. The variable $l_0$ represents the natural length of a spring, i.e., the length of a spring that is only connected to a single particle and thus is not stretched. To be able to linearly solve the system we discard this term by setting it to zero. By doing so the formula for the force $F_i$ on a particle $v_i$ is given by:
 %
-\begin{equation}\label{eq:single:forcle:simple}
-	F_i = - \Sigma_{j \in N_i} k_{ij}(x_i - x_j)
+\begin{equation}\label{eq:single:force:simple}
+	F_i = - \Sigma_{j \in N_i} k_{ij}(x_i - x_j).
 \end{equation}
 
 \todo[inline]{Describe how the model can be solved/stabilized}
 
-\todo[inline]{Decribe how springs break (two or three methods)}
+With the formula in \eqref{eq:single:force:simple} we can now compute all the forces on every particle and move the particle to the locations, such that the system is stable, i.e., $F_i = 0 \forall_i$. With this we can find the $L$ matrix:
+%
+\begin{equation}\label{eq:a:}
+	L = A^T K A .* C
+\end{equation}
+%
+\begin{equation}\label{eq::}
+	L\vec{x} = \vec{r}.
+\end{equation}
+%
+If this formula we find the new positions $\vec{x}$ of the particles by solving the 
 
 \todo[inline]{Reference that the step after this is the solve/stabilization part of this section.}
 
