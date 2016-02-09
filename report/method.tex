@@ -28,11 +28,11 @@ To model the rupture dynamics of mud we opted for a spring simulation. In this s
 \end{figure}
 
 
-\todo[inline]{Decribe how springs break (two or three methods)}
+% \todo[inline]{Decribe how springs break (two or three methods)}
 
 The image in \cref{fig:method:spring} shows the illustration of a single connection between two particles $v_i$ and $v_j$. The connection, as stated in the previous paragraph, is modeled using a spring. The force on a Hookean spring is given by $F = -k X\,$, where $F$ is restoring force exerted by the spring on whatever is pulling on the other end; and $X = |x_i - x_j|$ the distance between the two particles. If the stress on a spring exceeds some threshold, or is among the $k$ springs with the highest stress (see \cref{s:implementation}), it breaks and cracks appear.
 
-\rick{Write the following paragraph(s) such that they implement the following todo: ``Describe our model: 2. Initialization of the grid and spring constants. (Which distribution and parameters)''}
+\laura{Read the following paragraph(s) which should implement the following todo: ``Describe our model: 2. Initialization of the grid and spring constants. (Which distribution and parameters)''}
 
 In the previous paragraphs we described a single connection between particles. An area of rupturing mud can not be modeled using only a single connection. To simulate an area of mud we opted to layout multiple particles in a uniform square grid. An illustration of this initial layout is shown in \cref{fig:model:layout}. In this illustration the larger blue squares on the edge of the layout are, the so called the fixed particles. The free or movable particles are illustrated by the smaller red squares, each connected by a spring with its four neighbors. 
 %
@@ -44,6 +44,7 @@ In the previous paragraphs we described a single connection between particles. A
 	\label{fig:model:layout}
 \end{figure}
 %
+\rick{Write stuff about forces on particles and that we simplify them}
 The force on a single particle is then given by:
 %
 \begin{equation}\label{eq:single:force}
@@ -56,7 +57,7 @@ The set $N_i$ are the neighboring particles of particle $v_i$. For every spring 
 	F_i = - \Sigma_{j \in N_i} k_{ij}(x_i - x_j).
 \end{equation}
 
-\todo[inline]{Describe how the model can be solved/stabilized}
+\rick{Describe how the model can be solved/stabilized}
 
 With the formula in \eqref{eq:single:force:simple} we can now compute all the forces on every particle and move the particle to the locations, such that the system is stable, i.e., $F_i = 0 \forall_i$. With this we can find the $L$ matrix:
 %
