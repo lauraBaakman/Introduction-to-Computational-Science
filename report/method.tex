@@ -6,7 +6,7 @@ When simulating the dynamics of cracking material, one needs a model that repres
 \subsection{The model}\label{ss:method:model}
 
 \laura{Read the following paragraph(s) which should implement the following todo: ``Decribe our model:  1. Properties of single particles and connection between two (springs)''}
-To model the rupture dynamics of mud we opted for a spring simulation. In this simulation Mud is modeled by particles connected by springs. The cracking of mud is a very slow process and therefore we do not take the velocity and frictional forces into consideration, i.e., we ignore Newton's laws of motion and Stokes' law, which describes friction. We can therefore keep the particles massless and the simulation process simple, by only considering the locations of the particles. 
+To model the rupture dynamics of mud we opted for a spring simulation. In this simulation Mud is modeled by particles connected by springs. The cracking of mud is a very slow process and therefore we do not take the velocity and frictional forces into consideration, i.e., we ignore Newton's and Stokes' laws. We can therefore keep the particles massless and only take the location of a particle in consideration. This also makes the simulation process relatively simple and linearly solvable, which is discussed shortly in this section and more thoroughly in \cref{s:implementation}.
 
 \begin{figure}
 	\centering
@@ -27,23 +27,49 @@ To model the rupture dynamics of mud we opted for a spring simulation. In this s
 	\label{fig:method:spring}
 \end{figure}
 
+
+% \todo[inline]{Decribe how springs break (two or three methods)}
+
 The image in \cref{fig:method:spring} shows the illustration of a single connection between two particles $v_i$ and $v_j$. The connection, as stated in the previous paragraph, is modeled using a spring. The force on a Hookean spring is given by $F = -k X\,$, where $F$ is restoring force exerted by the spring on whatever is pulling on the other end; and $X = |x_i - x_j|$ the distance between the two particles. If the stress on a spring exceeds some threshold, or is among the $k$ springs with the highest stress (see \cref{s:implementation}), it breaks and cracks appear.
 
-\rick{Write the following paragraph(s) such that they implement the following todo: ``Describe our model: 2. Initialization of the grid and spring constants. (Which distribution and parameters)''}
+\laura{Read the following paragraph(s) which should implement the following todo: ``Describe our model: 2. Initialization of the grid and spring constants. (Which distribution and parameters)''}
 
-The previous paragraphs described a single connection between particles. This is not enough to simulate an area of rupturing mud. To simulate this we opted to layout the particles in a uniform square grid. The particles all have a valency of four, where their neighbors are, in the beginning, for every free particle... \todo[inline]{(fuck forgot to introduce the difference between free and fixed particles. )}
-
+In the previous paragraphs we described a single connection between particles. An area of rupturing mud can not be modeled using only a single connection. To simulate an area of mud we opted to layout multiple particles in a uniform square grid. An illustration of this initial layout is shown in \cref{fig:model:layout}. In this illustration the larger blue squares on the edge of the layout are, the so called the fixed particles. The free or movable particles are illustrated by the smaller red squares, each connected by a spring with its four neighbors. 
+%
 \begin{figure}
 	\centering
 	% \missingfigure{\plaatje{Illustration of a uniform square grid. There is no need for particle names and that kind of stuff, just a visualization of the uniform square grid, with a reasonable number of particles.}}
 	\includegraphics[width=0.9\columnwidth]{img/uniform_square_grid.png}
-	\caption{Starting layout of the particles representing uncracked mud.}
+	\caption{Starting layout of the particles representing uncracked mud. Image made using the software which was written for this paper.}
 	\label{fig:model:layout}
 \end{figure}
+%
+\rick{Write stuff about forces on particles and that we simplify them}
+The force on a single particle is then given by:
+%
+\begin{equation}\label{eq:single:force}
+	F_i = - \Sigma_{j \in N_i} k_{ij} \frac{x_i - x_j}{|x_i - x_j|}[|x_i - x_j| - l_0].
+\end{equation}
+%
+The set $N_i$ are the neighboring particles of particle $v_i$. For every spring between two particles $v_i$ and $v_j$ a constants $k_ij$ can be chosen randomly or from some distribution, see \cref{s:implementation} for the discussion about the details. The variable $l_0$ represents the natural length of a spring, i.e., the length of a spring that is only connected to a single particle and thus is not stretched. To be able to linearly solve the system we discard this term by setting it to zero. By doing so the formula for the force $F_i$ on a particle $v_i$ is given by:
+%
+\begin{equation}\label{eq:single:force:simple}
+	F_i = - \Sigma_{j \in N_i} k_{ij}(x_i - x_j).
+\end{equation}
 
-\todo[inline]{Describe how the model can be solved/stabilized}
+\rick{Describe how the model can be solved/stabilized}
 
-\todo[inline]{Decribe how springs break (two or three methods)}
+With the formula in \eqref{eq:single:force:simple} we can now compute all the forces on every particle and move the particle to the locations, such that the system is stable, i.e., $F_i = 0 \forall_i$. With this we can find the $L$ matrix:
+%
+\begin{equation}\label{eq:a:}
+	L = A^T K A .* C
+\end{equation}
+%
+\begin{equation}\label{eq::}
+	L\vec{x} = \vec{r}.
+\end{equation}
+%
+If this formula we find the new positions $\vec{x}$ of the particles by solving the 
 
 \todo[inline]{Reference that the step after this is the solve/stabilization part of this section.}
 
