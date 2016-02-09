@@ -35,9 +35,37 @@ This section discusses our implementation of our simulation, based on the theory
 	\end{bmatrix}
 }
 \end{equation}
-
 where $\spring{a + b} = \spring{a} + \spring{b}$. 
 
+\begin{equation}\label{eq:implementation:adjacency}
+	\begin{bmatrix}
+		1 		& 0 		& 0 		& \cdots 	& 0\\
+		0 		& 1 		& 0 		& \cdots 	& 0\\
+		0 		& 0 		& 1 		& \cdots 	& 0\\
+		1 		& 0 		& 1 		& \cdots 	& 0\\
+		1 		& 1 		& 1 		& \cdots 	& 0\\
+		\vdots	& \cdots 	& \cdots 	& \ddots 	& \vdots\\
+		0 		& 0 		& 0 		& \cdots 	& 1\\
+	\end{bmatrix}
+\end{equation}
+
+\begin{equation}\label{eq:implementation:springConstantMatrix}
+	\begin{bmatrix}
+		\spring{0} 	& 0 			& \cdots & 0\\
+		0 			& \spring{1}	& \cdots & 0\\	
+		\vdots 		& \vdots		& \ddots & \vdots\\
+		0 			& \cdots		& \cdots & \spring{23}\\
+	\end{bmatrix}
+\end{equation}
+
+\begin{equation}\label{eq:implementation:correctionMatrix}
+	\begin{bmatrix}
+		1 			& -1 			& \cdots & -1\\
+		-1 			& 1				& \cdots & -1\\	
+		\vdots 		& \vdots		& \ddots & \vdots\\
+		-1 			& -1			& \cdots & 1\\		
+	\end{bmatrix}
+\end{equation}
 
 \todo[inline]{Hoe werkt stabilize}
 
