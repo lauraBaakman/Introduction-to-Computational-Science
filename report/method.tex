@@ -10,7 +10,19 @@ To model the rupture dynamics of mud we opted for a spring simulation. In this s
 
 \begin{figure}
 	\centering
-	\singleSpring
+	  \begin{tikzpicture}
+	    \node [free]  (left)  at  (0,0)   {\freeParticle{i}};
+	    \node [free]  (right)   at  (4,0) {\freeParticle{j}};
+	    \drawSpring{left}{right}{0}
+
+	    \node (leftUpper) at (0,0.5) {};
+	    \node (rightUpper) at (4,0.5) {};
+	    \draw[dashed, <->] (leftUpper)--(rightUpper) node[label] {$X = \abs{x_i - x_j}$};
+
+	    \node (leftLower) at (1,-0.9) {};
+	    \node (rightLower) at (3,-0.9) {};
+	    \draw[dashed, <->] (leftLower)--(rightLower) node[label] {$l_0$};
+	  \end{tikzpicture} %
 	\caption{Illustration of a single connection, i.e., a spring, between two particles. The distance between particle $v_i$ and $v_j$ is given by $X$. The variable $l_0$ is used to denote the natural length of a spring with spring constant $k_0$.}
 	\label{fig:method:spring}
 \end{figure}
