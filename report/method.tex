@@ -61,9 +61,17 @@ particle $v_j$. The natural length of a spring is the length it would have if it
 	F_i = - \Sigma_{j \in N_i} k_{ij}(x_i - x_j).
 \end{equation}
 
+\rick{Describe how the model can be solved/stabilized}
+
+With the formula in \eqref{eq:single:force:simple} we can now compute all the forces on every particle and move the particle to the locations, such that the system is stable, i.e., $F_i = 0 \forall_i$. With this we can find the $L$ matrix:
+%
+\begin{equation}\label{eq:method:stabilizationEquationLHS}
+	L = A^T K A .* C
+\end{equation}
+%
 The system is stabilized by calculating, using the formula from \eqref{eq:single:force:simple}, the forces on all particles and moving each to the locations such that the system is stable, i.e., $F_i = 0 \forall_i$. We do this by solving the follow matrix vector equation:
 %
-\begin{equation}\label{eq::}
+\begin{equation}\label{eq:method:stabilizationEquation}
 	L\vec{x} = \vec{r},
 \end{equation}
 %
