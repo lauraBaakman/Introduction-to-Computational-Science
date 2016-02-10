@@ -1,10 +1,25 @@
 %!TEX root = report.tex
-This section discusses our implementation of our simulation, based on the theory discussed in \cref{s:method}. 
+This section discusses our implementation of our simulation, based on the theory discussed in \cref{s:method}. We used C++ to simulate the dessication process and  Qt\cite{qt} and OpenGL\cite{openGL} to visualize it. \Cref{s:implementation:init} discusses how we initialized our grid. The next section explains how we have created the matrices and vectors in \cref{eq:method:stabilizationEquation,eq:method:stabilizationEquationLHS}.
 
 \subsection{Initialize}
+\label{s:implementation:init}
+
+\todo[inline]{Refer to figure}
+
+\todo[inline]{Init grid: refer to figure, verschil tussen fixed and free, minimaal aantal fixed particles}
+
+\todo[inline]{Init particle: location determined by position in grid, otherwise no properties}
+
+\todo[inline]{Init }
+
+
 \todo[inline]{Hoe werkt init, leg uit hoe die matrices gebouwd worden}
 
 \subsection{Stabilize}
+\label{s:implementation:stabilize}
+
+
+\todo[inline]{Noemen welke lib, waarom die, wat we ervan gebruikt hebben.}
 
 \begin{equation}\label{eq:implementation:forceOnVo}
 	\begin{split}
@@ -70,6 +85,7 @@ where $\spring{a + b} = \spring{a} + \spring{b}$.
 \todo[inline]{Hoe werkt stabilize}
 
 \subsection{Break Springs}
+\label{s:implementation:break}
 \todo[inline]{Hoe werkt break: denk dat deze sectie eruit gaat, zo boeiend is break niet.}
 
 \begin{figure}
