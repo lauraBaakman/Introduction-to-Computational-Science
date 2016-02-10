@@ -5,7 +5,9 @@ When simulating the dynamics of cracking material, one needs a model that repres
 
 \subsection{The model}\label{ss:method:model}
 % \todo[inline]{``Decribe our model:  1. Properties of single particles and connection between two (springs)''}
-To model the rupture dynamics of mud we opted for a spring simulation. In this simulation mud is modeled by particles connected by Hookean springs. The cracking of mud is a very slow process and therefore we do not take the velocity and frictional forces into consideration, i.e., we ignore Newton's and Stokes' laws. Therefore we can use massless particles and only take the location of a particle into account. As a consequence it is possible to find the new position of particles using a matrix vector equation, which can be solved with a linear solver.
+We use a spring simulation to model the rupture dynamics of mud. In this section we first describe the behavior and properties of one spring connecting two particles. \todo{Wat doen we in de rest van deze sectie}
+
+Since the cracking of mud is a very slow process we can ignore Newton's and Stokes' law, i.e., we do not consider the effect of velocity and frictional forces in our model. Consequently our particles are massless and we only consider their location. This, and some other properties of our model, make it possible to find the new position of particles using a matrix vector equation, which can be solved with a linear solver.
 
 \begin{figure}
 	\centering
@@ -35,15 +37,13 @@ To model the rupture dynamics of mud we opted for a spring simulation. In this s
 \end{equation}
 where $F$ is the restoring force exerted by the spring on whatever is pulling on the other end. $X$ is the displacement of the string from it's relaxed position. To ensure that the final system of equations is linearly solvable we have to use springs with a natural length of zero. Consequently $X$ is equal to the distance between the particles that are connected by the spring, i.e., $D_{ij}$ in \cref{fig:method:spring}. If the stress on a spring exceeds some threshold, or is among the $n$ springs with the highest stress the string breaks, and cracks appear.
 
-\laura{Read the following paragraph(s) which should implement the following todo: ``Describe our model: 2. Initialization of the grid and spring constants. (Which distribution and parameters)''}
-
-In the previous paragraphs we described a single connection between particles. An area of rupturing mud can not be modeled using only a single connection. To simulate an area of mud we opted to layout multiple particles in a uniform square grid. An illustration of this initial layout is shown in \cref{fig:model:layout}. In this illustration the larger blue squares on the edge of the layout are, the so called the fixed particles. The free or movable particles are illustrated by the smaller red squares, each connected by a spring with its four neighbors. 
+\rick{Read the following paragraph(s) which should implement the following todo: ``Describe our model: 2. Initialization of the grid and spring constants. (Which distribution and parameters)'' Ik heb de eerste alinea gelezen, maar daarna mist er te veel om er echt iets over te zeggen.}
+Now that we know the properties of one connection between a pair of particles we can consider a network of these particles. We have opted for a uniform square grid to  simulate the are of rupturing mud, see \cref{fig:model:layout}. Note that one can easily use an alternative initial layout with our model.
 %
 \begin{figure}
 	\centering
-	% \missingfigure{\plaatje{Illustration of a uniform square grid. There is no need for particle names and that kind of stuff, just a visualization of the uniform square grid, with a reasonable number of particles.}}
 	\includegraphics[width=0.9\columnwidth]{img/uniform_square_grid.png}
-	\caption{Starting layout of the particles representing uncracked mud. Image made using the software which was written for this paper.}
+	\caption{Initial placement of the particles, used to represent a layer of mud without any cracks. The blue squares represent the fixed particles, whose location does not change during the simulation. The red particles change position, the green lines represent springs between the particles.}
 	\label{fig:model:layout}
 \end{figure}
 %
