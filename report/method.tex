@@ -69,7 +69,7 @@ The system is stabilized by calculating, using the formula from \eqref{eq:single
 %
 where $\vec{x}$ are the unknown new particle positions. How the matrix $L$ and vector $\vec{r}$ are constructed is described in \cref{s:implementation}. When the new locations are found the system is stable and springs can be broken. There are multiple ways to determine which springs to break, e.g., the ten springs with the highest stress. The stress on a spring is given by:
 \begin{equation}\label{eq:spring:stress}
-	
+	\epsilon_{ij} = k_{ij} |\vec{x}_i - \vec{x}_j|
 \end{equation}
 
 
