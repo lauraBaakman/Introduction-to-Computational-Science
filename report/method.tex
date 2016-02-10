@@ -38,7 +38,8 @@ Since the cracking of mud is a very slow process we can ignore Newton's and Stok
 where $F$ is the restoring force exerted by the spring on whatever is pulling on the other end. $X$ is the displacement of the string from it's relaxed position. To ensure that the final system of equations is linearly solvable we have to use springs with a natural length of zero. Consequently $X$ is equal to the distance between the particles that are connected by the spring, i.e., $D_{ij}$ in \cref{fig:method:spring}. If the stress on a spring exceeds some threshold, or is among the $n$ springs with the highest stress the string breaks, and cracks appear.
 
 \rick{Read the following paragraph(s) which should implement the following todo: ``Describe our model: 2. Initialization of the grid and spring constants. (Which distribution and parameters)'' Ik heb de eerste alinea gelezen, maar daarna mist er te veel om er echt iets over te zeggen.}
-Now that we know the properties of one connection between a pair of particles we can consider a network of these particles. We have opted for a uniform square grid to  simulate the are of rupturing mud, see \cref{fig:model:layout}. Note that one can easily use an alternative initial layout with our model.
+
+In the previous paragraph we established the properties of particles and the single spring connection between them. Now we consider a network of these particles. We have opted for a uniform square grid to simulate the area of rupturing mud, see \cref{fig:model:layout}. Note that one can easily use an alternative initial layout with our model. The constants of the springs are picked from a Gaussian distribution, see \cref{s:implementation} for the discussion about these details.
 %
 \begin{figure}
 	\centering
@@ -46,15 +47,15 @@ Now that we know the properties of one connection between a pair of particles we
 	\caption{Initial placement of the particles, used to represent a layer of mud without any cracks. The blue squares represent the fixed particles, whose location does not change during the simulation. The red particles change position, the green lines represent springs between the particles.}
 	\label{fig:model:layout}
 \end{figure}
-%
-\rick{Write stuff about forces on particles and that we simplify them}
-The force on a single particle is then given by:
+
+After the grid has been initialized it needs to be stabilized. A stable state is defined as $F_i = 0 \forall_i$. Here $F_i$ is the sum of all incoming forces at a particle $v_i$, i.e.,
 %
 \begin{equation}\label{eq:single:force}
-	F_i = - \Sigma_{j \in N_i} k_{ij} \frac{x_i - x_j}{|x_i - x_j|}[|x_i - x_j| - l_0].
+	F_i = - \Sigma_{j \in N_i} k_{ij} \frac{x_i - x_j}{|x_i - x_j|}[|x_i - x_j| - l_0],
 \end{equation}
 %
-The set $N_i$ are the neighboring particles of particle $v_i$. For every spring between two particles $v_i$ and $v_j$ a constants $k_ij$ can be chosen randomly or from some distribution, see \cref{s:implementation} for the discussion about the details. The variable $l_0$ represents the natural length of a spring, i.e., the length of a spring that is only connected to a single particle and thus is not stretched. To be able to linearly solve the system we discard this term by setting it to zero. By doing so the formula for the force $F_i$ on a particle $v_i$ is given by:
+where the set $N_i$ contains the neighboring particles; and $k_{ij}$ and $l_0$ denote the spring constant and natural length of the spring connecting $v_i$ with 
+particle $v_j$. The natural length of a spring is the length it would have if it is not connected to anything. To be able to use a matrix vector equation to solve, i.e., stabilize the system, we ignore the natural length by assigning a length of zero to every spring in the system. The formula from \eqref{eq:single:force} is then simplified, i.e., the sum of incoming forces at a particle $v_i$, in our model, is now given by:
 %
 \begin{equation}\label{eq:single:force:simple}
 	F_i = - \Sigma_{j \in N_i} k_{ij}(x_i - x_j).
@@ -68,13 +69,17 @@ With the formula in \eqref{eq:single:force:simple} we can now compute all the fo
 	L = A^T K A .* C
 \end{equation}
 %
+The system is stabilized by calculating, using the formula from \eqref{eq:single:force:simple}, the forces on all particles and moving each to the locations such that the system is stable, i.e., $F_i = 0 \forall_i$. We do this by solving the follow matrix vector equation:
+%
 \begin{equation}\label{eq:method:stabilizationEquation}
-	L\vec{x} = \vec{r}.
+	L\vec{x} = \vec{r},
 \end{equation}
 %
-If this formula we find the new positions $\vec{x}$ of the particles by solving the 
+where $\vec{x}$ are the unknown new particle positions. How the matrix $L$ and vector $\vec{r}$ are constructed is described in \cref{s:implementation}. When the new locations are found the system is stable and springs can be broken. There are multiple ways to determine which springs to break, e.g., the ten springs with the highest stress. The stress on a spring is given by:
+\begin{equation}\label{eq:spring:stress}
+	fu
+\end{equation}
 
-\todo[inline]{Reference that the step after this is the solve/stabilization part of this section.}
 
 \subsection{The Vogel model}\label{ss:method:vogel}
 
