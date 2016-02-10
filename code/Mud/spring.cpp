@@ -44,12 +44,14 @@ const Particle *Spring::getOtherParticle(const Particle *particle) const
 
 float Spring::strain() const
 {
-    float distanceBetweenParticles = particleA->getLocation()->distanceToPoint(*(particleB->getLocation()));
+    float distanceBetweenParticles = std::abs(particleA->getLocation()->distanceToPoint(*(particleB->getLocation())));
+    qDebug() << (springConstant * (distanceBetweenParticles - naturalLength));
     return (springConstant * (distanceBetweenParticles - naturalLength));
 }
 
 void Spring::breakIt()
 {
+    qDebug() << "Break spring with: " << this->strain();
     broken = true;
 }
 
