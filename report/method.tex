@@ -18,11 +18,11 @@ Since the cracking of mud is a very slow process we can ignore Newton's and Stok
 
 	    \node (leftUpper) at (0,0.5) {};
 	    \node (rightUpper) at (4,0.5) {};
-	    \draw[dashed, <->] (leftUpper)--(rightUpper) node[label] {$D_{ij} = \abs{x_i - x_j}$};
+	    \draw[dashed, <->] (leftUpper)--(rightUpper) node[foo] {$D_{ij} = \abs{x_i - x_j}$};
 
 	    \node (leftLower) at (1,-0.5) {};
 	    \node (rightLower) at (3,-0.5) {};
-	    \draw[dashed, <->] (leftLower)--(rightLower) node[label, below=1ex] {$l_0$};
+	    \draw[dashed, <->] (leftLower)--(rightLower) node[foo, below=1ex] {$l_0$};
 	  \end{tikzpicture} %
 	\caption{Illustration of a spring, \spring{0}, connecting the particles \freeParticle{i} and \freeParticle{j}. The distance between the two particles is represented by $D_{ij}$, $x_i$ and $x_j$ refer to the position of \freeParticle{i} and \freeParticle{j}, respectively. The natural length of a spring is represented by $l_0$.}
 	\label{fig:method:spring}
