@@ -64,11 +64,11 @@ The set $N_i$ are the neighboring particles of particle $v_i$. For every spring 
 
 With the formula in \eqref{eq:single:force:simple} we can now compute all the forces on every particle and move the particle to the locations, such that the system is stable, i.e., $F_i = 0 \forall_i$. With this we can find the $L$ matrix:
 %
-\begin{equation}\label{eq:a:}
+\begin{equation}\label{eq:method:stabilizationEquationLHS}
 	L = A^T K A .* C
 \end{equation}
 %
-\begin{equation}\label{eq::}
+\begin{equation}\label{eq:method:stabilizationEquation}
 	L\vec{x} = \vec{r}.
 \end{equation}
 %
