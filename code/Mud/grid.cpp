@@ -117,9 +117,9 @@ void Grid::breakSpringsWithHighestStrain()
         if(!spring->isBroken()) map[spring->strain()] = spring;
     }
 
-    for(auto item = map.end();
-        (springsToBreak != 0) && (item != map.begin());
-        item--)
+    for(auto item = map.rbegin();
+        (springsToBreak != 0) && (item != map.rend());
+        item++)
     {
         item->second->breakIt();
         springsToBreak--;
