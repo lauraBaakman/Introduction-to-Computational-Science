@@ -1,19 +1,25 @@
 %!TEX root = report.tex
-This section discusses our implementation of our simulation, based on the theory discussed in \cref{s:method}. We used C++ to simulate the dessication process and  Qt\cite{qt} and OpenGL\cite{openGL} to visualize it. \Cref{s:implementation:init} discusses how we initialized our grid. The next section explains how we have created the matrices and vectors in \cref{eq:method:stabilizationEquation,eq:method:stabilizationEquationLHS}.
+This section discusses our implementation of our simulation, based on the theory discussed in \cref{s:method}. We used C++ to simulate the dessication process and  Qt\cite{qt} and OpenGL\cite{openGL} to visualize it. \Cref{s:implementation:init} discusses how we initialized our grid. The next section explains how we have created the matrices and vectors in \cref{eq:method:stabilizationEquation}.
 
 \subsection{Initialize}
 \label{s:implementation:init}
 
-\todo[inline]{Refer to figure}
+\begin{figure}
+	\centering
+	\resizebox{0.9\columnwidth}{!}{%
+		\initialGrid
+	}
+	\caption{The square uniform grid as it is initialized. The dots labeled with \fixedParticle{0} through \fixedParticle{23} are fixed. The circles named \freeParticle{0} through \freeParticle{8} are free. The lines labeled \spring{0} through \spring{23} are springs with spring constants \spring{i}, for $i = 1\ldots23$.}
+	\label{fig:implementation:intitialGrid}
+\end{figure}
 
-\todo[inline]{Init grid: refer to figure, verschil tussen fixed and free, minimaal aantal fixed particles}
-
-\todo[inline]{Init particle: location determined by position in grid, otherwise no properties}
-
-\todo[inline]{Init }
-
-
-\todo[inline]{Hoe werkt init, leg uit hoe die matrices gebouwd worden}
+\Cref{fig:implementation:intitialGrid} presents the square uniform grid as it is initialized. 
+%Free
+The user selects the number of free particles requested in the grid. This number is then rounded up to get the number of particles required for a square grid. The location of the free particles are determined by the shape of the initial grid.
+% Fixed
+The fixed particles are placed  in such a way that their number is minimal and that every free particle is connected to four other particles. 
+%Springs
+The spring constants are sampled form a normal distribution whose mean and standard deviation are set by the user. 
 
 \subsection{Stabilize}
 \label{s:implementation:stabilize}
@@ -87,15 +93,6 @@ where $\spring{a + b} = \spring{a} + \spring{b}$.
 \subsection{Break Springs}
 \label{s:implementation:break}
 \todo[inline]{Hoe werkt break: denk dat deze sectie eruit gaat, zo boeiend is break niet.}
-
-\begin{figure}
-	\centering
-	\resizebox{0.9\columnwidth}{!}{%
-		\initialGrid
-	}
-	\caption{Caption here}
-	\label{fig:1:}
-\end{figure}
 
 % \begin{figure}
 % 	\centering
