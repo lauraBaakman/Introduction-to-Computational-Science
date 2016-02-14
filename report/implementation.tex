@@ -2,93 +2,104 @@
 This section discusses our implementation of our simulation, based on the theory discussed in \cref{s:method}. We used C++ to simulate the dessication process and  Qt\cite{qt} and OpenGL\cite{openGL} to visualize it. \Cref{s:implementation:init} discusses how we initialized our grid. The next section explains how we have created the matrices and vectors in \cref{eq:method:stabilizationEquation}.
 
 \subsection{Initialize}
-\label{s:implementation:init}
+	\label{s:implementation:init}
+	\begin{figure}
+		\centering
+		\resizebox{0.9\columnwidth}{!}{%
+			\initialGrid
+		}
+		\caption{The square uniform grid as it is initialized. The dots labeled with \fixedParticle{0} through \fixedParticle{23} are fixed. The circles named \freeParticle{0} through \freeParticle{8} are free. The lines labeled \spring{0} through \spring{23} are springs with spring constants \spring{i}, for $i = 1\ldots23$.}
+		\label{fig:implementation:intitialGrid}
+	\end{figure}
 
-\begin{figure}
-	\centering
-	\resizebox{0.9\columnwidth}{!}{%
-		\initialGrid
-	}
-	\caption{The square uniform grid as it is initialized. The dots labeled with \fixedParticle{0} through \fixedParticle{23} are fixed. The circles named \freeParticle{0} through \freeParticle{8} are free. The lines labeled \spring{0} through \spring{23} are springs with spring constants \spring{i}, for $i = 1\ldots23$.}
-	\label{fig:implementation:intitialGrid}
-\end{figure}
-
-\Cref{fig:implementation:intitialGrid} presents the square uniform grid as it is initialized. 
-%Free
-The user selects the number of free particles requested in the grid. This number is then rounded up to get the number of particles required for a square grid. The location of the free particles are determined by the shape of the initial grid.
-% Fixed
-The fixed particles are placed  in such a way that their number is minimal and that every free particle is connected to four other particles. 
-%Springs
-The spring constants are sampled form a normal distribution whose mean and standard deviation are set by the user. 
+	\Cref{fig:implementation:intitialGrid} presents the square uniform grid as it is initialized. 
+	%Free
+	The user selects the number of free particles requested in the grid. This number is then rounded up to get the number of particles required for a square grid. The location of the free particles are determined by the shape of the initial grid.
+	% Fixed
+	The fixed particles are placed  in such a way that their number is minimal and that every free particle is connected to four other particles. 
+	%Springs
+	The spring constants are sampled form a normal distribution whose mean and standard deviation are set by the user. 
 
 \subsection{Stabilize}
-\label{s:implementation:stabilize}
+	\label{s:implementation:stabilize}
+	To stabilize the system we need to solve \cref{eq:method:stabilizationEquation}. We first derive the matrix $L$ algebraically. We then show how one can create matrix $L$ and the vector $\vec{r}$ in \cref{eq:method:stabilizationEquation}.
+
+	%Derive matrix
+	If we apply \cref{eq:single:force:simple} to compute the force on particle \freeParticle{0} in \cref{fig:implementation:intitialGrid} we find:
+	\begin{equation}\label{eq:implementation:forceOnVo}
+		\begin{split}
+		F_{\freeParticle{0}} 	& = - [				\spring{0} \left(\fixedParticle{0} - \freeParticle{0}\right) +
+													\spring{3} \left(\fixedParticle{3} - \freeParticle{0}\right) + \\
+								& \quad\quad\;\;	\spring{4} \left(\freeParticle{1} - \freeParticle{0}\right)  +
+													\spring{7} \left(\freeParticle{3} - \freeParticle{0}\right) ].
+		\end{split}
+	\end{equation}	
+	Which can be rewritten as:
+	\begin{equation}\label{eq:implementation:forceOnVoVersimpled}
+		\begin{split}
+		\spring{0}\fixedParticle{0} + \spring{3}\fixedParticle{3} 
+			&= - \spring{4}\freeParticle{1} - \spring{7}\freeParticle{3} + \\
+			& \quad\: \freeParticle{0} \left( \spring{0} + \spring{3} + \spring{4} + \spring{7} \right).
+		\end{split}
+	\end{equation}
+	Based on the structure of \cref{eq:implementation:forceOnVoVersimpled} we find that the matrix $L$ has the following form:
+	\begin{equation}\label{eq:implementation:rhs}
+	{
+		\arraycolsep=1pt
+		L = \begin{bmatrix}
+			\spring{0 + 3 + 4 + 7}	& -\spring{4}			& \cdots & 0\\
+			- \spring{4} 			& \spring{1 + 4+ 5 + 8}	& \cdots & 0\\
+			\vdots					& \vdots 				& \ddots & \vdots\\
+			0						& 0 					& \cdots & \spring{16 + 19 + 20 + 23}\\
+		\end{bmatrix}
+	}
+	\end{equation}
+	where $\spring{a + b} = \spring{a} + \spring{b}$. 
+
+	% LHS
+	We build the matrix $L$ as follows
+	\begin{equation}\label{eq:implementation:LHS}
+		L = A^T K A .* C,
+	\end{equation}
+	where $A$ is the adjacency matrix, $K$ is the spring constant matrix and $C$ is the correction matrix. In \cref{fig:implementation:intitialGrid} the adjacency matrix $A$ is:
+	\begin{equation}\label{eq:implementation:adjacency}
+		A = \begin{bmatrix}
+			1 		& 0 		& 0 		& \cdots 	& 0\\
+			0 		& 1 		& 0 		& \cdots 	& 0\\
+			0 		& 0 		& 1 		& \cdots 	& 0\\
+			1 		& 0 		& 1 		& \cdots 	& 0\\
+			1 		& 1 		& 1 		& \cdots 	& 0\\
+			\vdots	& \cdots 	& \cdots 	& \ddots 	& \vdots\\
+			0 		& 0 		& 0 		& \cdots 	& 1\\
+		\end{bmatrix}
+	\end{equation}
+	The matrix $A$ has a many rows and columns as there are free particles in the grid. An element in $A$ is set to one if two particles are connected by a spring. 
+	% 
+	The spring constant matrix is a diagonal matrix with the spring constants of the springs in the system on the diagonal:
+	\begin{equation}\label{eq:implementation:springConstantMatrix}
+		K = \begin{bmatrix}
+			\spring{0} 	& 0 			& \cdots & 0\\
+			0 			& \spring{1}	& \cdots & 0\\	
+			\vdots 		& \vdots		& \ddots & \vdots\\
+			0 			& \cdots		& \cdots & \spring{23}\\
+		\end{bmatrix}.
+	\end{equation}	
+	Lastly we need to correct the signs of the elements in the matrix, in such a way that all elements not on the diagonal are negative. We do this with the correction matrix:
+	\begin{equation}\label{eq:implementation:correctionMatrix}
+		C = \begin{bmatrix}
+			1 			& -1 			& \cdots & -1\\
+			-1 			& 1				& \cdots & -1\\	
+			\vdots 		& \vdots		& \ddots & \vdots\\
+			-1 			& -1			& \cdots & 1\\		
+		\end{bmatrix}.
+	\end{equation}
+
+	% RHS
+	\todo[inline]{Hoe komen we aan de RHS}
 
 
-\todo[inline]{Noemen welke lib, waarom die, wat we ervan gebruikt hebben.}
+	\todo[inline]{Noemen welke lib, waarom die, wat we ervan gebruikt hebben.}
 
-\begin{equation}\label{eq:implementation:forceOnVo}
-	\begin{split}
-	F_{\freeParticle{0}} 	& = - [				\spring{0} \left(\fixedParticle{0} - \freeParticle{0}\right) +
-												\spring{3} \left(\fixedParticle{3} - \freeParticle{0}\right) + \\
-							& \quad\quad\;\;	\spring{4} \left(\freeParticle{1} - \freeParticle{0}\right)  +
-												\spring{7} \left(\freeParticle{3} - \freeParticle{0}\right) ]
-	\end{split}
-\end{equation}
-
-
-\begin{equation}\label{eq:implementation:forceOnVoVersimpled}
-	\begin{split}
-	\spring{0}\fixedParticle{0} + \spring{3}\fixedParticle{3} 
-		&= - \spring{4}\freeParticle{1} - \spring{7}\freeParticle{3} + \\
-		& \quad\: \freeParticle{0} \left( \spring{0} + \spring{3} + \spring{4} + \spring{7} \right)
-	\end{split}
-\end{equation}
-
-\begin{equation}\label{eq:implementation:rhs}
-{
-	\arraycolsep=1pt
-	\begin{bmatrix}
-		\spring{0 + 3 + 4 + 7}	& -\spring{4}			& \cdots & 0\\
-		- \spring{4} 			& \spring{1 + 4+ 5 + 8}	& \cdots & 0\\
-		\vdots					& \vdots 				& \ddots & \vdots\\
-		0						& 0 					& \cdots & \spring{16 + 19 + 20 + 23}\\
-	\end{bmatrix}
-}
-\end{equation}
-where $\spring{a + b} = \spring{a} + \spring{b}$. 
-
-\begin{equation}\label{eq:implementation:adjacency}
-	\begin{bmatrix}
-		1 		& 0 		& 0 		& \cdots 	& 0\\
-		0 		& 1 		& 0 		& \cdots 	& 0\\
-		0 		& 0 		& 1 		& \cdots 	& 0\\
-		1 		& 0 		& 1 		& \cdots 	& 0\\
-		1 		& 1 		& 1 		& \cdots 	& 0\\
-		\vdots	& \cdots 	& \cdots 	& \ddots 	& \vdots\\
-		0 		& 0 		& 0 		& \cdots 	& 1\\
-	\end{bmatrix}
-\end{equation}
-
-\begin{equation}\label{eq:implementation:springConstantMatrix}
-	\begin{bmatrix}
-		\spring{0} 	& 0 			& \cdots & 0\\
-		0 			& \spring{1}	& \cdots & 0\\	
-		\vdots 		& \vdots		& \ddots & \vdots\\
-		0 			& \cdots		& \cdots & \spring{23}\\
-	\end{bmatrix}
-\end{equation}
-
-\begin{equation}\label{eq:implementation:correctionMatrix}
-	\begin{bmatrix}
-		1 			& -1 			& \cdots & -1\\
-		-1 			& 1				& \cdots & -1\\	
-		\vdots 		& \vdots		& \ddots & \vdots\\
-		-1 			& -1			& \cdots & 1\\		
-	\end{bmatrix}
-\end{equation}
-
-\todo[inline]{Hoe werkt stabilize}
 
 \subsection{Break Springs}
 \label{s:implementation:break}
