@@ -5,7 +5,7 @@ When simulating the dynamics of cracking material, one needs a model that repres
 
 \subsection{The model}\label{ss:method:model}
 % \todo[inline]{``Decribe our model:  1. Properties of single particles and connection between two (springs)''}
-We use a spring simulation to model the rupture dynamics of mud. In this section we first describe the behavior and properties of one spring connecting two particles. \todo{Wat doen we in de rest van deze sectie}
+We use a spring simulation to model the rupture dynamics of mud. In this section we first describe the behavior and properties of one spring connecting two particles. Then we discuss a network of particles connected with springs and under which constraints this network is solved to find a stable system. \todo{Wat doen we in de rest van deze sectie}
 
 Since the cracking of mud is a very slow process we can ignore Newton's and Stokes' law, i.e., we do not consider the effect of velocity and frictional forces in our model. Consequently our particles are massless and we only consider their location. This, and some other properties of our model, make it possible to find the new position of particles using a matrix vector equation, which can be solved with a linear solver.
 
@@ -35,7 +35,7 @@ Since the cracking of mud is a very slow process we can ignore Newton's and Stok
 \begin{equation}\label{eq:method:hookeslaw}
 	F = -k X,	
 \end{equation}
-where $F$ is the restoring force exerted by the spring on whatever is pulling on the other end. $X$ is the displacement of the string from it's relaxed position. To ensure that the final system of equations is linearly solvable we have to use springs with a natural length of zero. Consequently $X$ is equal to the distance between the particles that are connected by the spring, i.e., $D_{ij}$ in \cref{fig:method:spring}. If the stress on a spring exceeds some threshold, or is among the $n$ springs with the highest stress the string breaks, and cracks appear.
+where $F$ is the restoring force exerted by the spring on whatever is pulling on the other end. $X$ is the displacement of the string from it's relaxed position. To ensure that the final system of equations is linearly solvable we have to use springs with a natural length of zero. Consequently $X$ is equal to the distance between the particles that are connected by the spring, i.e., $D_{ij}$ in \cref{fig:method:spring}. If the strain on a spring exceeds some threshold, or is among the $n$ springs with the highest strain the string breaks, and cracks appear.
 
 \rick{Read the following paragraph(s) which should implement the following todo: ``Describe our model: 2. Initialization of the grid and spring constants. (Which distribution and parameters)'' Ik heb de eerste alinea gelezen, maar daarna mist er te veel om er echt iets over te zeggen.}
 
@@ -66,24 +66,38 @@ particle $v_j$. The natural length of a spring is the length it would have if it
 With the formula in \eqref{eq:single:force:simple} we can now compute all the forces on every particle and move the particle to the locations, such that the system is stable, i.e., $F_i = 0 \forall_i$. With this we can find the $L$ matrix:
 %
 \begin{equation}\label{eq:method:stabilizationEquationLHS}
-	L = A^T K A .* C
+	L = A^T K A .* C,
 \end{equation}
 %
-The system is stabilized by calculating, using the formula from \eqref{eq:single:force:simple}, the forces on all particles and moving each to the locations such that the system is stable, i.e., $F_i = 0 \forall_i$. We do this by solving the follow matrix vector equation:
+where $A$ is the adjacency matrix, $K$ the matrix containing all the spring constants, and $C$ a correction matrix. How these matrices are constructed and what they are exactly, is discussed in \cref{s:implementation}. The system is stabilized by calculating, using the formula from \eqref{eq:single:force:simple}, the forces on all particles and moving each to the locations such that. We do this by solving the follow matrix vector equation:
 %
 \begin{equation}\label{eq:method:stabilizationEquation}
 	L\vec{x} = \vec{r},
 \end{equation}
 %
-where $\vec{x}$ are the unknown new particle positions. How the matrix $L$ and vector $\vec{r}$ are constructed is described in \cref{s:implementation}. When the new locations are found the system is stable and springs can be broken. There are multiple ways to determine which springs to break, e.g., the ten springs with the highest stress. The stress on a spring is given by:
-\begin{equation}\label{eq:spring:stress}
-	\epsilon_{ij} = k_{ij} |\vec{x}_i - \vec{x}_j|
+where $\vec{x}$ are the unknown new particle positions. For details see \cref{s:implementation}. When the new locations are found, the system is stable and the springs can be broken. There are multiple ways to determine which springs to break, e.g., the ten springs with the highest strain, where the strain on a spring is given by:
+\begin{equation}\label{eq:spring:strain}
+	\epsilon_{ij} = k_{ij} |\vec{x}_i - \vec{x}_j|.
 \end{equation}
+Where $\epsilon_{ij}$ is the strain on the spring between particle $v_i$ and $v_j$, which is proportional to the distance between the two particles times the constant of the spring. Different techniques to break the springs are again discussed in \cref{s:implementation}.
 
+With all the described steps above the simulation procedure is summarized as follows. We start with an uniform square grid and then perform the following steps:
+\begin{enumerate}
+	\item Stabilize the system, by solving \eqref{eq:method:stabilizationEquation}. Consequently the particles are now shifted to their new location such that the force on every particle is zero.
+	\item Break a number of springs, e.g., the number of springs with the highest strain \eqref{eq:spring:strain}.
+	\item Repeat until a maximum number of times, i.e., when all the springs are broken.
+\end{enumerate}
 
 \subsection{The Vogel model}\label{ss:method:vogel}
 
 \todo[inline]{Short review of the model from Vogel et al. So we can contrast this in the last section}
+
+The model as presented by \citeauthor{vogel2005studies2} \cite{vogel2005studies2}, differs in a number of ways. First we discuss the model and secondly the process used such that the system is stabilized. We only give a short review of the aspects of the model and simulation process to be able to give a good contrast with our model, which is presented in \cref{ss:method:model}. For detail on the model as presented by \citeauthor{vogel2005studies2} we refer the reader to \cite{vogel2005studies1} and \cite{vogel2005studies2}.
+
+\todo[inline]{Single connection uses a natural length > 0.}
+\todo[inline]{Network uses triangles, stable state is the same, but now not solvable using a linear matrix vector equation.}
+
+\todo[inline]{Process as described in the slides.}
 
 \subsection{Contrast}\label{ss:method:contrast}
 
