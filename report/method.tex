@@ -1,10 +1,9 @@
 %!TEX root = report.tex
 
-\todo[inline]{Intro plus what one can find in this section... }
 When simulating the dynamics of cracking material, one needs a model that represents the properties of that materials, mud in our case. In \cref{ss:method:model} we present our model. \Cref{ss:method:vogel} presents the model introduced by \citeauthor{vogel2005studies2} on which ours is loosely based. So that we can contrast the two models in \cref{ss:method:contrast}.
 
-\subsection{The model}\label{ss:method:model}
-% \todo[inline]{``Decribe our model:  1. Properties of single particles and connection between two (springs)''}
+\subsection{The model}\label{ss:method:model} \laura{Nalezen. Ik denk dat alles er zo (ongeveer) in staat. Alleen deze subsectie.}
+
 We use a spring simulation to model the rupture dynamics of mud. In this section we first describe the behavior and properties of one spring connecting two particles. Then we discuss a network of particles connected with springs and under which constraints this network is solved to find a stable system. \todo{Wat doen we in de rest van deze sectie}
 
 Since the cracking of mud is a very slow process we can ignore Newton's and Stokes' law, i.e., we do not consider the effect of velocity and frictional forces in our model. Consequently our particles are massless and we only consider their location. This, and some other properties of our model, make it possible to find the new position of particles using a matrix vector equation, which can be solved with a linear solver.
@@ -28,16 +27,13 @@ Since the cracking of mud is a very slow process we can ignore Newton's and Stok
 	\label{fig:method:spring}
 \end{figure}
 
-
-% \todo[inline]{Decribe how springs break (two or three methods)}
-
 \Cref{fig:method:spring} illustrates a single connection between two particles \freeParticle{i} and \freeParticle{j}. The connection between the two particle is modeled with the spring \spring{0}. The force $F$ on a Hookean spring is defined as
+%
 \begin{equation}\label{eq:method:hookeslaw}
 	F = -k X,	
 \end{equation}
+%
 where $F$ is the restoring force exerted by the spring on whatever is pulling on the other end. $X$ is the displacement of the string from it's relaxed position. To ensure that the final system of equations is linearly solvable we have to use springs with a natural length of zero. Consequently $X$ is equal to the distance between the particles that are connected by the spring, i.e., $D_{ij}$ in \cref{fig:method:spring}. If the strain on a spring exceeds some threshold, or is among the $n$ springs with the highest strain the string breaks, and cracks appear.
-
-\rick{Read the following paragraph(s) which should implement the following todo: ``Describe our model: 2. Initialization of the grid and spring constants. (Which distribution and parameters)'' Ik heb de eerste alinea gelezen, maar daarna mist er te veel om er echt iets over te zeggen.}
 
 In the previous paragraph we established the properties of particles and the single spring connection between them. Now we consider a network of these particles. We have opted for a uniform square grid to simulate the area of rupturing mud, see \cref{fig:model:layout}. Note that one can easily use an alternative initial layout with our model. The constants of the springs are picked from a Gaussian distribution, see \cref{s:implementation} for the discussion about these details.
 %
@@ -60,8 +56,6 @@ particle $v_j$. The natural length of a spring is the length it would have if it
 \begin{equation}\label{eq:single:force:simple}
 	F_i = - \Sigma_{j \in N_i} k_{ij}(x_i - x_j).
 \end{equation}
-
-\rick{Describe how the model can be solved/stabilized}
 
 With the formula in \eqref{eq:single:force:simple} we can now compute all the forces on every particle and move the particle to the locations, such that the system is stable, i.e., $F_i = 0 \forall_i$. With this we can find the $L$ matrix:
 %
@@ -89,17 +83,20 @@ With all the described steps above the simulation procedure is summarized as fol
 \end{enumerate}
 
 \subsection{The Vogel model}\label{ss:method:vogel}
+\rick{Write this.}
 
 \todo[inline]{Short review of the model from Vogel et al. So we can contrast this in the last section}
 
 The model as presented by \citeauthor{vogel2005studies2} \cite{vogel2005studies2}, differs in a number of ways. First we discuss the model and secondly the process used such that the system is stabilized. We only give a short review of the aspects of the model and simulation process to be able to give a good contrast with our model, which is presented in \cref{ss:method:model}. For detail on the model as presented by \citeauthor{vogel2005studies2} we refer the reader to \cite{vogel2005studies1} and \cite{vogel2005studies2}.
 
 \todo[inline]{Single connection uses a natural length > 0.}
+
 \todo[inline]{Network uses triangles, stable state is the same, but now not solvable using a linear matrix vector equation.}
 
 \todo[inline]{Process as described in the slides.}
 
 \subsection{Contrast}\label{ss:method:contrast}
+\rick{write this.}
 
 \todo[inline]{Describe the important differences of the two models.}
 

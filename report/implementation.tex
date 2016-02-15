@@ -1,8 +1,8 @@
 %!TEX root = report.tex
-\rick{nalezen}
-This section discusses our implementation of our simulation, based on the theory discussed in \cref{s:method}. We used C++ to simulate the dessication process and  Qt\cite{qt} and OpenGL\cite{openGL} to visualize it. The sections below present our implementation based on an example system, the initialization of which is presented in \cref{fig:implementation:intitialGrid}, which is the smallest possible system where at least one particle is only connected to other free particles. \Cref{s:implementation:init} discusses how we initialized our grid. The next section explains how we have created the matrices and vectors in \cref{eq:method:stabilizationEquation}. 
+This section discusses our implementation of our simulation, based on the theory discussed in \cref{s:method}. We used C++ to simulate the dessication process and  Qt\cite{qt} and OpenGL\cite{openGL} to visualize it. The sections below present our implementation explained with an example system. The initialization of the example is presented in \cref{fig:implementation:intitialGrid}, which is the smallest possible system where at least one particle is connected to only free particles. \Cref{s:implementation:init} discusses how we initialized our grid. In \cref{s:implementation:stabilize} we present the methods to create the matrices and vectors from \cref{eq:method:stabilizationEquation} to be able to stabilize the system. 
 
 \subsection{Initialize}
+	\rick{nalezen... morgen, want nu komt er niet veel meer uit.}
 	\label{s:implementation:init}
 	\begin{figure}
 		\centering
