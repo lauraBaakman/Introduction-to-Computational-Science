@@ -1,5 +1,6 @@
 %!TEX root = report.tex
-This section discusses our implementation of our simulation, based on the theory discussed in \cref{s:method}. We used C++ to simulate the dessication process and  Qt\cite{qt} and OpenGL\cite{openGL} to visualize it. \Cref{s:implementation:init} discusses how we initialized our grid. The next section explains how we have created the matrices and vectors in \cref{eq:method:stabilizationEquation}.
+\rick{nalezen}
+This section discusses our implementation of our simulation, based on the theory discussed in \cref{s:method}. We used C++ to simulate the dessication process and  Qt\cite{qt} and OpenGL\cite{openGL} to visualize it. The sections below present our implementation based on an example system, the initialization of which is presented in \cref{fig:implementation:intitialGrid}, which is the smallest possible system where at least one particle is only connected to other free particles. \Cref{s:implementation:init} discusses how we initialized our grid. The next section explains how we have created the matrices and vectors in \cref{eq:method:stabilizationEquation}. 
 
 \subsection{Initialize}
 	\label{s:implementation:init}
@@ -71,7 +72,7 @@ This section discusses our implementation of our simulation, based on the theory
 			1 		& 1 		& 1 		& \cdots 	& 0\\
 			\vdots	& \cdots 	& \cdots 	& \ddots 	& \vdots\\
 			0 		& 0 		& 0 		& \cdots 	& 1\\
-		\end{bmatrix}
+		\end{bmatrix}.
 	\end{equation}
 	The matrix $A$ has a many rows and columns as there are free particles in the grid. An element in $A$ is set to one if two particles are connected by a spring. 
 	% 
@@ -95,24 +96,20 @@ This section discusses our implementation of our simulation, based on the theory
 	\end{equation}
 
 	% RHS
-	\todo[inline]{Hoe komen we aan de RHS}
+	As we can see from \cref{eq:implementation:forceOnVoVersimpled} the vector $\vec{r}$ is defined as the summation of the position of the fixed particles multiplied by their spring constant. 
 
+	We solve this matrix vector equations for both the $x$ and the $y$ dimension of the system. To stabilize the initial grid, presented in \cref{fig:implementation:intitialGrid}, we place the free particles at their new locations, which results in a stabilized version of the initial grid, see \cref{fig:implementation:stabilizedInitial}.
 
-	\todo[inline]{Noemen welke lib, waarom die, wat we ervan gebruikt hebben.}
+	We have used the library Armadillo version 6.40.3 \cite{sanderson2010armadillo} to solve the system. One of the main motivations for using this library was their support for sparse matrices. Which should result in a significant speed up with larger systems, as each particle is only connected to a small number of other particles. 
 
-
-\subsection{Break Springs}
-\label{s:implementation:break}
-\todo[inline]{Hoe werkt break: denk dat deze sectie eruit gaat, zo boeiend is break niet.}
-
-% \begin{figure}
-% 	\centering
-% 	\resizebox{0.9\columnwidth}{!}{%
-% 		\stabilizedInitialGrid
-% 	}
-% 	\caption{Caption here}
-% 	\label{fig:2:}
-% \end{figure}
+	\begin{figure}
+		\centering
+		\resizebox{0.9\columnwidth}{!}{%
+			\stabilizedInitialGrid
+		}
+		\caption{The initial grid, presented in \cref{fig:implementation:intitialGrid}, stabilized.}
+		\label{fig:implementation:stabilizedInitial}
+	\end{figure}
 
 % \begin{figure}
 % 	\centering
