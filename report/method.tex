@@ -83,17 +83,21 @@ With all the described steps above the simulation procedure is summarized as fol
 \end{enumerate}
 
 \subsection{The Vogel model}\label{ss:method:vogel}
-\rick{Write this.}
 
-\todo[inline]{Short review of the model from Vogel et al. So we can contrast this in the last section}
+The model as presented by \citeauthor{vogel2005studies2} \cite{vogel2005studies2}, differs in a number of ways. First we discuss the model and secondly the process used such that the system is stabilized and how the springs are broken. We only give a short review of the aspects of the model and simulation process to be able to give a good contrast with our model, which is presented in \cref{ss:method:model}. For detail on the model as presented by \citeauthor{vogel2005studies2} we refer the reader to \cite{vogel2005studies1} and \cite{vogel2005studies2}. 
 
-The model as presented by \citeauthor{vogel2005studies2} \cite{vogel2005studies2}, differs in a number of ways. First we discuss the model and secondly the process used such that the system is stabilized. We only give a short review of the aspects of the model and simulation process to be able to give a good contrast with our model, which is presented in \cref{ss:method:model}. For detail on the model as presented by \citeauthor{vogel2005studies2} we refer the reader to \cite{vogel2005studies1} and \cite{vogel2005studies2}.
+As with our model the simple hookean springs, where the force on a spring is defined by \eqref{eq:method:hookeslaw}. The network in the model of \citeauthor{vogel2005studies2} uses a triangular grid layout, where every free particle has tree neighbors. The force on a single particle is given by \eqref{eq:single:force}, without the simplification of setting the natural length $l_0$ to zero. By doing this the simulation cannot be solved in one go. Including the natural length into the process makes the formula for the strain on the springs than the one used in our model, where the strain is given by \eqref{eq:spring:strain}. The formula for the strain including the natural length is given by:
+%
+\begin{equation}\label{eq:method:strain_vogel}
+	\epsilon_{ij} = \frac{|\vec{x}_i - \vec{x}_j|}{l_0} - 1.
+\end{equation}
 
-\todo[inline]{Single connection uses a natural length > 0.}
+When laying out the initial grid, the spring constants are sampled from a gaussian distribution. The variance of the distribution has an effect on the material that is modeled. By choosing a high variance more heterogeneous material is modeled and consequently when a low variance is chosen the modeled material is more homogeneous.
 
-\todo[inline]{Network uses triangles, stable state is the same, but now not solvable using a linear matrix vector equation.}
-
-\todo[inline]{Process as described in the slides.}
+Before springs can be broken the system of particles and springs needs to be stabilized. The stabilization, breaking and stabilizing process used by \citeauthor{vogel2005studies2} is described here:
+\begin{enumerate}
+	\item 
+\end{enumerate}
 
 \subsection{Contrast}\label{ss:method:contrast}
 \rick{write this.}

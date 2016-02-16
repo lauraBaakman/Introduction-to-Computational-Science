@@ -2,7 +2,6 @@
 This section discusses our implementation of our simulation, based on the theory discussed in \cref{s:method}. We used C++ to simulate the dessication process and  Qt\cite{qt} and OpenGL\cite{openGL} to visualize it. The sections below present our implementation explained with an example system. The initialization of the example is presented in \cref{fig:implementation:intitialGrid}, which is the smallest possible system where at least one particle is connected to only free particles. \Cref{s:implementation:init} discusses how we initialized our grid. In \cref{s:implementation:stabilize} we present the methods to create the matrices and vectors from \cref{eq:method:stabilizationEquation} to be able to stabilize the system. 
 
 \subsection{Initialize}
-	\rick{nalezen... morgen, want nu komt er niet veel meer uit.}
 	\label{s:implementation:init}
 	\begin{figure}
 		\centering
@@ -19,7 +18,7 @@ This section discusses our implementation of our simulation, based on the theory
 	% Fixed
 	The fixed particles are placed  in such a way that their number is minimal and that every free particle is connected to four other particles. 
 	%Springs
-	The spring constants are sampled form a normal distribution whose mean and standard deviation are set by the user. 
+	The spring constants are sampled from a normal distribution whose mean and standard deviation are set by the user. 
 
 \subsection{Stabilize}
 	\label{s:implementation:stabilize}
