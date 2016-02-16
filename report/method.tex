@@ -78,8 +78,8 @@ Where $\epsilon_{ij}$ is the strain on the spring between particle $v_i$ and $v_
 With all the described steps above the simulation procedure is summarized as follows. We start with an uniform square grid and then perform the following steps:
 \begin{enumerate}
 	\item Stabilize the system, by solving \eqref{eq:method:stabilizationEquation}. Consequently the particles are now shifted to their new location such that the force on every particle is zero.
-	\item Break a number of springs, e.g., the number of springs with the highest strain \eqref{eq:spring:strain}.
-	\item Repeat until a maximum number of times, i.e., when all the springs are broken.
+	\item Break a number of springs, e.g., the number of springs with the highest strain as given by \eqref{eq:spring:strain}.
+	\item Repeat for an arbitrary number of steps or until the maximum number, i.e., when all the springs are broken. 
 \end{enumerate}
 
 \subsection{The Vogel model}\label{ss:method:vogel}
@@ -94,16 +94,20 @@ As with our model the simple hookean springs, where the force on a spring is def
 
 When laying out the initial grid, the spring constants are sampled from a gaussian distribution. The variance of the distribution has an effect on the material that is modeled. By choosing a high variance more heterogeneous material is modeled and consequently when a low variance is chosen the modeled material is more homogeneous.
 
-Before springs can be broken the system of particles and springs needs to be stabilized. The stabilization, breaking and stabilizing process used by \citeauthor{vogel2005studies2} is described here:
+Before springs can be broken the system of particles and springs needs to be stabilized. The breaking, and stabilization steps used by \citeauthor{vogel2005studies2} are described with the following process:
 \begin{enumerate}
-	\item 
+	\item The natural length of the springs is decreased, with an in advance chosen step size. By doing this, the strain on the springs increases, see \eqref{eq:method:strain_vogel}.
+	\item The springs with a strain larger than some threshold are broken.
+	\item Stabilization is done radially, recursively around the broken spring. The process starts at the directly effected particles and is repeated up to a max number of steps. 
 \end{enumerate}
 
 \subsection{Contrast}\label{ss:method:contrast}
-\rick{write this.}
+
+In this section we briefly review the differences between the two models that are described in \cref{ss:method:model} and \cref{ss:method:vogel}. 
+
+\laura{Ours is fast, but does not model what it is supposed to model, but a it is a nice simulation of a breaking balloon vs Vogel who build an ultra slow but correct model of the desiccation of mud. You decide which is more fun :D}
 
 \todo[inline]{Describe the important differences of the two models.}
-
 
 \todo[inline]{Story from the presentation. Different types of particles. Springs. How the particles are connected, with those springs (square uniform grid). Things like energy and what is a stable system?}
 
