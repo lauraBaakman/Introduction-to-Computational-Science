@@ -1,36 +1,53 @@
 %!TEX root = report.tex
+In this section we present and discuss some of the experiments we have performed with our simulation. Each experiment in this section was performed on a grid of 1200 particles, with the spring constants sampled from a normal distribution with a mean of 0 and a standard deviation of 0.99. The seed was reset to the same value at the start of each simulation, consequently all initial grids have the same spring constants. When a number of springs under the highest strain was broken, we broken 97 springs at each step. When the second method was used we broke the springs with a strain greater than 1.04 If springs were stretched $\vartheta = 0.1$.
 
-\todo[inline]{Geen grounding -> ballon effect -> add grounding springs. Compare results.}
+Below we discuss the possible combinations of breaking versus stretching and the different conditions under which springs are either broken or stretched.
 
-\todo[inline]{Compare different methods of breaking}
-
-\todo[inline]{Compare different numbers of springs to break per step}
-
-
+% Break x with highest strain
 \begin{figure*}
 	\centering
 	\input{results_highest}					
-	\caption{Several steps of the breaking of springs, where the 97 springs with the highest strain were broken. The grid had 1200 particles, the spring constants were sampled from a normal distribution with mean 0.0 and standard deviation 1.0. Step 0 is a stabilization of the initial grid, presented in \cref{fig:implementation:stabilizedInitial}, the following steps are the stabilization and breaking steps of the algorithm.}
+	\caption{Several steps of the simulation where at each step where springs were broken the 97 springs with the highest strain were broken.}
 	\label{fig:experiment:highestStrain}
 \end{figure*}
+\Cref{fig:experiment:highestStrain} presents the results of breaking a number of springs with the highest strain. Initially, \cref{fig:experiment:highestStrain:0,fig:experiment:highestStrain:1}, the pattern resembles cracked mud. However as the simulation progresses the patterns start to resemble a popped balloon, this is especially noticeable in \cref{fig:experiment:highestStrain:6,fig:experiment:highestStrain:7,fig:experiment:highestStrain:8}. When there are no more springs to break the particles have all moved to the lower left corner of the simulation, the point with coordinate $(0,0)$.
 
-\begin{figure*}
-	\centering
-	\input{results_greater}					
-	\caption{Several steps of the breaking of springs, where the springs with a strain greater than 1.04 were broken. The grid had 1200 particles, the spring constants were sampled from a normal distribution with mean 0.0 and standard deviation 1.0. Step 0 is a stabilization of the initial grid, presented in \cref{fig:implementation:stabilizedInitial}, the following steps are the stabilization and breaking steps of the algorithm.}
-	\label{fig:experiment:greaterThanStrain}
-\end{figure*}
 
-\begin{figure*}
-	\centering
-	\input{results_stretchGreater}					
-	\caption{Several steps of the stretching of springs, $\vartheta = 0.1$, where the springs with a strain greater than 1.04 were stretched. The grid had 1200 particles, the spring constants were sampled from a normal distribution with mean 0.0 and standard deviation 1.0. Step 0 is a stabilization of the initial grid, presented in \cref{fig:implementation:stabilizedInitial}, the following steps are the stabilization and breaking steps of the algorithm.}
-	\label{fig:experiment:stretchGreaterThanStrain}
-\end{figure*}
+% Break x with strain >
 
-\begin{figure*}
-	\centering
-	\input{results_stretchHighest}					
-	\caption{Several steps of the stretching of springs, $\vartheta = 0.1$, where the 97 springs with the highest strain were stretched. The grid had 1200 particles, the spring constants were sampled from a normal distribution with mean 0.0 and standard deviation 1.0. Step 0 is a stabilization of the initial grid, presented in \cref{fig:implementation:stabilizedInitial}, the following steps are the stabilization and breaking steps of the algorithm.}
-	\label{fig:experiment:stretchHighest}
-\end{figure*}
+% Stretch x with highest strain
+
+% Stretch x with strain >
+
+
+% Discuss influence of parameters
+% Number
+
+% Strain
+
+% Stretch factor
+
+
+
+
+
+% \begin{figure*}
+% 	\centering
+% 	\input{results_greater}					
+% 	\caption{Several steps of the breaking of springs, where the springs with a strain greater than 1.04 were broken. The grid had 1200 particles, the spring constants were sampled from a normal distribution with mean 0.0 and standard deviation 1.0. Step 0 is a stabilization of the initial grid, presented in \cref{fig:implementation:stabilizedInitial}, the following steps are the stabilization and breaking steps of the algorithm.}
+% 	\label{fig:experiment:greaterThanStrain}
+% \end{figure*}
+
+% \begin{figure*}
+% 	\centering
+% 	\input{results_stretchGreater}					
+% 	\caption{Several steps of the stretching of springs, $\vartheta = 0.1$, where the springs with a strain greater than 1.04 were stretched. The grid had 1200 particles, the spring constants were sampled from a normal distribution with mean 0.0 and standard deviation 1.0. Step 0 is a stabilization of the initial grid, presented in \cref{fig:implementation:stabilizedInitial}, the following steps are the stabilization and breaking steps of the algorithm.}
+% 	\label{fig:experiment:stretchGreaterThanStrain}
+% \end{figure*}
+
+% \begin{figure*}
+% 	\centering
+% 	\input{results_stretchHighest}					
+% 	\caption{Several steps of the stretching of springs, $\vartheta = 0.1$, where the 97 springs with the highest strain were stretched. The grid had 1200 particles, the spring constants were sampled from a normal distribution with mean 0.0 and standard deviation 1.0. Step 0 is a stabilization of the initial grid, presented in \cref{fig:implementation:stabilizedInitial}, the following steps are the stabilization and breaking steps of the algorithm.}
+% 	\label{fig:experiment:stretchHighest}
+% \end{figure*}
