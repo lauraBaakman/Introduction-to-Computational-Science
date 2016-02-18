@@ -4,7 +4,7 @@
 
 When simulating the dynamics of cracking material, one needs a model that represents the properties of that materials, mud in our case. In \cref{ss:method:model} we present our model. \Cref{ss:method:vogel} presents the model introduced by \citeauthor{vogel2005studies2} on which ours is loosely based. So that we can contrast the two models in \cref{ss:method:contrast}.
 
-\subsection{The model}\label{ss:method:model} \rick{Ik heb hem nagelezen. Er staat een extra todo in en ik heb de verschillende methods om veren te breken hier besproken. Zodat de implementatie sectie echt implementatie blijft.}
+\subsection{The model}\label{ss:method:model} 
 
 We use a spring simulation to model the rupture dynamics of mud. In this section we first describe the behavior and properties of one spring that connects two particles. Then we discuss a network of particles connected with springs and under which constraints this network is solved to find a stable system.
 
@@ -59,20 +59,13 @@ particle $v_j$. The natural length of a spring is the length it would have if it
 	F_i = - \Sigma_{j \in N_i} k_{ij}(x_i - x_j).
 \end{equation}
 
-With the formula in \cref{eq:single:force:simple} we can now compute all the forces on every particle and move the particle to the locations, such that the system is stable, i.e., $F_i = 0 \forall_i$. With this we can find the $L$ matrix:
-%
-\todo[inline]{Ik dacht dat deze er hier uit zou gaan en we direct \cref{eq:method:stabilizationEquation} zouden noemen.}
-\begin{equation}\label{eq:method:stabilizationEquationLHS}
-	L = A^T K A .* C,
-\end{equation}
-%
-where $A$ is the adjacency matrix, $K$ the matrix containing all the spring constants, and $C$ a correction matrix. How these matrices are constructed and what they are exactly, is discussed in \cref{s:implementation}. The system is stabilized by calculating, using the formula from \eqref{eq:single:force:simple}, the forces on all particles and moving each to the locations such that. We do this by solving the follow matrix vector equation:
+With the formula in \cref{eq:single:force:simple} we can now compute all the forces on every particle and move the particle to the locations, such that the system is stable. The system is stabilized by calculating, using the formula from \eqref{eq:single:force:simple}, the forces on all particles and moving each to the locations such that the force on every particle is zero. We do this by solving the follow matrix vector equation:
 %
 \begin{equation}\label{eq:method:stabilizationEquation}
 	L\vec{x} = \vec{r},
 \end{equation}
 %
-where $\vec{x}$ are the unknown new particle positions. When the new locations are found, the system is stable and springs can be broken. This process of stabilizing and breaking is repeated until there are no more springs left to break. 
+where $\vec{x}$ are the unknown new particle positions. When the new locations are found, the system is stable and springs can be broken. This process of stabilizing and breaking is repeated until there are no more springs left to break. How the matrices and vectors are constructed is discussed in \cref{s:implementation}.
 
 We propose three different methods to `break' the springs. 
 %
@@ -110,7 +103,7 @@ As with our model the simple hookean springs, where the force on a spring is def
 When laying out the initial grid, the spring constants are sampled from a gaussian distribution. The variance of the distribution has an effect on the material that is modeled. By choosing a high variance more heterogeneous material is modeled and consequently when a low variance is chosen the modeled material is more homogeneous.
 
 Before springs can be broken the system of particles and springs needs to be stabilized. The breaking, and stabilization steps used by \citeauthor{vogel2005studies2} are described with the following process:
-\begin{enumerate}
+\begin{enumerate}[(i)]
 	\item The natural length of the springs is decreased, with an in advance chosen step size. By doing this, the strain on the springs increases, see \cref{eq:method:strain_vogel}.
 	\item The springs with a strain larger than some threshold are broken.
 	\item Stabilization is done radially, recursively around the broken spring. The process starts at the directly effected particles and is repeated up to a max number of steps. 
@@ -118,11 +111,16 @@ Before springs can be broken the system of particles and springs needs to be sta
 
 \subsection{Contrast}\label{ss:method:contrast}
 
-In this section we briefly review the differences between the two models that are described in \cref{ss:method:model} and \cref{ss:method:vogel}. 
+In this section we summaries the differences between the two models that are described in \cref{ss:method:model} and \cref{ss:method:vogel}. 
 
-\rick{Ours is fast, but does not model what it is supposed to model, but a it is a nice simulation of a breaking balloon vs Vogel who build an ultra slow but correct model of the desiccation of mud. You decide which is more fun :D. Ik had hier meer iets in gedachten dat de verschillen tussen die modellen bespreekt. Vogel heeft massless particles, maar veren hebben geen natuurlijke lengte van nul, dat soort blaat. Denk dat dat hier relevanter is. We noemen in de inleiding al waarom we dit model gebouwd hebben, anders dan het moest ;-). En in de conclusie kunnen we wel bekijken welke van de twee modellen het leukst is. Dus eignelijk de todos die hieronder staan. }
+% single connection -> natural length 
+The difference with respect to a single connection, i.e., a spring, is that the model of \citeauthor{vogel2005studies2} uses a natural length for every string. In our model is was necessary to `remove' this from the formula to be able to write it as a linear problem and by doing so being able calculate the new positions, of minimum energy, for the particles.
 
-\todo[inline]{Describe the important differences of the two models.}
+% breaking springs -> only if F_i exceeds a threshold.
+When springs break in the model from \citeauthor{vogel2005studies2} the particles only move if the force $F_i$ on those particles exceed a threshold. This threshold parameter is one of the free parameters of the model and is chosen at the beginning of a simulation. Our model does not have such a parameter and particles will always move to a new position if $F_i \neq 0$. Our model is thus simplified further with the risk of losing modeling capabilities with respect to the model described by \citeauthor{vogel2005studies1}.
 
-\todo[inline]{Story from the presentation. Different types of particles. Springs. How the particles are connected, with those springs (square uniform grid). Things like energy and what is a stable system?}
+% relaxation/stabilization -> radially
+The relaxation or stabilization of the system in both models differ a lot. In essence our proposed model is able to calculate the new position of every particles at once, where the relaxation described by \citeauthor{vogel2005studies1} takes a lot more computational effort. In \cite{vogel2005studies2} the positions of every effected particle is calculated by starting to determine the new location of the first effected particle and going radially through the system up to a maximum number of steps. For a more detailed overview of the processes used, see \cref{ss:method:model} and \cref{ss:method:vogel}. 
 
+% conclusion
+To conclude, our changes made to the model of \cite{vogel2005studies2} make it possible to determine the locations of the particles very fast, with the risk of loosing some of the modeling capabilities, see \cref{s:ExperimentsDiscussion} for the performed experiments and results. 
